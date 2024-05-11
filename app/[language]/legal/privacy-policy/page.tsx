@@ -1,6 +1,6 @@
 const PrivacyPolicy = () => {
     return (
-        <div className="prose prose-stone dark:prose-invert m-auto h-fit w-full max-w-screen-lg px-4 py-8">
+        <div className="prose prose-stone m-auto h-fit w-full max-w-screen-lg px-4 py-8 dark:prose-invert">
             <h1>Privacy Policy</h1>
             <p>
                 This privacy policy applies to the SpellBook app (hereby referred to as &quot;Application&quot;) for

@@ -14,7 +14,6 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 
 export interface PageProps {
     params: { language: Language };
-    searchParams: URLSearchParams;
 }
 
 export interface Props extends PageProps {
@@ -51,7 +50,7 @@ const RootLayout = ({ children, params: { language } }: Props) => {
                         <ThemeProvider>
                             {/* <Header language={language} /> */}
 
-                            <div className="mouse:pt-16 relative w-full pb-16 md:pt-16">{children}</div>
+                            <div className="relative w-full pb-16 md:pt-16 mouse:pt-16">{children}</div>
 
                             {/* <Navbar language={language} /> */}
                         </ThemeProvider>

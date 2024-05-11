@@ -3,7 +3,7 @@
 ### Run locally
 
 -   Install the dependencies with: `pnpm i`
--   Run the project locally with: `pnpm run dev`
+-   Run the project locally with: `pnpm dev`
 -   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### Test on mobile devices
@@ -15,6 +15,6 @@ With the project running locally, you can use [ngrok](https://ngrok.com/download
 
 ## Database
 
-Generate migrations: 'pnpm run db:generate'
-Migrate: 'pnpm run db:migrate'
-View data: 'pnpm run db:studio'
+Generate migrations: 'pnpm db:generate'
+Migrate: 'pnpm db:migrate'
+View data: 'pnpm db:studio'

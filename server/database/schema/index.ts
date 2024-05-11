@@ -1,1 +1,2 @@
-export * from "./user/user";
+export * from "./spell";
+export * from "./user";

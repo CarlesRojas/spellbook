@@ -8,9 +8,11 @@
         "start": "next start",
         "lint": "next lint && prettier --check '**/*.{ts,tsx}'",
         "ts": "tsc --noEmit --incremental",
+        "pretty": "prettier --write '**/*.{ts,tsx}'",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "ts-node -r dotenv/config -P ./tsconfig.json ./server/database/migration/applyMigrations.ts",
-        "db:studio": "drizzle-kit studio"
+        "db:studio": "drizzle-kit studio",
+        "spells": "ts-node -r dotenv/config -P ./tsconfig.json ./server/scraper"
     },
     "dependencies": {
         "@ducanh2912/next-pwa": "^10.2.7",
@@ -50,6 +52,7 @@
         "prettier-plugin-tailwindcss": "^0.5.14",
         "tailwindcss": "^3.4.1",
         "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5"
     }
 }
