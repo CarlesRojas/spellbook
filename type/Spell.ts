@@ -121,7 +121,6 @@ export type DifficultyClass = z.infer<typeof DifficultyClassSchema>;
 const ComponentsSchema = z.array(z.nativeEnum(ComponentType));
 export type Components = z.infer<typeof ComponentsSchema>;
 
-
 export const SpellSchema = z.object({
     index: z.string(),
     name: z.string(),
