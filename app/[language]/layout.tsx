@@ -1,0 +1,65 @@
+// import Header from "@/components/header/Header";
+// import Navbar from "@/components/header/Navbar";
+import { QueryProvider } from "@/component/provider/QueryProvider";
+import AuthProvider from "@/component/provider/SessionProvider";
+import ThemeProvider from "@/component/provider/ThemeProvider";
+import { getTranslation } from "@/hook/useTranslation";
+import { Language, LANGUAGES } from "@/type/Language";
+import { type Metadata, type Viewport } from "next";
+import { Montserrat } from "next/font/google";
+import { ReactNode } from "react";
+import "../globals.css";
+
+const montserrat = Montserrat({ subsets: ["latin"] });
+
+export interface PageProps {
+    params: { language: Language };
+    searchParams: URLSearchParams;
+}
+
+export interface Props extends PageProps {
+    children: ReactNode;
+}
+
+export async function generateStaticParams() {
+    return LANGUAGES.map((language) => ({ language }));
+}
+
+export async function generateMetadata({ params: { language } }: PageProps): Promise<Metadata> {
+    const t = getTranslation(language);
+    return {
+        title: t.title,
+        description: t.description,
+        manifest: "/manifest.json",
+    };
+}
+
+export const viewport: Viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#f5f5f4" },
+        { media: "(prefers-color-scheme: dark)", color: "#1c1917" },
+    ],
+};
+
+const RootLayout = ({ children, params: { language } }: Props) => {
+    return (
+        <html lang={language} suppressHydrationWarning>
+            <head />
+            <QueryProvider>
+                <AuthProvider>
+                    <body className={`${montserrat.className} bg-stone-100 dark:bg-stone-900`}>
+                        <ThemeProvider>
+                            {/* <Header language={language} /> */}
+
+                            <div className="mouse:pt-16 relative w-full pb-16 md:pt-16">{children}</div>
+
+                            {/* <Navbar language={language} /> */}
+                        </ThemeProvider>
+                    </body>
+                </AuthProvider>
+            </QueryProvider>
+        </html>
+    );
+};
+
+export default RootLayout;

@@ -1,0 +1,11 @@
+{
+    "title": "SpellBook",
+    "description": "Create you own spell books for D&D 5e",
+
+    "enum": {
+        "language": {
+            "en": "English",
+            "es": "Spanish"
+        }
+    }
+}
