@@ -1,9 +1,24 @@
+"use client"
+
 import { PageProps } from "@/app/[language]/layout";
+import { createSpell } from "@/server/repo/spell";
+import spells from "@/server/scraper/resultSpells.json";
+import { SpellSchema } from "@/type/Spell";
 
 const Home = ({ params: { language } }: PageProps) => {
+
+    const createSpells = async () => {
+        for (const spell of spells) {
+            console.log(spell)
+            await createSpell(SpellSchema.parse(spell));
+        }
+    }
+
     return (
         <main className="relative flex h-full w-full flex-col items-center">
-            <div className="relative flex h-fit min-h-full w-full justify-center overflow-y-auto">Hello World</div>
+            <div className="relative flex h-fit min-h-full w-full justify-center overflow-y-auto">
+                <button onClick={createSpells}>Create</button>
+                </div>
         </main>
     );
 };
