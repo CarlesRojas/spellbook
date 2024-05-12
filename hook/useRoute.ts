@@ -1,5 +1,5 @@
 import { Language } from "@/type/Language";
-import { Route, dynamicRoutes } from "@/type/Route";
+import { DYNAMIC_ROUTES, Route } from "@/type/Route";
 import { usePathname } from "next/navigation";
 
 export const pathnameToRoute = (pathname: string): Route => {
@@ -8,7 +8,7 @@ export const pathnameToRoute = (pathname: string): Route => {
     const exactMatch = Object.values(Route).find((route) => route === parsedPathname) as Route;
     if (exactMatch) return exactMatch;
 
-    return dynamicRoutes.find((route) => parsedPathname.startsWith(route)) as Route;
+    return DYNAMIC_ROUTES.find((route) => parsedPathname.startsWith(route)) as Route;
 };
 
 export const useRoute = () => {

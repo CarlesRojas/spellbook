@@ -1,3 +1,4 @@
+import { NotFoundType } from "@/type/NotFoundType";
 import { Route } from "@/type/Route";
 import { z } from "zod";
 
@@ -22,6 +23,8 @@ export const LanguageObjectSchema = z.object({
         hi: z.string(),
         title: z.string(),
         language: z.string(),
+        back: z.string(),
+
         theme: z.object({
             loading: z.string(),
             switchToLight: z.string(),
@@ -36,7 +39,10 @@ export const LanguageObjectSchema = z.object({
 
     enum: z.object({
         language: z.object(Object.fromEntries(Object.values(Language).map((language) => [language, z.string()]))),
-        route: z.object(Object.fromEntries(Object.values(Route).map((routeRoute) => [routeRoute, z.string()]))),
+        route: z.object(Object.fromEntries(Object.values(Route).map((route) => [route, z.string()]))),
+        notFound: z.object(
+            Object.fromEntries(Object.values(NotFoundType).map((notFoundType) => [notFoundType, z.string()])),
+        ),
     }),
 });
 

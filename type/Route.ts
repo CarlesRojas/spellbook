@@ -3,4 +3,4 @@ export enum Route {
     SPELLBOOKS = "/spellbooks",
 }
 
-export const dynamicRoutes: Route[] = [];
+export const DYNAMIC_ROUTES: Route[] = [Route.SPELLBOOKS];

@@ -12,7 +12,7 @@ const NavbarItem = ({ label, icon, selected = false }: Props) => {
         <div
             className={cn(
                 "flex h-full w-full flex-col items-center justify-center gap-1 opacity-80",
-                selected && "!text-orange-500 opacity-100",
+                selected && "!text-amber-600 opacity-100",
             )}
         >
             {icon}

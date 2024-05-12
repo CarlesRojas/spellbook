@@ -6,6 +6,8 @@
         "hi": "¡Hola",
         "title": "Ajustes",
         "language": "Idioma",
+        "back": "Volver",
+
         "theme": {
             "loading": "Cargando tema...",
             "switchToLight": "Tema Claro",
@@ -23,9 +25,15 @@
             "en": "Inglés",
             "es": "Español"
         },
+
         "route": {
             "/": "Hechizos",
-            "/spellbooks": "Mis Libros"
+            "/spellbooks": "Libros"
+        },
+
+        "notFound": {
+            "SPELL": "Hechizo no encontrado",
+            "USER": "Usuario no encontrado"
         }
     }
 }

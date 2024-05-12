@@ -6,6 +6,8 @@
         "hi": "Hi",
         "title": "Settings",
         "language": "Language",
+        "back": "Go back",
+
         "theme": {
             "loading": "Loading theme...",
             "switchToLight": "Light Theme",
@@ -25,7 +27,12 @@
         },
         "route": {
             "/": "Spells",
-            "/spellbooks": "My Spellbooks"
+            "/spellbooks": "Spellbooks"
+        },
+
+        "notFound": {
+            "SPELL": "Spell not found",
+            "USER": "User not found"
         }
     }
 }

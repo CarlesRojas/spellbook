@@ -35,12 +35,12 @@ const Links = ({ language }: Props) => {
     return (
         <>
             <div className="relative hidden items-center md:flex">
-                <Button asChild variant="link" className={route === Route.SPELLS ? "!text-orange-500" : ""}>
+                <Button asChild variant="link" className={route === Route.SPELLS ? "!text-amber-600" : ""}>
                     <Link href={`/${language}${Route.SPELLS}`}>{t.enum.route[Route.SPELLS]}</Link>
                 </Button>
 
                 {user.data ? (
-                    <Button asChild variant="link" className={route === Route.SPELLBOOKS ? "!text-orange-500" : ""}>
+                    <Button asChild variant="link" className={route === Route.SPELLBOOKS ? "!text-amber-600" : ""}>
                         <Link href={`/${language}${Route.SPELLBOOKS}/${user.data.id}`}>
                             {t.enum.route[Route.SPELLBOOKS]}
                         </Link>
@@ -59,7 +59,7 @@ const Links = ({ language }: Props) => {
                             aria-label="Open menu"
                             className="flex h-12 w-12 items-center justify-center rounded-full p-3 group-data-[state=open]:hidden"
                         >
-                            <LuMenu className="mouse:group-hover:text-orange-500" />
+                            <LuMenu className="mouse:group-hover:text-amber-600" />
                         </Button>
 
                         <Button
@@ -68,14 +68,14 @@ const Links = ({ language }: Props) => {
                             aria-label="Close menu"
                             className="hidden h-12 w-12 items-center justify-center rounded-full p-3 group-data-[state=open]:flex"
                         >
-                            <LuX className="mouse:group-hover:text-orange-500" />
+                            <LuX className="mouse:group-hover:text-amber-600" />
                         </Button>
                     </DropdownMenuTrigger>
 
                     <DropdownMenuContent className="my-3 md:hidden">
                         <Link href={`/${language}${Route.SPELLS}`}>
                             <DropdownMenuItem
-                                className={`font-semibold ${route === Route.SPELLS ? "!text-orange-500" : ""}`}
+                                className={`font-semibold ${route === Route.SPELLS ? "!text-amber-600" : ""}`}
                             >
                                 {t.enum.route[Route.SPELLS]}
                             </DropdownMenuItem>
@@ -84,7 +84,7 @@ const Links = ({ language }: Props) => {
                         {user.data ? (
                             <Link href={`/${language}${Route.SPELLBOOKS}/${user.data.id}`}>
                                 <DropdownMenuItem
-                                    className={`font-semibold ${route === Route.SPELLBOOKS ? "!text-orange-500" : ""}`}
+                                    className={`font-semibold ${route === Route.SPELLBOOKS ? "!text-amber-600" : ""}`}
                                 >
                                     {t.enum.route[Route.SPELLBOOKS]}
                                 </DropdownMenuItem>
