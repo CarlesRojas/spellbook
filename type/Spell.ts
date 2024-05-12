@@ -140,5 +140,6 @@ export const SpellSchema = z.object({
     subclasses: z.array(SubclassSchema),
     damage: DamageSchema.optional(),
     difficultyClass: DifficultyClassSchema.optional(),
+    level: z.number(),
 });
 export type Spell = z.infer<typeof SpellSchema>;

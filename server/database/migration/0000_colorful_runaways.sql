@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS "spell" (
 	"classes" json[] NOT NULL,
 	"subclasses" json[] NOT NULL,
 	"damage" json,
-	"difficulty_class" json
+	"difficulty_class" json,
+	"level" integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user" (

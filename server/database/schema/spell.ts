@@ -1,5 +1,5 @@
 import { AreaOfEffect, Class, Components, Damage, DifficultyClass, School } from "@/type/Spell";
-import { boolean, json, pgTable, text } from "drizzle-orm/pg-core";
+import { boolean, integer, json, pgTable, text } from "drizzle-orm/pg-core";
 
 export const spell = pgTable("spell", {
     index: text("index").primaryKey().notNull(),
@@ -20,4 +20,5 @@ export const spell = pgTable("spell", {
     subclasses: json("subclasses").$type<Class>().array().notNull(),
     damage: json("damage").$type<Damage>(),
     difficultyClass: json("difficulty_class").$type<DifficultyClass>(),
+    level: integer("level").notNull(),
 });

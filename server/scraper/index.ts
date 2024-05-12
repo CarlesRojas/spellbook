@@ -96,5 +96,9 @@ const getEnumValues = async () => {
     console.log("DifficultyClassType", Array.from(DifficultyClassType));
 };
 
-await getAllSpells();
-await getEnumValues();
+const execute = async () => {
+    await getAllSpells();
+    await getEnumValues();
+};
+
+execute();
