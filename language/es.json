@@ -2,6 +2,17 @@
     "title": "SpellBook",
     "description": "Crea tus propios libros de hechizos para D&D 5e",
 
+    "settings": {
+        "hi": "¡Hola",
+        "title": "Ajustes",
+        "language": "Idioma",
+        "theme": {
+            "loading": "Cargando tema...",
+            "switchToLight": "Tema Claro",
+            "switchToDark": "Tema Oscuro"
+        }
+    },
+
     "auth": {
         "signIn": "Iniciar sesión",
         "signOut": "Cerrar sesión"
@@ -11,6 +22,10 @@
         "language": {
             "en": "Inglés",
             "es": "Español"
+        },
+        "route": {
+            "/": "Hechizos",
+            "/spellbooks": "Mis Libros"
         }
     }
 }

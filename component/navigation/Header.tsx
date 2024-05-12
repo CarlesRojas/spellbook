@@ -1,6 +1,8 @@
 "use client";
 
 import D20 from "@/asset/D20.svg";
+import Links from "@/component/navigation/Links";
+import Settings from "@/component/navigation/Settings";
 import { Button } from "@/component/ui/button";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUser } from "@/server/use/useUser";
@@ -27,7 +29,10 @@ const Header = ({ language }: Props) => {
     const header = (children?: ReactNode) => (
         <header className="fixed left-0 right-0 top-0 z-50 hidden h-16 items-center justify-between border-b border-stone-300 bg-stone-100 px-3 py-2 dark:border-stone-700 dark:bg-stone-900 md:flex md:px-4 mouse:flex">
             <nav className="relative flex items-center gap-3 md:gap-4">
-                <Link href={`/${language}${Route.HOME}`} className="focus-ring group relative flex gap-3 rounded">
+                <Link
+                    href={`/${language}${Route.SPELLS}`}
+                    className="focus-shadow group relative flex gap-3 rounded pr-1"
+                >
                     <D20 className="h-8 w-auto opacity-90 md:h-9 mouse:transition-transform mouse:group-hover:rotate-180" />
 
                     <h2
@@ -37,14 +42,14 @@ const Header = ({ language }: Props) => {
                     </h2>
                 </Link>
 
-                {/* <Links language={language} /> */}
+                <Links language={language} />
             </nav>
 
             {children && <div>{children}</div>}
         </header>
     );
 
-    if (!user.data && user.isLoading) return header(<LuLoader2 className="h-4 w-4 stroke-[3]" />);
+    if (!user.data && user.isLoading) return header(<LuLoader2 className="h-4 w-4 animate-spin stroke-[3]" />);
 
     return header(
         <div className="flex items-center gap-4">
@@ -55,7 +60,7 @@ const Header = ({ language }: Props) => {
                 </Button>
             )}
 
-            {/* <UserDropdownMenu language={language} /> */}
+            <Settings language={language} />
         </div>,
     );
 };

@@ -1,3 +1,4 @@
+import { Route } from "@/type/Route";
 import { z } from "zod";
 
 /* When adding a new language:
@@ -17,15 +18,25 @@ export const LanguageObjectSchema = z.object({
     title: z.string(),
     description: z.string(),
 
+    settings: z.object({
+        hi: z.string(),
+        title: z.string(),
+        language: z.string(),
+        theme: z.object({
+            loading: z.string(),
+            switchToLight: z.string(),
+            switchToDark: z.string(),
+        }),
+    }),
+
     auth: z.object({
         signIn: z.string(),
         signOut: z.string(),
     }),
 
     enum: z.object({
-        language: z.object(
-            Object.fromEntries(Object.values(Language).map((languageLanguage) => [languageLanguage, z.string()])),
-        ),
+        language: z.object(Object.fromEntries(Object.values(Language).map((language) => [language, z.string()]))),
+        route: z.object(Object.fromEntries(Object.values(Route).map((routeRoute) => [routeRoute, z.string()]))),
     }),
 });
 

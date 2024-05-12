@@ -2,6 +2,17 @@
     "title": "SpellBook",
     "description": "Create you own spell books for D&D 5e",
 
+    "settings": {
+        "hi": "Hi",
+        "title": "Settings",
+        "language": "Language",
+        "theme": {
+            "loading": "Loading theme...",
+            "switchToLight": "Light Theme",
+            "switchToDark": "Dark Theme"
+        }
+    },
+
     "auth": {
         "signIn": "Sign In",
         "signOut": "Sign Out"
@@ -11,6 +22,10 @@
         "language": {
             "en": "English",
             "es": "Spanish"
+        },
+        "route": {
+            "/": "Spells",
+            "/spellbooks": "My Spellbooks"
         }
     }
 }

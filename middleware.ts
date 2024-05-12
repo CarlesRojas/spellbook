@@ -1,9 +1,10 @@
 import { env } from "@/env";
+import { pathnameToRoute } from "@/hook/useRoute";
 import { DEFAULT_LANGUAGE, LANGUAGES } from "@/type/Language";
+import { Route } from "@/type/Route";
 import acceptLanguage from "accept-language";
 import withAuth, { NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { Route, pathnameToRoute } from "./type/Route";
 
 acceptLanguage.languages(LANGUAGES);
 
@@ -47,7 +48,7 @@ export default withAuth(
         const currentRoute = pathnameToRoute(path.replace(`/${language}`, "") || "/");
 
         if (userRoutes.includes(currentRoute) && !isUserAuthenticated(request))
-            return NextResponse.redirect(new URL(Route.HOME, request.url));
+            return NextResponse.redirect(new URL(Route.SPELLS, request.url));
 
         return NextResponse.next();
     },

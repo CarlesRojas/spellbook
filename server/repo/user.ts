@@ -14,7 +14,7 @@ export const createUser = async (newUser: NewUser) => {
 };
 
 export const getUser = async (email: string, name: string, image?: string) => {
-    if (!existsUser(email)) await createUser({ email, name });
+    if (!(await existsUser(email))) await createUser({ email, name });
 
     const result = await db.query.user.findFirst({
         where: (user, { eq }) => eq(user.email, email),
