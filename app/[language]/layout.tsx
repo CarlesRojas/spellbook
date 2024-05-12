@@ -1,5 +1,3 @@
-// import Header from "@/components/header/Header";
-// import Navbar from "@/components/header/Navbar";
 import Header from "@/component/navigation/Header";
 import Navbar from "@/component/navigation/Navbar";
 import { QueryProvider } from "@/component/provider/QueryProvider";
