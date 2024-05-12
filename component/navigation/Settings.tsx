@@ -37,8 +37,8 @@ const Settings = ({ language }: Props) => {
 
     return (
         <DropdownMenu modal={true}>
-            <DropdownMenuTrigger>
-                <div className="focus-ring group hidden rounded-full md:flex mouse:flex">
+            <DropdownMenuTrigger className="focus-shadow rounded-full">
+                <div className="group hidden rounded-full md:flex mouse:flex">
                     {user.data ? (
                         <Button
                             asChild
@@ -73,7 +73,7 @@ const Settings = ({ language }: Props) => {
                     )}
                 </div>
 
-                <div className="focus-ring group flex h-12 max-h-12 w-full md:hidden mouse:hidden">
+                <div className="group flex h-12 max-h-12 w-full md:hidden mouse:hidden">
                     <Button asChild variant="link" aria-label="Open Settings" className="relative h-full w-full p-0">
                         <NavbarItem
                             label={t.settings.title}

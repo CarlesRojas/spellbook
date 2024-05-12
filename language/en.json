@@ -34,5 +34,9 @@
             "SPELL": "Spell not found",
             "USER": "User not found"
         }
+    },
+
+    "filter": {
+        "query": "Search..."
     }
 }

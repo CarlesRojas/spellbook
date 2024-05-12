@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { LuArrowLeft, LuUser2 } from "react-icons/lu";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 interface Props {
     type: NotFoundType;

@@ -1,5 +1,5 @@
 import { PageProps } from "@/app/[language]/layout";
-import NotFound from "@/component/NotFound";
+import NotFound from "@/component/navigation/NotFound";
 import { getUserById } from "@/server/repo/user";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";

@@ -22,6 +22,12 @@ export const getSpell = async (index: string) => {
     return toDomain(result);
 };
 
+export const getAllSpells = async () => {
+    const result = await db.query.spell.findMany();
+
+    return result.map(toDomain);
+};
+
 export const clearSpells = async () => {
     await db.delete(spell).execute();
 };

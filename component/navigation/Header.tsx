@@ -49,7 +49,12 @@ const Header = ({ language }: Props) => {
         </header>
     );
 
-    if (!user.data && user.isLoading) return header(<LuLoader2 className="h-4 w-4 animate-spin stroke-[3]" />);
+    if (!user.data && user.isLoading)
+        return header(
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-full p-2">
+                <LuLoader2 className="h-4 w-4 animate-spin stroke-[3]" />
+            </div>,
+        );
 
     return header(
         <div className="flex items-center gap-4">

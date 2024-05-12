@@ -4,7 +4,7 @@
 
 @layer components {
     .focus-shadow {
-        @apply transition-colors focus-visible:outline-none mouse:focus-visible:shadow-[0_0_0_4px_#d6d3d1] mouse:focus-visible:dark:shadow-[0_0_0_4px_#57534e];
+        @apply transition-colors focus-visible:outline-none mouse:focus-visible:z-10 mouse:focus-visible:shadow-[0_0_0_4px_#d6d3d1] mouse:focus-visible:dark:shadow-[0_0_0_4px_#44403c];
     }
 
     .skeleton {

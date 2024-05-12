@@ -35,5 +35,9 @@
             "SPELL": "Hechizo no encontrado",
             "USER": "Usuario no encontrado"
         }
+    },
+
+    "filter": {
+        "query": "Buscar..."
     }
 }

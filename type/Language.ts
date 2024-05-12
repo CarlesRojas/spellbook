@@ -44,6 +44,10 @@ export const LanguageObjectSchema = z.object({
             Object.fromEntries(Object.values(NotFoundType).map((notFoundType) => [notFoundType, z.string()])),
         ),
     }),
+
+    filter: z.object({
+        query: z.string(),
+    }),
 });
 
 export type LanguageObject = z.infer<typeof LanguageObjectSchema>;

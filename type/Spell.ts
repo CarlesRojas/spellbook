@@ -78,21 +78,21 @@ export type AreaOfEffect = z.infer<typeof AreaOfEffectSchema>;
 const SchoolSchema = z.object({
     index: z.nativeEnum(SchoolType),
     name: z.string(),
-    level: z.number().optional(),
+    level: z.number().optional().nullable(),
 });
 export type School = z.infer<typeof SchoolSchema>;
 
 const ClassSchema = z.object({
     index: z.nativeEnum(ClassType),
     name: z.string(),
-    level: z.number().optional(),
+    level: z.number().optional().nullable(),
 });
 export type Class = z.infer<typeof ClassSchema>;
 
 const SubclassSchema = z.object({
     index: z.nativeEnum(SubclassType),
     name: z.string(),
-    level: z.number().optional(),
+    level: z.number().optional().nullable(),
 });
 export type Subclass = z.infer<typeof SubclassSchema>;
 
@@ -102,9 +102,10 @@ const DamageSchema = z.object({
             index: z.nativeEnum(DamageType),
             name: z.string(),
         })
-        .optional(),
-    slotLevel: z.record(z.coerce.number(), z.string()).optional(),
-    characterLevel: z.record(z.coerce.number(), z.string()).optional(),
+        .optional()
+        .nullable(),
+    slotLevel: z.record(z.coerce.number(), z.string()).optional().nullable(),
+    characterLevel: z.record(z.coerce.number(), z.string()).optional().nullable(),
 });
 export type Damage = z.infer<typeof DamageSchema>;
 
@@ -114,7 +115,7 @@ const DifficultyClassSchema = z.object({
         name: z.string(),
     }),
     success: z.string(),
-    description: z.string().optional(),
+    description: z.string().optional().nullable(),
 });
 export type DifficultyClass = z.infer<typeof DifficultyClassSchema>;
 
@@ -128,18 +129,18 @@ export const SpellSchema = z.object({
     highLevelDescription: z.array(z.string()),
     range: z.string(),
     components: z.array(z.nativeEnum(ComponentType)),
-    material: z.string().optional(),
-    areaOfEffect: AreaOfEffectSchema.optional(),
+    material: z.string().optional().nullable(),
+    areaOfEffect: AreaOfEffectSchema.optional().nullable(),
     ritual: z.boolean(),
     duration: z.string(),
     concentration: z.boolean(),
     castingTime: z.string(),
-    attackType: z.string().optional(),
+    attackType: z.string().optional().nullable(),
     school: SchoolSchema,
     classes: z.array(ClassSchema),
     subclasses: z.array(SubclassSchema),
-    damage: DamageSchema.optional(),
-    difficultyClass: DifficultyClassSchema.optional(),
+    damage: DamageSchema.optional().nullable(),
+    difficultyClass: DifficultyClassSchema.optional().nullable(),
     level: z.number(),
 });
 export type Spell = z.infer<typeof SpellSchema>;
