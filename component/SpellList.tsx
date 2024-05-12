@@ -1,29 +1,29 @@
 "use client";
 
 import { useUrlState } from "@/hook/useUrlState";
+import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
-import { Spell } from "@/type/Spell";
 import { z } from "zod";
 import Query from "./filter/Query";
 
 interface Props {
     language: Language;
-    spells: Spell[];
+    initialSpellsData: GetAllSpellsReturnType;
 }
 
-const SpellList = ({ language, spells }: Props) => {
+const SpellList = ({ language, initialSpellsData }: Props) => {
     const [query, setQuery] = useUrlState("query", "", z.string());
 
-    const filteredSpells = spells.filter((spell) => {
+    const spells = useSpells(initialSpellsData);
+    const filteredSpells = spells.data.filter((spell) => {
         if (!query) return true;
-        const regex = new RegExp(query, "i");
-        return regex.test(spell.name);
+        return spell.name.toLowerCase().includes(query.toLowerCase());
     });
 
     return (
         <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-4 p-4">
             <div className="grid w-full gap-2 md:flex md:flex-row md:justify-end">
-                <Query language={language} query={query} setQuery={(newQuery) => setQuery(newQuery)} />
+                <Query language={language} query={query} setQuery={setQuery} />
             </div>
 
             <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3">
