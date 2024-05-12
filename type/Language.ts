@@ -1,6 +1,5 @@
 import { NotFoundType } from "@/type/NotFoundType";
 import { Route } from "@/type/Route";
-import { z } from "zod";
 import {
     AreaOfEffectType,
     ClassType,
@@ -8,8 +7,10 @@ import {
     DamageType,
     DifficultyClassType,
     SchoolType,
+    Sort,
     SubclassType,
-} from "./Spell";
+} from "@/type/Spell";
+import { z } from "zod";
 
 /* When adding a new language:
  * 1. Add the new language to the Language enum
@@ -59,6 +60,7 @@ export const LanguageObjectSchema = z.object({
         difficultyClassType: z.object(
             Object.fromEntries(Object.values(DifficultyClassType).map((item) => [item, z.string()])),
         ),
+        sort: z.object(Object.fromEntries(Object.values(Sort).map((item) => [item, z.string()]))),
     }),
 
     filter: z.object({
@@ -70,6 +72,7 @@ export const LanguageObjectSchema = z.object({
         title: z.object({
             query: z.string(),
             school: z.string(),
+            sort: z.string(),
         }),
     }),
 });

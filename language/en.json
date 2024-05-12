@@ -103,6 +103,13 @@
             "con": "CON",
             "int": "INT",
             "str": "STR"
+        },
+
+        "sort": {
+            "name_asc": "Name",
+            "name_desc": "Name reversed",
+            "level_asc": "Lowest level",
+            "level_desc": "Highest level"
         }
     },
 
@@ -114,7 +121,8 @@
 
         "title": {
             "query": "Search...",
-            "school": "School"
+            "school": "School",
+            "sort": "Sorted by"
         }
     }
 }

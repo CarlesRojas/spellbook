@@ -12,17 +12,24 @@ interface Props {
     school: SchoolType | null;
     schoolsAvailable?: SchoolType[];
     setSchool: (school: SchoolType | null) => void;
+    isLoading?: boolean;
 }
 
-const SchoolFilter = ({ language, school, schoolsAvailable = Object.values(SchoolType), setSchool }: Props) => {
+const SchoolFilter = ({
+    language,
+    school,
+    schoolsAvailable = Object.values(SchoolType),
+    setSchool,
+    isLoading = false,
+}: Props) => {
     const { t } = useTranslation(language);
 
     return (
         <div className="relative flex w-fit flex-row">
             <DropdownMenu modal={true}>
                 <DropdownMenuTrigger className="group" asChild>
-                    <Button variant="outline" type="button" className="min-w-fit">
-                        <span className="mr-2 font-medium opacity-60">{t.filter.title.school}:</span>
+                    <Button variant="outline" type="button" className="min-w-fit" disabled={isLoading}>
+                        <span className="mr-2 hidden font-medium opacity-60 md:block">{t.filter.title.school}:</span>
 
                         {school ? t.enum.school[school] : t.filter.all}
 

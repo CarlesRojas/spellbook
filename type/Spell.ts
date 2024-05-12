@@ -1,5 +1,13 @@
 import { z } from "zod";
 
+export enum Sort {
+    LEVEL_ASC = "level_asc",
+    LEVEL_DESC = "level_desc",
+
+    NAME_ASC = "name_asc",
+    NAME_DESC = "name_desc",
+}
+
 export enum ComponentType {
     V = "V",
     S = "S",

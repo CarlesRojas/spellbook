@@ -103,6 +103,13 @@
             "con": "CON",
             "int": "INT",
             "str": "FUE"
+        },
+
+        "sort": {
+            "name_asc": "Nombre",
+            "name_desc": "Nombre inverso",
+            "level_asc": "Menor nivel",
+            "level_desc": "Mayor nivel"
         }
     },
 
@@ -114,7 +121,8 @@
 
         "title": {
             "query": "Buscar...",
-            "school": "Escuela"
+            "school": "Escuela",
+            "sort": "Ordenado por"
         }
     }
 }
