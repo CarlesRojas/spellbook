@@ -1,7 +1,7 @@
 import { PageProps } from "@/app/[language]/layout";
 import Spell from "@/app/[language]/spell/[spellId]/page";
+import Modal from "@/component/ui/modal";
 import { Language } from "@/type/Language";
-import Modal from "./modal";
 
 interface Props extends PageProps {
     params: { language: Language; spellId: string };
