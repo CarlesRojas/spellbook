@@ -125,5 +125,10 @@
             "school": "Escuela",
             "sort": "Ordenado por"
         }
+    },
+
+    "dnd": {
+        "cantrip": "Truco",
+        "cantrips": "Trucos"
     }
 }

@@ -125,5 +125,10 @@
             "school": "School",
             "sort": "Sorted by"
         }
+    },
+
+    "dnd": {
+        "cantrip": "Cantrip",
+        "cantrips": "Cantrips"
     }
 }

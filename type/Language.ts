@@ -76,6 +76,11 @@ export const LanguageObjectSchema = z.object({
             sort: z.string(),
         }),
     }),
+
+    dnd: z.object({
+        cantrip: z.string(),
+        cantrips: z.string(),
+    }),
 });
 
 export type LanguageObject = z.infer<typeof LanguageObjectSchema>;
