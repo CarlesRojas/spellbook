@@ -68,7 +68,7 @@ const Settings = ({ language }: Props) => {
                             aria-label="Open Settings"
                             className="flex h-12 w-12 items-center justify-center rounded-full p-3"
                         >
-                            <LuSettings className="mouse:group-hover:text-amber-600" />
+                            <LuSettings className="mouse:group-hover:text-sky-500" />
                         </Button>
                     )}
                 </div>
@@ -77,7 +77,7 @@ const Settings = ({ language }: Props) => {
                     <Button asChild variant="link" aria-label="Open Settings" className="relative h-full w-full p-0">
                         <NavbarItem
                             label={t.settings.title}
-                            icon={<LuSettings className="h-6 w-6 mouse:group-hover:text-amber-600" />}
+                            icon={<LuSettings className="h-6 w-6 mouse:group-hover:text-sky-500" />}
                         />
                     </Button>
                 </div>
@@ -103,7 +103,7 @@ const Settings = ({ language }: Props) => {
                             {Object.values(Language).map((currentLanguage) => (
                                 <Link href={`/${currentLanguage}${pathnameWithoutLanguage}`} key={currentLanguage}>
                                     <DropdownMenuItem
-                                        className={`font-semibold ${currentLanguage === language ? "!text-amber-600" : ""}`}
+                                        className={`font-semibold ${currentLanguage === language ? "!text-sky-500" : ""}`}
                                     >
                                         {t.enum.language[currentLanguage]}
                                     </DropdownMenuItem>

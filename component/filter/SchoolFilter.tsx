@@ -40,7 +40,7 @@ const SchoolFilter = ({
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem
                         onClick={() => setSchool(null)}
-                        className={`font-semibold ${school === null ? "!text-amber-600" : ""}`}
+                        className={`font-semibold ${school === null ? "!text-sky-500" : ""}`}
                     >
                         <p>{t.filter.all}</p>
                     </DropdownMenuItem>
@@ -49,7 +49,7 @@ const SchoolFilter = ({
                         <DropdownMenuItem
                             key={currentSchool}
                             onClick={() => setSchool(currentSchool)}
-                            className={`font-semibold ${school === currentSchool ? "!text-amber-600" : ""}`}
+                            className={`font-semibold ${school === currentSchool ? "!text-sky-500" : ""}`}
                         >
                             <p>{t.enum.school[currentSchool]}</p>
                         </DropdownMenuItem>

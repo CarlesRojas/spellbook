@@ -4,9 +4,11 @@ import QueryFilter from "@/component/filter/QueryFilter";
 import SchoolFilter from "@/component/filter/SchoolFilter";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
+import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { SchoolType, Sort } from "@/type/Spell";
+import Link from "next/link";
 import { z } from "zod";
 import SortFilter from "./filter/SortFilter";
 
@@ -44,8 +46,10 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
             }
         });
 
+    let lastLevel = filteredSpells.length > 0 ? filteredSpells[0].level : 0;
+
     return (
-        <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-4 p-4">
+        <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col p-4">
             <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
 
@@ -55,17 +59,32 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 </div>
             </div>
 
+            <div
+                className={cn(
+                    "flex justify-end pb-[0.4rem] pt-1",
+                    spells.isLoading ? "pointer-events-none opacity-0" : "",
+                )}
+            >
+                <p className="text-sm font-medium tracking-wide opacity-60">
+                    {filteredSpells.length > 0
+                        ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`
+                        : `${t.filter.noResults}`}
+                </p>
+            </div>
+
             <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3">
                 {filteredSpells.map((spell) => (
-                    <div
+                    <Link
+                        href={`/${language}/spell/${spell.index}`}
                         key={spell.index}
-                        className="flex flex-col gap-1 rounded border border-stone-300 p-2 dark:border-stone-700"
+                        className="focus-shadow group flex flex-col gap-1 rounded border border-stone-300 p-2 dark:border-stone-700"
                     >
-                        <h3 className="text-lg font-bold">{spell.name}</h3>
+                        <h3 className="text-lg font-bold mouse:group-hover:text-sky-500">{spell.name}</h3>
+
                         <small>
                             {spell.level} {t.enum.school[spell.school.index]}
                         </small>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </section>

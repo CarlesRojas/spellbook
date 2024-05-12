@@ -33,7 +33,7 @@ const Header = ({ language }: Props) => {
                     href={`/${language}${Route.SPELLS}`}
                     className="focus-shadow group relative flex gap-3 rounded pr-1"
                 >
-                    <D20 className="h-8 w-auto text-amber-600 opacity-90 md:h-9 mouse:transition-transform mouse:group-hover:rotate-180" />
+                    <D20 className="h-8 w-auto text-sky-500 opacity-90 md:h-9 mouse:transition-transform mouse:group-hover:rotate-180" />
 
                     <h2
                         className={`${philosopher.className} pt-[2px] text-xl font-bold md:text-2xl mouse:transition-transform mouse:group-hover:-translate-x-1`}
