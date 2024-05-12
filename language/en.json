@@ -2,6 +2,11 @@
     "title": "SpellBook",
     "description": "Create you own spell books for D&D 5e",
 
+    "auth": {
+        "signIn": "Sign In",
+        "signOut": "Sign Out"
+    },
+
     "enum": {
         "language": {
             "en": "English",

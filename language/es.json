@@ -2,6 +2,11 @@
     "title": "SpellBook",
     "description": "Crea tus propios libros de hechizos para D&D 5e",
 
+    "auth": {
+        "signIn": "Iniciar sesión",
+        "signOut": "Cerrar sesión"
+    },
+
     "enum": {
         "language": {
             "en": "Inglés",

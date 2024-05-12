@@ -1,5 +1,6 @@
 // import Header from "@/components/header/Header";
 // import Navbar from "@/components/header/Navbar";
+import Header from "@/component/navigation/Header";
 import { QueryProvider } from "@/component/provider/QueryProvider";
 import AuthProvider from "@/component/provider/SessionProvider";
 import ThemeProvider from "@/component/provider/ThemeProvider";
@@ -46,9 +47,11 @@ const RootLayout = ({ children, params: { language } }: Props) => {
             <head />
             <QueryProvider>
                 <AuthProvider>
-                    <body className={`${montserrat.className} bg-stone-100 dark:bg-stone-900`}>
+                    <body
+                        className={`${montserrat.className} bg-stone-100 text-stone-900 dark:bg-stone-900 dark:text-stone-100`}
+                    >
                         <ThemeProvider>
-                            {/* <Header language={language} /> */}
+                            <Header language={language} />
 
                             <div className="relative w-full pb-16 md:pt-16 mouse:pt-16">{children}</div>
 

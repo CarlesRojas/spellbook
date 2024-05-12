@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="D8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect stroke="currentColor" x="104.75" y="104.75" width="302.5" height="302.5"
+    transform="translate(-106.04 256) rotate(-45)"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="256" y1="42.1" x2="256" y2="469.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <polyline stroke="currentColor" points="42.1 256 256 353 469.9 256"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+</svg>

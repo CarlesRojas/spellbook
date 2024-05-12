@@ -17,6 +17,11 @@ export const LanguageObjectSchema = z.object({
     title: z.string(),
     description: z.string(),
 
+    auth: z.object({
+        signIn: z.string(),
+        signOut: z.string(),
+    }),
+
     enum: z.object({
         language: z.object(
             Object.fromEntries(Object.values(Language).map((languageLanguage) => [languageLanguage, z.string()])),

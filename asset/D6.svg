@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="D6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <polygon stroke="currentColor"
+    points="441.24 362.95 441.24 149.05 256 42.1 70.76 149.05 70.76 362.95 256 469.9 441.24 362.95"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="70.76" y1="149.05" x2="256" y2="256"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="256" y1="469.9" x2="256" y2="256"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="441.24" y1="149.05" x2="256" y2="256"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+</svg>

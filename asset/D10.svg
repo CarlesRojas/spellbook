@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="D10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <polygon stroke="currentColor" points="256 42.1 465.59 274.66 256 469.9 46.41 274.66 256 42.1"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <polyline stroke="currentColor" points="46.41 274.66 145.55 240.31 256 42.1"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <polyline stroke="currentColor" points="465.59 274.66 366.45 240.31 256 42.1"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <polyline stroke="currentColor" points="145.55 240.31 256 294.1 256 469.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="366.45" y1="240.31" x2="256" y2="294.1"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+</svg>

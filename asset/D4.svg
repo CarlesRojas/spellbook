@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="D4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <line stroke="currentColor" x1="256" y1="42.1" x2="256" y2="469.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="256" y1="469.9" x2="47.9" y2="319.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="256" y1="42.1" x2="47.9" y2="319.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="256" y1="469.9" x2="464.1" y2="319.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+  <line stroke="currentColor" x1="256" y1="42.1" x2="464.1" y2="319.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 28px;" />
+</svg>
