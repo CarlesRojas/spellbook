@@ -93,8 +93,8 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                     <Image
                                         src={TestIcon}
                                         alt="spell icon"
-                                        width={150}
-                                        height={150}
+                                        width={64}
+                                        height={64}
                                         className="w-16 mouse:transition-transform mouse:group-hover:scale-110"
                                     />
 
