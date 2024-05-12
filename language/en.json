@@ -25,6 +25,7 @@
             "en": "English",
             "es": "Spanish"
         },
+
         "route": {
             "/": "Spells",
             "/spellbooks": "Spellbooks"
@@ -33,10 +34,87 @@
         "notFound": {
             "SPELL": "Spell not found",
             "USER": "User not found"
+        },
+
+        "component": {
+            "V": "Verbal",
+            "S": "Somatic",
+            "M": "Material"
+        },
+
+        "areaOfEffect": {
+            "cube": "Cube",
+            "cone": "Cone",
+            "cylinder": "Cylinder",
+            "line": "Line",
+            "sphere": "Sphere"
+        },
+
+        "class": {
+            "wizard": "Wizard",
+            "sorcerer": "Sorcerer",
+            "cleric": "Cleric",
+            "paladin": "Paladin",
+            "ranger": "Ranger",
+            "bard": "Bard",
+            "druid": "Druid",
+            "warlock": "Warlock"
+        },
+
+        "subclass": {
+            "lore": "Lore",
+            "land": "Land",
+            "life": "Life",
+            "devotion": "Devotion",
+            "fiend": "Fiend"
+        },
+
+        "school": {
+            "evocation": "Evocation",
+            "conjuration": "Conjuration",
+            "abjuration": "Abjuration",
+            "transmutation": "Transmutation",
+            "enchantment": "Enchantment",
+            "necromancy": "Necromancy",
+            "divination": "Divination",
+            "illusion": "Illusion"
+        },
+
+        "damageType": {
+            "acid": "Acid",
+            "force": "Force",
+            "bludgeoning": "Bludgeoning",
+            "slashing": "Slashing",
+            "necrotic": "Necrotic",
+            "radiant": "Radiant",
+            "fire": "Fire",
+            "lightning": "Lightning",
+            "poison": "Poison",
+            "cold": "Cold",
+            "psychic": "Psychic",
+            "piercing": "Piercing",
+            "thunder": "Thunder"
+        },
+
+        "difficultyClassType": {
+            "dex": "DEX",
+            "wis": "WIS",
+            "cha": "CHA",
+            "con": "CON",
+            "int": "INT",
+            "str": "STR"
         }
     },
 
     "filter": {
-        "query": "Search..."
+        "noResults": "No results found",
+        "result": "result",
+        "results": "results",
+        "all": "All",
+
+        "title": {
+            "query": "Search...",
+            "school": "School"
+        }
     }
 }

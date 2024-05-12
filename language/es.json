@@ -34,10 +34,87 @@
         "notFound": {
             "SPELL": "Hechizo no encontrado",
             "USER": "Usuario no encontrado"
+        },
+
+        "component": {
+            "V": "Verbal",
+            "S": "Somático",
+            "M": "Material"
+        },
+
+        "areaOfEffect": {
+            "cube": "Cubo",
+            "cone": "Cono",
+            "cylinder": "Cilindro",
+            "line": "Línea",
+            "sphere": "Esfera"
+        },
+
+        "class": {
+            "wizard": "Mago",
+            "sorcerer": "Hechicero",
+            "cleric": "Clérigo",
+            "paladin": "Paladín",
+            "ranger": "Explorador",
+            "bard": "Bardo",
+            "druid": "Druida",
+            "warlock": "Brujo"
+        },
+
+        "subclass": {
+            "lore": "Sabiduría",
+            "land": "Tierra",
+            "life": "Vida",
+            "devotion": "Devoción",
+            "fiend": "Demonio"
+        },
+
+        "school": {
+            "evocation": "Evocación",
+            "conjuration": "Conjuración",
+            "abjuration": "Abjuración",
+            "transmutation": "Transmutación",
+            "enchantment": "Encantamiento",
+            "necromancy": "Nigromancia",
+            "divination": "Adivinación",
+            "illusion": "Ilusión"
+        },
+
+        "damageType": {
+            "acid": "Ácido",
+            "force": "Fuerza",
+            "bludgeoning": "Contundente",
+            "slashing": "Cortante",
+            "necrotic": "Necrótico",
+            "radiant": "Radiante",
+            "fire": "Fuego",
+            "lightning": "Eléctrico",
+            "poison": "Veneno",
+            "cold": "Frío",
+            "psychic": "Psíquico",
+            "piercing": "Perforante",
+            "thunder": "Trueno"
+        },
+
+        "difficultyClassType": {
+            "dex": "DES",
+            "wis": "SAB",
+            "cha": "CAR",
+            "con": "CON",
+            "int": "INT",
+            "str": "FUE"
         }
     },
 
     "filter": {
-        "query": "Buscar..."
+        "noResults": "No se encontraron resultados",
+        "result": "resultado",
+        "results": "resultados",
+        "all": "Todas",
+
+        "title": {
+            "query": "Buscar...",
+            "school": "Escuela"
+        }
     }
 }

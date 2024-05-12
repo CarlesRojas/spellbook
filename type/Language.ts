@@ -1,6 +1,15 @@
 import { NotFoundType } from "@/type/NotFoundType";
 import { Route } from "@/type/Route";
 import { z } from "zod";
+import {
+    AreaOfEffectType,
+    ClassType,
+    ComponentType,
+    DamageType,
+    DifficultyClassType,
+    SchoolType,
+    SubclassType,
+} from "./Spell";
 
 /* When adding a new language:
  * 1. Add the new language to the Language enum
@@ -38,15 +47,30 @@ export const LanguageObjectSchema = z.object({
     }),
 
     enum: z.object({
-        language: z.object(Object.fromEntries(Object.values(Language).map((language) => [language, z.string()]))),
-        route: z.object(Object.fromEntries(Object.values(Route).map((route) => [route, z.string()]))),
-        notFound: z.object(
-            Object.fromEntries(Object.values(NotFoundType).map((notFoundType) => [notFoundType, z.string()])),
+        language: z.object(Object.fromEntries(Object.values(Language).map((item) => [item, z.string()]))),
+        route: z.object(Object.fromEntries(Object.values(Route).map((item) => [item, z.string()]))),
+        notFound: z.object(Object.fromEntries(Object.values(NotFoundType).map((item) => [item, z.string()]))),
+        component: z.object(Object.fromEntries(Object.values(ComponentType).map((item) => [item, z.string()]))),
+        areaOfEffect: z.object(Object.fromEntries(Object.values(AreaOfEffectType).map((item) => [item, z.string()]))),
+        class: z.object(Object.fromEntries(Object.values(ClassType).map((item) => [item, z.string()]))),
+        subclass: z.object(Object.fromEntries(Object.values(SubclassType).map((item) => [item, z.string()]))),
+        school: z.object(Object.fromEntries(Object.values(SchoolType).map((item) => [item, z.string()]))),
+        damageType: z.object(Object.fromEntries(Object.values(DamageType).map((item) => [item, z.string()]))),
+        difficultyClassType: z.object(
+            Object.fromEntries(Object.values(DifficultyClassType).map((item) => [item, z.string()])),
         ),
     }),
 
     filter: z.object({
-        query: z.string(),
+        noResults: z.string(),
+        result: z.string(),
+        results: z.string(),
+        all: z.string(),
+
+        title: z.object({
+            query: z.string(),
+            school: z.string(),
+        }),
     }),
 });
 

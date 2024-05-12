@@ -23,7 +23,9 @@ export const getSpell = async (index: string) => {
 };
 
 export const getAllSpells = async () => {
-    const result = await db.query.spell.findMany();
+    const result = await db.query.spell.findMany({
+        orderBy: (spell, { asc }) => asc(spell.name),
+    });
 
     return result.map(toDomain);
 };

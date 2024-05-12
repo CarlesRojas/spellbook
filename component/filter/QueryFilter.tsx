@@ -15,7 +15,7 @@ interface Props {
     isLoading?: boolean;
 }
 
-const Query = ({ language, query, setQuery, isLoading = false }: Props) => {
+const QueryFilter = ({ language, query, setQuery, isLoading = false }: Props) => {
     const { t } = useTranslation(language);
 
     const [internalQuery, setInternalQuery] = useState(query);
@@ -27,7 +27,7 @@ const Query = ({ language, query, setQuery, isLoading = false }: Props) => {
             onSubmit={(event) => event.preventDefault()}
         >
             <Input
-                placeholder={t.filter.query}
+                placeholder={t.filter.title.query}
                 autoComplete="off"
                 disabled={isLoading}
                 value={internalQuery}
@@ -57,4 +57,4 @@ const Query = ({ language, query, setQuery, isLoading = false }: Props) => {
     );
 };
 
-export default Query;
+export default QueryFilter;
