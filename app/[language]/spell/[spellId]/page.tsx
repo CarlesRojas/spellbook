@@ -1,11 +1,19 @@
 import { PageProps } from "@/app/[language]/layout";
 import NotFound from "@/component/navigation/NotFound";
-import { getSpell } from "@/server/repo/spell";
+import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
 
 interface Props extends PageProps {
     params: { language: Language; spellId: string };
+}
+
+export async function generateStaticParams() {
+    const spells = await getAllSpells();
+    const result = Object.values(Language).flatMap((language) =>
+        spells.map(({ index }) => ({ language, spellId: index })),
+    );
+    return result;
 }
 
 const Spell = async ({ params: { language, spellId } }: Props) => {

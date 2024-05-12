@@ -80,7 +80,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                     return (
                         <Fragment key={spell.index}>
                             {[Sort.LEVEL_ASC, Sort.LEVEL_DESC].includes(sort) && isLevelChange && (
-                                <h2 className="sticky top-0 mt-4 bg-stone-100 py-2 font-semibold tracking-wide text-sky-500 dark:bg-stone-900 md:col-span-2 lg:col-span-3 mouse:top-16">
+                                <h2 className="sticky top-0 z-20 mt-4 bg-stone-100 py-2 font-semibold tracking-wide text-sky-500 dark:bg-stone-900 md:col-span-2 lg:col-span-3 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
                             )}
