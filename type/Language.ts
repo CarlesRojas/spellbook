@@ -68,6 +68,7 @@ export const LanguageObjectSchema = z.object({
         result: z.string(),
         results: z.string(),
         all: z.string(),
+        level: z.string(),
 
         title: z.object({
             query: z.string(),

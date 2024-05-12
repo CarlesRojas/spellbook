@@ -118,6 +118,7 @@
         "result": "result",
         "results": "results",
         "all": "All",
+        "level": "Level",
 
         "title": {
             "query": "Search...",

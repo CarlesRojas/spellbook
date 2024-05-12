@@ -9,6 +9,7 @@ import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { SchoolType, Sort } from "@/type/Spell";
 import Link from "next/link";
+import { Fragment } from "react";
 import { z } from "zod";
 import SortFilter from "./filter/SortFilter";
 
@@ -46,7 +47,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
             }
         });
 
-    let lastLevel = filteredSpells.length > 0 ? filteredSpells[0].level : 0;
+    let lastLevel = -1;
 
     return (
         <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col p-4">
@@ -73,19 +74,31 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
             </div>
 
             <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3">
-                {filteredSpells.map((spell) => (
-                    <Link
-                        href={`/${language}/spell/${spell.index}`}
-                        key={spell.index}
-                        className="focus-shadow group flex flex-col gap-1 rounded border border-stone-300 p-2 dark:border-stone-700"
-                    >
-                        <h3 className="text-lg font-bold mouse:group-hover:text-sky-500">{spell.name}</h3>
+                {filteredSpells.map((spell) => {
+                    const isLevelChange = spell.level !== lastLevel;
+                    lastLevel = spell.level;
 
-                        <small>
-                            {spell.level} {t.enum.school[spell.school.index]}
-                        </small>
-                    </Link>
-                ))}
+                    return (
+                        <Fragment key={spell.index}>
+                            {[Sort.LEVEL_ASC, Sort.LEVEL_DESC].includes(sort) && isLevelChange && (
+                                <h2 className="mt-4 text-lg font-bold tracking-wide text-blue-500 md:col-span-2 lg:col-span-3">
+                                    {t.filter.level} {spell.level}
+                                </h2>
+                            )}
+
+                            <Link
+                                href={`/${language}/spell/${spell.index}`}
+                                className="focus-shadow group flex flex-col gap-1 rounded border border-stone-300 p-2 dark:border-stone-700"
+                            >
+                                <h3 className="text-lg font-bold mouse:group-hover:text-sky-500">{spell.name}</h3>
+
+                                <small>
+                                    {spell.level} {t.enum.school[spell.school.index]}
+                                </small>
+                            </Link>
+                        </Fragment>
+                    );
+                })}
             </div>
         </section>
     );
