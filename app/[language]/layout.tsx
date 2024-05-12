@@ -20,6 +20,7 @@ export interface PageProps {
 
 export interface Props extends PageProps {
     children: ReactNode;
+    modal: ReactNode;
 }
 
 export async function generateStaticParams() {
@@ -42,7 +43,7 @@ export const viewport: Viewport = {
     ],
 };
 
-const RootLayout = ({ children, params: { language } }: Props) => {
+const RootLayout = ({ children, modal, params: { language } }: Props) => {
     return (
         <html lang={language} suppressHydrationWarning>
             <head />
@@ -57,6 +58,8 @@ const RootLayout = ({ children, params: { language } }: Props) => {
                             <div className="relative w-full pb-16 md:pt-16 mouse:pt-16">{children}</div>
 
                             <Navbar language={language} />
+
+                            {modal}
                         </ThemeProvider>
                     </body>
                 </AuthProvider>
