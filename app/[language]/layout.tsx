@@ -58,7 +58,6 @@ const RootLayout = ({ children, modal, params: { language } }: Props) => {
                             <Navbar language={language} />
 
                             {modal}
-                            <div id="modal-root" />
                         </ThemeProvider>
                     </body>
                 </AuthProvider>

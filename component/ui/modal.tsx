@@ -3,7 +3,6 @@
 import { Dialog, DialogContent } from "@/component/ui/dialog";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
-import { createPortal } from "react-dom";
 
 interface Props {
     children: ReactNode;
@@ -12,11 +11,10 @@ interface Props {
 const Modal = ({ children }: Props) => {
     const router = useRouter();
 
-    return createPortal(
+    return (
         <Dialog open={true} onOpenChange={(open) => !open && router.back()}>
             <DialogContent>{children}</DialogContent>
-        </Dialog>,
-        document.getElementById("modal-root")!,
+        </Dialog>
     );
 };
 
