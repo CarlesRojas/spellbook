@@ -16,7 +16,7 @@ const Spell = async ({ params: { language, spellId } }: Props) => {
 
     return (
         <main className="relative flex h-full w-full flex-col items-center">
-            <div className="relative flex h-fit min-h-full w-full justify-center overflow-y-auto">
+            <div className="relative flex h-fit min-h-full w-full justify-center">
                 <p className="p-4 font-semibold">Page for {name}</p>
             </div>
         </main>

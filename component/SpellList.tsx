@@ -1,17 +1,21 @@
 "use client";
 
+import TestIcon from "@/asset/test_icon.png";
 import QueryFilter from "@/component/filter/QueryFilter";
 import SchoolFilter from "@/component/filter/SchoolFilter";
+import SortFilter from "@/component/filter/SortFilter";
+import { Button } from "@/component/ui/button";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { SchoolType, Sort } from "@/type/Spell";
+import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
+import { LuPlus } from "react-icons/lu";
 import { z } from "zod";
-import SortFilter from "./filter/SortFilter";
 
 interface Props {
     language: Language;
@@ -60,12 +64,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 </div>
             </div>
 
-            <div
-                className={cn(
-                    "flex justify-end pb-[0.4rem] pt-1",
-                    spells.isLoading ? "pointer-events-none opacity-0" : "",
-                )}
-            >
+            <div className={cn("flex justify-end pt-1", spells.isLoading ? "pointer-events-none opacity-0" : "")}>
                 <p className="text-sm font-medium tracking-wide opacity-60">
                     {filteredSpells.length > 0
                         ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`
@@ -81,21 +80,36 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                     return (
                         <Fragment key={spell.index}>
                             {[Sort.LEVEL_ASC, Sort.LEVEL_DESC].includes(sort) && isLevelChange && (
-                                <h2 className="mt-4 text-lg font-bold tracking-wide text-blue-500 md:col-span-2 lg:col-span-3">
+                                <h2 className="sticky top-0 mt-4 bg-stone-100 py-2 font-semibold tracking-wide text-sky-500 dark:bg-stone-900 md:col-span-2 lg:col-span-3 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
                             )}
 
-                            <Link
-                                href={`/${language}/spell/${spell.index}`}
-                                className="focus-shadow group flex flex-col gap-1 rounded border border-stone-300 p-2 dark:border-stone-700"
-                            >
-                                <h3 className="text-lg font-bold mouse:group-hover:text-sky-500">{spell.name}</h3>
+                            <div className="flex items-center justify-between rounded border border-stone-300 dark:border-stone-700">
+                                <Link
+                                    href={`/${language}/spell/${spell.index}`}
+                                    className="focus-shadow group flex grow items-center gap-2 p-1"
+                                >
+                                    <Image
+                                        src={TestIcon}
+                                        alt="spell icon"
+                                        width={150}
+                                        height={150}
+                                        className="w-16 mouse:transition-transform mouse:group-hover:scale-110"
+                                    />
 
-                                <small>
-                                    {spell.level} {t.enum.school[spell.school.index]}
-                                </small>
-                            </Link>
+                                    <div className="flex flex-col">
+                                        <h3 className="font-semibold mouse:group-hover:text-sky-500">{spell.name}</h3>
+                                        <small className="opacity-60">{t.enum.school[spell.school.index]}</small>
+                                    </div>
+                                </Link>
+
+                                <div className="h-fit w-fit p-2">
+                                    <Button variant="outline" size="icon">
+                                        <LuPlus className="h-4 w-4 stroke-[3]" />
+                                    </Button>
+                                </div>
+                            </div>
                         </Fragment>
                     );
                 })}
