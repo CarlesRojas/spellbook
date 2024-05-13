@@ -89,6 +89,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                 <Link
                                     href={`/${language}/spell/${spell.index}`}
                                     className="focus-shadow group flex grow items-center gap-2 p-1"
+                                    scroll={false}
                                 >
                                     <Image
                                         src={TestIcon}

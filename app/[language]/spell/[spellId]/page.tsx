@@ -1,4 +1,5 @@
 import { PageProps } from "@/app/[language]/layout";
+import Spell from "@/component/Spell";
 import NotFound from "@/component/navigation/NotFound";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
@@ -16,19 +17,17 @@ export async function generateStaticParams() {
     return result;
 }
 
-const Spell = async ({ params: { language, spellId } }: Props) => {
+const SpellPage = async ({ params: { language, spellId } }: Props) => {
     const spell = await getSpell(spellId);
     if (!spell) return <NotFound type={NotFoundType.SPELL} language={language} />;
-
-    const { name } = spell;
 
     return (
         <main className="relative flex h-full w-full flex-col items-center">
             <div className="relative flex h-fit min-h-full w-full justify-center">
-                <p className="p-4 font-semibold">Page for {name}</p>
+                <Spell spellId={spellId} spellInitialData={spell} />
             </div>
         </main>
     );
 };
 
-export default Spell;
+export default SpellPage;

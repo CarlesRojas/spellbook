@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "npm run lint && npm run ts && next build",
+        "build": "pnpm run lint && pnpm run ts && next build",
         "start": "next start",
         "lint": "next lint && prettier --check '**/*.{ts,tsx}'",
         "ts": "tsc --noEmit --incremental",
