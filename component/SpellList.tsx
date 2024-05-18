@@ -107,7 +107,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                         </h3>
 
                                         <h3
-                                            className="absolute z-10 hidden font-semibold opacity-0 mouse:block mouse:group-hover:opacity-100" // brightness-0 dark:brightness-[1000] mouse:group-hover:brightness-75 mouse:group-hover:transition-all mouse:group-hover:dark:brightness-100"
+                                            className="absolute z-10 hidden font-semibold opacity-0 brightness-[0.8] dark:brightness-100 mouse:block mouse:group-hover:opacity-100"
                                             style={{
                                                 color: spell.color,
                                             }}
