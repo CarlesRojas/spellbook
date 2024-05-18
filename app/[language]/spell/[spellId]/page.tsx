@@ -1,5 +1,7 @@
 import { PageProps } from "@/app/[language]/layout";
+import BackButton from "@/component/navigation/BackButton";
 import NotFound from "@/component/navigation/NotFound";
+import { useTranslation } from "@/hook/useTranslation";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
@@ -17,17 +19,41 @@ export async function generateStaticParams() {
 }
 
 const SpellPage = async ({ params: { language, spellId } }: Props) => {
+    const { t } = useTranslation(language);
     const spell = await getSpell(spellId);
     if (!spell) return <NotFound type={NotFoundType.SPELL} language={language} />;
 
-    const { name, icon, color } = spell;
+    const {
+        name,
+        icon,
+        color,
+        description,
+        castingTime,
+        classes,
+        components,
+        concentration,
+        duration,
+        highLevelDescription,
+        level,
+        range,
+        ritual,
+        school,
+        areaOfEffect,
+        attackType,
+        damage,
+        difficultyClass,
+        material,
+        subclasses,
+    } = spell;
 
     return (
         <main className="relative flex h-full w-full flex-col items-center">
-            <div className="relative flex h-fit min-h-full w-full items-center justify-center">
-                <div className="flex w-full max-w-screen-lg items-center gap-2 p-4">
+            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-4 p-4">
+                <BackButton language={language} />
+
+                <div className="flex w-full flex-col items-center">
                     <div
-                        className="inline-block h-32 min-h-32 w-32 min-w-32 bg-cover mouse:transition-transform mouse:group-hover:scale-110"
+                        className="mb-2 inline-block h-32 min-h-32 w-32 min-w-32 bg-cover brightness-90 dark:brightness-100"
                         style={{
                             backgroundImage: `url(/spell/${icon})`,
                             maskImage: `url(/spell/${icon})`,
@@ -37,8 +63,12 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                             backgroundColor: color,
                         }}
                     />
-                    <h1 className="p-4 text-lg font-semibold tracking-wide">{name}</h1>
+
+                    <h1 className="text-lg font-semibold tracking-wide">{name}</h1>
+                    <small className="text-sm opacity-60">{t.enum.school[school.index]}</small>
                 </div>
+
+                <p className="opacity-70">{description}</p>
             </div>
         </main>
     );

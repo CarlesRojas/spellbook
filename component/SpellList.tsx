@@ -110,7 +110,9 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                         >
                                             {spell.name}
                                         </h3>
-                                        <small className="opacity-60">{t.enum.school[spell.school.index]}</small>
+                                        <small className="text-sm opacity-60">
+                                            {t.enum.school[spell.school.index]}
+                                        </small>
                                     </div>
                                 </Link>
 
