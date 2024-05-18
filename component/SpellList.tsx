@@ -1,6 +1,5 @@
 "use client";
 
-import TestIcon from "@/asset/test_icon.png";
 import QueryFilter from "@/component/filter/QueryFilter";
 import SchoolFilter from "@/component/filter/SchoolFilter";
 import SortFilter from "@/component/filter/SortFilter";
@@ -11,7 +10,6 @@ import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { SchoolType, Sort } from "@/type/Spell";
-import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
 import { LuPlus } from "react-icons/lu";
@@ -91,16 +89,27 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                     className="focus-shadow group flex grow items-center gap-2 p-1"
                                     scroll={false}
                                 >
-                                    <Image
-                                        src={TestIcon}
-                                        alt="spell icon"
-                                        width={64}
-                                        height={64}
-                                        className="w-16 mouse:transition-transform mouse:group-hover:scale-110"
+                                    <div
+                                        className="inline-block h-16 w-16 bg-cover mouse:transition-transform mouse:group-hover:scale-110"
+                                        style={{
+                                            backgroundImage: `url(/spell/${spell.icon})`,
+                                            maskImage: `url(/spell/${spell.icon})`,
+                                            maskMode: "alpha",
+                                            maskSize: "cover",
+                                            backgroundBlendMode: "luminosity",
+                                            backgroundColor: spell.color,
+                                        }}
                                     />
 
                                     <div className="flex flex-col">
-                                        <h3 className="font-semibold mouse:group-hover:text-sky-500">{spell.name}</h3>
+                                        <h3
+                                            className="font-semibold brightness-[-1000] saturate-[0.9] dark:brightness-[1000] mouse:group-hover:brightness-100  mouse:group-hover:transition-all"
+                                            style={{
+                                                color: spell.color,
+                                            }}
+                                        >
+                                            {spell.name}
+                                        </h3>
                                         <small className="opacity-60">{t.enum.school[spell.school.index]}</small>
                                     </div>
                                 </Link>

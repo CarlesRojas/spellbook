@@ -150,5 +150,7 @@ export const SpellSchema = z.object({
     damage: DamageSchema.optional().nullable(),
     difficultyClass: DifficultyClassSchema.optional().nullable(),
     level: z.number(),
+    icon: z.string(),
+    color: z.string(),
 });
 export type Spell = z.infer<typeof SpellSchema>;

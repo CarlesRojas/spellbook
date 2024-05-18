@@ -1,13 +1,20 @@
 {
-    "version": "6",
-    "dialect": "postgresql",
-    "entries": [
-        {
-            "idx": 0,
-            "version": "6",
-            "when": 1715516039259,
-            "tag": "0000_colorful_runaways",
-            "breakpoints": true
-        }
-    ]
+  "version": "6",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1715516039259,
+      "tag": "0000_colorful_runaways",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1716031446726,
+      "tag": "0001_silky_richard_fisk",
+      "breakpoints": true
+    }
+  ]
 }

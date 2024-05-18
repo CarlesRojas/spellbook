@@ -21,4 +21,6 @@ export const spell = pgTable("spell", {
     damage: json("damage").$type<Damage>(),
     difficultyClass: json("difficulty_class").$type<DifficultyClass>(),
     level: integer("level").notNull(),
+    icon: text("icon").notNull(),
+    color: text("color").notNull(),
 });
