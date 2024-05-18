@@ -101,15 +101,20 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                         }}
                                     />
 
-                                    <div className="flex flex-col">
+                                    <div className="relative flex flex-col">
+                                        <h3 className="font-semibold opacity-100 mouse:group-hover:opacity-0">
+                                            {spell.name}
+                                        </h3>
+
                                         <h3
-                                            className="font-semibold brightness-0 dark:brightness-[1000] mouse:group-hover:brightness-75 mouse:group-hover:transition-all mouse:group-hover:dark:brightness-100"
+                                            className="absolute z-10 hidden font-semibold opacity-0 mouse:block mouse:group-hover:opacity-100" // brightness-0 dark:brightness-[1000] mouse:group-hover:brightness-75 mouse:group-hover:transition-all mouse:group-hover:dark:brightness-100"
                                             style={{
                                                 color: spell.color,
                                             }}
                                         >
                                             {spell.name}
                                         </h3>
+
                                         <small className="text-sm opacity-60">
                                             {t.enum.school[spell.school.index]}
                                         </small>
