@@ -83,14 +83,14 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                 </h2>
                             )}
 
-                            <div className="flex items-center justify-between rounded border border-stone-300 dark:border-stone-700">
+                            <div className="flex items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-950">
                                 <Link
                                     href={`/${language}/spell/${spell.index}`}
-                                    className="focus-shadow group flex grow items-center gap-2 p-1"
+                                    className="focus-shadow group flex grow items-center gap-2 p-2"
                                     scroll={false}
                                 >
                                     <div
-                                        className="inline-block h-16 min-h-16 w-16 min-w-16 bg-cover mouse:transition-transform mouse:group-hover:scale-110"
+                                        className="inline-block h-16 min-h-16 w-16 min-w-16 bg-cover brightness-90 dark:brightness-100 mouse:transition-transform mouse:group-hover:scale-110"
                                         style={{
                                             backgroundImage: `url(/spell/${spell.icon})`,
                                             maskImage: `url(/spell/${spell.icon})`,
@@ -103,7 +103,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
 
                                     <div className="flex flex-col">
                                         <h3
-                                            className="font-semibold brightness-[-1000] saturate-[0.9] dark:brightness-[1000] mouse:group-hover:brightness-100  mouse:group-hover:transition-all"
+                                            className="font-semibold brightness-0 dark:brightness-[1000] mouse:group-hover:brightness-75 mouse:group-hover:transition-all mouse:group-hover:dark:brightness-100"
                                             style={{
                                                 color: spell.color,
                                             }}
