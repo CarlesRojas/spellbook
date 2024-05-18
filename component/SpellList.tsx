@@ -90,7 +90,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                     scroll={false}
                                 >
                                     <div
-                                        className="inline-block h-16 w-16 bg-cover mouse:transition-transform mouse:group-hover:scale-110"
+                                        className="inline-block h-16 min-h-16 w-16 min-w-16 bg-cover mouse:transition-transform mouse:group-hover:scale-110"
                                         style={{
                                             backgroundImage: `url(/spell/${spell.icon})`,
                                             maskImage: `url(/spell/${spell.icon})`,
