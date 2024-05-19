@@ -1,0 +1,20 @@
+
+body {
+    --dark: #005180;
+    --lightning: #334bff;
+    --ice: #42bdff;
+    --movement: #a6e6ff;
+    --heal: #19fff0;
+    --spectral: #03fcca;
+    --plant: #1cfc08;
+    --acid: #bbff00;
+    --animal: #ffe77a;
+    --holy: #ffd500;
+    --fire: #ff8400;
+    --spike: #ff500a;
+    --missile: #ff0019;
+    --counter: #ff7daf;
+    --curse: #ff69c8;
+    --faerie: #d154ff;
+    --shock: #b47aff;
+}
