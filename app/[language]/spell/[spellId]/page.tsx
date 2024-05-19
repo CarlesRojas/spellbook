@@ -2,6 +2,7 @@ import { PageProps } from "@/app/[language]/layout";
 import BackButton from "@/component/navigation/BackButton";
 import NotFound from "@/component/navigation/NotFound";
 import { useTranslation } from "@/hook/useTranslation";
+import { parceParagraphsWithDice } from "@/lib/dice";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
@@ -68,7 +69,11 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <small className="text-sm opacity-60">{t.enum.school[school.index]}</small>
                 </div>
 
-                <p className="opacity-70">{description}</p>
+                <div className="flex flex-col gap-3">
+                    {description.map((paragraph, i) => (
+                        <p key={i}>{parceParagraphsWithDice(paragraph).map((paragraphPart) => paragraphPart)}</p>
+                    ))}
+                </div>
             </div>
         </main>
     );
