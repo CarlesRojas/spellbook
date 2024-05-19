@@ -1,4 +1,3 @@
-
 body {
     --dark: #005180;
     --lightning: #334bff;
@@ -6,6 +5,7 @@ body {
     --movement: #a6e6ff;
     --heal: #19fff0;
     --spectral: #03fcca;
+    --poison: #03fc52;
     --plant: #1cfc08;
     --acid: #bbff00;
     --animal: #ffe77a;
