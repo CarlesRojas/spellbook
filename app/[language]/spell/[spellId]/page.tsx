@@ -69,7 +69,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <small className="text-sm opacity-60">{t.enum.school[school.index]}</small>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                     {description.map((paragraph, i) => (
                         <p key={i}>{parceParagraphsWithDice(paragraph).map((paragraphPart) => paragraphPart)}</p>
                     ))}

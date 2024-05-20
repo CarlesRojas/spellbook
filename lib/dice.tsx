@@ -3,7 +3,7 @@ import uuid from "react-uuid";
 import { cn } from "./util";
 
 export const DICE_REGEX = /\(?\d+\s*[dD](?:4|6|8|10|12|20)\)?/g;
-const ONLY_ALPHANUMERIC_REGEX = /[^a-zA-Z0-9]/g;
+const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9]/g;
 
 export enum Dice {
     D4 = "D4",
@@ -14,7 +14,7 @@ export enum Dice {
     D20 = "D20",
 }
 
-export const diceBackgroundColor: Record<Dice, string> = {
+const diceBackgroundColor: Record<Dice, string> = {
     [Dice.D4]: "bg-purple-500",
     [Dice.D6]: "bg-sky-500",
     [Dice.D8]: "bg-green-500",
@@ -23,7 +23,7 @@ export const diceBackgroundColor: Record<Dice, string> = {
     [Dice.D20]: "bg-red-500",
 };
 
-export const diceColor: Record<Dice, string> = {
+const diceColor: Record<Dice, string> = {
     [Dice.D4]: "text-purple-500",
     [Dice.D6]: "text-sky-500",
     [Dice.D8]: "text-green-500",
@@ -32,7 +32,7 @@ export const diceColor: Record<Dice, string> = {
     [Dice.D20]: "text-red-500",
 };
 
-export const diceImage: Record<Dice, ReactElement> = {
+const diceImage: Record<Dice, ReactElement> = {
     [Dice.D4]: (
         <span
             className={cn(
@@ -93,56 +93,49 @@ export const diceTextToWidget = (diceText: string) => {
     let startRemovedChars = "";
     let endRemovedChars = "";
 
-    const cleanedText = diceText.replace(ONLY_ALPHANUMERIC_REGEX, (match) => {
+    const cleanedText = diceText.replace(ALPHANUMERIC_REGEX, (match) => {
         if (startRemovedChars.length < diceText.length && diceText.indexOf(match) === 0) startRemovedChars += match;
         else endRemovedChars += match;
         return "";
     });
 
-    const uppercaseDiceText = cleanedText.toUpperCase();
-    const diceTextParts = uppercaseDiceText.split("D");
-    const [number, sides] = diceTextParts;
-    const dice = `D${sides}` as Dice;
+    const [number, sides] = cleanedText.toUpperCase().split("D");
+    const dice: Dice = `D${sides}` as Dice;
 
     return (
-        <span className="relative inline" key={uuid()}>
-            <span className={cn("text-sm opacity-75")}>{startRemovedChars}</span>
+        <span className="relative inline-block whitespace-nowrap" key={uuid()}>
+            <span className={cn("text-sm opacity-80")}>{startRemovedChars}</span>
             {diceImage[dice]}
             <span className={cn("ml-8 text-sm font-bold tracking-wide", diceColor[dice])}>{number}</span>
-            <span className={cn("text-sm opacity-75")}>D</span>
+            <span className={cn("text-sm opacity-80")}>D</span>
             <span className={cn("text-sm font-bold tracking-wide", diceColor[dice])}>{sides}</span>
-            <span className={cn("text-sm opacity-75")}>{endRemovedChars}</span>{" "}
+            <span className={cn("mr-[5px] text-sm opacity-80")}>{endRemovedChars}</span>
         </span>
     );
 };
 
 export const parceParagraphsWithDice = (paragraph: string) => {
     const newParagraph: ReactElement[] = [];
-
     let paragraphPart = "";
+
+    const pushToParagraph = (text: string) => {
+        newParagraph.push(
+            <span className="opacity-80" key={uuid()}>
+                {text}
+            </span>,
+        );
+        paragraphPart = "";
+    };
+
     for (const word of paragraph.split(" ")) {
         if (!DICE_REGEX.test(word)) paragraphPart += word + " ";
         else {
-            if (paragraphPart) {
-                newParagraph.push(
-                    <span className="opacity-75" key={uuid()}>
-                        {paragraphPart}
-                    </span>,
-                );
-                paragraphPart = "";
-            }
-
-            const dice = diceTextToWidget(word);
-            newParagraph.push(dice);
+            if (paragraphPart) pushToParagraph(paragraphPart);
+            newParagraph.push(diceTextToWidget(word));
         }
     }
 
-    if (paragraphPart)
-        newParagraph.push(
-            <span className="opacity-75" key={uuid()}>
-                {paragraphPart}
-            </span>,
-        );
+    if (paragraphPart) pushToParagraph(paragraphPart);
 
     return newParagraph;
 };
