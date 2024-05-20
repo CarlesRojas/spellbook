@@ -22,7 +22,7 @@ const SortFilter = ({ language, sort, setSort, isLoading = false }: Props) => {
             <DropdownMenu modal={true}>
                 <DropdownMenuTrigger className="group" asChild>
                     <Button variant="outline" type="button" className="min-w-fit rounded-r-none" disabled={isLoading}>
-                        <span className="mr-2 hidden font-medium opacity-60 md:block">{t.filter.title.sort}</span>
+                        <span className="mr-2 font-medium opacity-60">{t.filter.title.sort}</span>
 
                         {t.enum.sort[sort]}
 

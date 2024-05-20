@@ -1,19 +1,15 @@
 "use client";
 
+import SpellIcon from "@/component/SpellIcon";
 import QueryFilter from "@/component/filter/QueryFilter";
-import SchoolFilter from "@/component/filter/SchoolFilter";
 import SortFilter from "@/component/filter/SortFilter";
-import { Button } from "@/component/ui/button";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
-import { getSpellColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { SchoolType, Sort } from "@/type/Spell";
-import Link from "next/link";
 import { Fragment } from "react";
-import { LuPlus } from "react-icons/lu";
 import { z } from "zod";
 
 interface Props {
@@ -58,7 +54,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
 
                 <div className="flex flex-row justify-end gap-2">
-                    <SchoolFilter language={language} school={school} setSchool={setSchool} />
+                    {/* <SchoolFilter language={language} school={school} setSchool={setSchool} /> */}
                     <SortFilter language={language} sort={sort} setSort={setSort} />
                 </div>
             </div>
@@ -71,7 +67,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 </p>
             </div>
 
-            <div className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                 {filteredSpells.map((spell) => {
                     const isLevelChange = spell.level !== lastLevel;
                     lastLevel = spell.level;
@@ -79,55 +75,12 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                     return (
                         <Fragment key={spell.index}>
                             {[Sort.LEVEL_ASC, Sort.LEVEL_DESC].includes(sort) && isLevelChange && (
-                                <h2 className="sticky top-0 z-20 mt-4 bg-stone-100 py-2 font-semibold tracking-wide text-sky-500 dark:bg-stone-900 md:col-span-2 lg:col-span-3 mouse:top-16">
+                                <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-900 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
                             )}
 
-                            <div className="flex items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-950">
-                                <Link
-                                    href={`/${language}/spell/${spell.index}`}
-                                    className="focus-shadow group flex grow items-center gap-2 p-2"
-                                    scroll={false}
-                                >
-                                    <div
-                                        className="inline-block h-16 min-h-16 w-16 min-w-16 bg-cover brightness-90 dark:brightness-100 mouse:transition-transform mouse:group-hover:scale-110"
-                                        style={{
-                                            backgroundImage: `url(/spell/${spell.icon})`,
-                                            maskImage: `url(/spell/${spell.icon})`,
-                                            maskMode: "alpha",
-                                            maskSize: "cover",
-                                            backgroundBlendMode: "luminosity",
-                                            backgroundColor: getSpellColor(spell.color),
-                                        }}
-                                    />
-
-                                    <div className="relative flex flex-col">
-                                        <h3 className="user-select-none pointer-events-none font-semibold opacity-100 mouse:group-hover:opacity-0">
-                                            {spell.name}
-                                        </h3>
-
-                                        <h3
-                                            className="absolute z-10 hidden font-semibold opacity-0 brightness-[0.8] dark:brightness-100 mouse:block mouse:group-hover:opacity-100"
-                                            style={{
-                                                color: getSpellColor(spell.color),
-                                            }}
-                                        >
-                                            {spell.name}
-                                        </h3>
-
-                                        <small className="text-sm opacity-60">
-                                            {t.enum.school[spell.school.index]}
-                                        </small>
-                                    </div>
-                                </Link>
-
-                                <div className="h-fit w-fit p-2">
-                                    <Button variant="outline" size="icon">
-                                        <LuPlus className="h-4 w-4 stroke-[3]" />
-                                    </Button>
-                                </div>
-                            </div>
+                            <SpellIcon language={language} spell={spell} />
                         </Fragment>
                     );
                 })}
