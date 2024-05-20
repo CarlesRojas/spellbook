@@ -1,3 +1,4 @@
+import { SpellColor } from "@/lib/spell";
 import { z } from "zod";
 
 export enum Sort {
@@ -151,6 +152,6 @@ export const SpellSchema = z.object({
     difficultyClass: DifficultyClassSchema.optional().nullable(),
     level: z.number(),
     icon: z.string(),
-    color: z.string(),
+    color: z.nativeEnum(SpellColor),
 });
 export type Spell = z.infer<typeof SpellSchema>;

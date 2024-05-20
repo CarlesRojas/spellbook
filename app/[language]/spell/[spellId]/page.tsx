@@ -3,6 +3,7 @@ import BackButton from "@/component/navigation/BackButton";
 import NotFound from "@/component/navigation/NotFound";
 import { useTranslation } from "@/hook/useTranslation";
 import { parceParagraphsWithDice } from "@/lib/dice";
+import { getSpellColor } from "@/lib/spell";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
@@ -61,7 +62,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                             maskMode: "alpha",
                             maskSize: "cover",
                             backgroundBlendMode: "luminosity",
-                            backgroundColor: color,
+                            backgroundColor: getSpellColor(color),
                         }}
                     />
 

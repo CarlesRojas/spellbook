@@ -6,6 +6,7 @@ import SortFilter from "@/component/filter/SortFilter";
 import { Button } from "@/component/ui/button";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
+import { getSpellColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
@@ -97,19 +98,19 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                             maskMode: "alpha",
                                             maskSize: "cover",
                                             backgroundBlendMode: "luminosity",
-                                            backgroundColor: spell.color,
+                                            backgroundColor: getSpellColor(spell.color),
                                         }}
                                     />
 
                                     <div className="relative flex flex-col">
-                                        <h3 className="font-semibold opacity-100 mouse:group-hover:opacity-0">
+                                        <h3 className="user-select-none pointer-events-none font-semibold opacity-100 mouse:group-hover:opacity-0">
                                             {spell.name}
                                         </h3>
 
                                         <h3
                                             className="absolute z-10 hidden font-semibold opacity-0 brightness-[0.8] dark:brightness-100 mouse:block mouse:group-hover:opacity-100"
                                             style={{
-                                                color: spell.color,
+                                                color: getSpellColor(spell.color),
                                             }}
                                         >
                                             {spell.name}
