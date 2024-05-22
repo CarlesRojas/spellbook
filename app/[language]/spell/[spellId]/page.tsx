@@ -56,7 +56,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
                 <div className="flex w-full flex-col items-center">
                     <div
-                        className="mb-2 inline-block h-32 min-h-32 w-32 min-w-32 bg-cover brightness-90 dark:brightness-100"
+                        className="mb-2 inline-block h-36 min-h-36 w-36 min-w-36 bg-cover brightness-90 dark:brightness-100"
                         style={{
                             backgroundImage: `url(/spell/${icon})`,
                             maskImage: `url(/spell/${icon})`,

@@ -224,9 +224,6 @@ const getSpellInformation = async (spellId: string): Promise<DbSpell> => {
 
         return spell;
     } catch (e) {
-        console.log(data);
-        console.log(e);
-        console.error(JSON.stringify(e));
         throw new Error("Failed to parse spell");
     }
 };

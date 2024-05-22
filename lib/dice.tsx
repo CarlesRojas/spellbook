@@ -71,7 +71,6 @@ export const parseParagraphsWithDice = (text: string) => {
 
             const textBeforeMatch = word.slice(0, word.indexOf(match));
             const textAfterMatch = word.slice(word.indexOf(match) + match.length);
-            console.log(textBeforeMatch, match, textAfterMatch);
 
             newParagraph += `${textBeforeMatch}${diceTextToWidget(match)}${textAfterMatch ? textAfterMatch : " "}`;
         }
