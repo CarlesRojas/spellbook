@@ -46,7 +46,6 @@ export const existsSpell = async (index: string) => {
 
 export const getAllSpells = async () => {
     const result = await db.query.spell.findMany({
-        orderBy: (spell, { asc }) => asc(spell.index), // TODO sort by name
         with: {
             name: true,
             description: true,
