@@ -22,7 +22,7 @@ const SpellRow = ({ spell, language, children }: Props) => {
                 className="focus-shadow group relative flex w-full flex-col items-center"
             >
                 <div
-                    className="inline-block h-20 min-h-20 w-20 min-w-20 bg-cover brightness-90 dark:brightness-100 sm:h-28 sm:min-h-28 sm:w-28 sm:min-w-28 mouse:transition-transform mouse:group-hover:scale-110"
+                    className="inline-block h-20 min-h-20 w-20 min-w-20 bg-cover brightness-90 dark:brightness-100 sm:h-24 sm:min-h-24 sm:w-24 sm:min-w-24 mouse:transition-transform mouse:group-hover:scale-110"
                     style={{
                         backgroundImage: `url(/spell/${icon})`,
                         maskImage: `url(/spell/${icon})`,
