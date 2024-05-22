@@ -5,6 +5,8 @@ import { cn } from "./util";
 export const DICE_REGEX = /\(?\d+\s*[dD](?:4|6|8|10|12|20)\)?/g;
 const ALPHANUMERIC_REGEX = /[^a-zA-Z0-9]/g;
 
+// TODO update toparse the html of the text
+
 export enum Dice {
     D4 = "D4",
     D6 = "D6",

@@ -36,7 +36,7 @@ const SpellRow = ({ spell, language }: Props) => {
 
                 <div className="relative flex flex-col">
                     <h3 className="user-select-none pointer-events-none font-semibold opacity-100 mouse:group-hover:opacity-0">
-                        {name}
+                        {name[language]}
                     </h3>
 
                     <h3
@@ -45,10 +45,10 @@ const SpellRow = ({ spell, language }: Props) => {
                             color: getSpellColor(color),
                         }}
                     >
-                        {name}
+                        {name[language]}
                     </h3>
 
-                    <small className="text-sm opacity-60">{t.enum.school[school.index]}</small>
+                    <small className="text-sm opacity-60">{t.enum.school[school]}</small>
                 </div>
             </Link>
 

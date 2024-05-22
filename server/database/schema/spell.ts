@@ -1,26 +1,53 @@
-import { AreaOfEffect, Class, Components, Damage, DifficultyClass, School } from "@/type/Spell";
+import { translation } from "@/server/database/schema/translation";
+import { AreaOfEffect, ClassList, Components, Damage, DifficultyClass, SubclassList } from "@/type/Spell";
+import { relations } from "drizzle-orm";
 import { boolean, integer, json, pgTable, text } from "drizzle-orm/pg-core";
 
 export const spell = pgTable("spell", {
     index: text("index").primaryKey().notNull(),
-    name: text("name").notNull(),
-    description: text("description").array().notNull(),
-    highLevelDescription: text("high_level_description").array().notNull(),
+    nameId: integer("nameId")
+        .references(() => translation.id, { onDelete: "restrict" })
+        .notNull(),
+    descriptionId: integer("descriptionId")
+        .references(() => translation.id, { onDelete: "restrict" })
+        .notNull(),
+    highLevelDescriptionId: integer("highLevelDescriptionId").references(() => translation.id, {
+        onDelete: "restrict",
+    }),
     range: text("range").notNull(),
     components: json("components").$type<Components>().notNull(),
-    material: text("material"),
-    areaOfEffect: json("area_of_effect").$type<AreaOfEffect>(),
+    materialId: integer("materialId").references(() => translation.id, { onDelete: "restrict" }),
+    areaOfEffect: json("areaOfEffect").$type<AreaOfEffect>(),
     ritual: boolean("ritual").notNull(),
     duration: text("duration").notNull(),
     concentration: boolean("concentration").notNull(),
-    castingTime: text("casting_time").notNull(),
-    attackType: text("attack_type"),
-    school: json("school").$type<School>().notNull(),
-    classes: json("classes").$type<Class>().array().notNull(),
-    subclasses: json("subclasses").$type<Class>().array().notNull(),
+    castingTime: text("castingTime").notNull(),
+    attackType: text("attackType"),
+    school: text("school").notNull(),
+    classes: json("classes").$type<ClassList>().notNull(),
+    subclasses: json("subclasses").$type<SubclassList>().notNull(),
     damage: json("damage").$type<Damage>(),
-    difficultyClass: json("difficulty_class").$type<DifficultyClass>(),
+    difficultyClass: json("difficultyClass").$type<DifficultyClass>(),
     level: integer("level").notNull(),
     icon: text("icon").notNull(),
     color: text("color").notNull(),
 });
+
+export const spellRelations = relations(spell, ({ many, one }) => ({
+    name: one(translation, {
+        fields: [spell.nameId],
+        references: [translation.id],
+    }),
+    description: one(translation, {
+        fields: [spell.descriptionId],
+        references: [translation.id],
+    }),
+    highLevelDescription: one(translation, {
+        fields: [spell.highLevelDescriptionId],
+        references: [translation.id],
+    }),
+    material: one(translation, {
+        fields: [spell.materialId],
+        references: [translation.id],
+    }),
+}));

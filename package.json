@@ -11,11 +11,11 @@
         "pretty": "prettier --write '**/*.{ts,tsx}'",
         "db:generate": "drizzle-kit generate",
         "db:migrate": "ts-node -r dotenv/config -P ./tsconfig.json ./server/database/migration/applyMigrations.ts",
-        "db:studio": "drizzle-kit studio",
-        "spells": "ts-node -r dotenv/config -P ./tsconfig.json ./server/scraper"
+        "db:studio": "drizzle-kit studio"
     },
     "dependencies": {
         "@ducanh2912/next-pwa": "^10.2.7",
+        "@hedgedoc/html-to-react": "^2.1.1",
         "@radix-ui/react-avatar": "^1.0.4",
         "@radix-ui/react-dialog": "^1.0.5",
         "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -61,6 +61,7 @@
         "tailwindcss": "^3.4.1",
         "ts-node": "^10.9.2",
         "tsconfig-paths": "^4.2.0",
-        "typescript": "^5"
+        "typescript": "^5",
+        "openai": "^4.47.1"
     }
 }

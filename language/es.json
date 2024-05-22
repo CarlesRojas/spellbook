@@ -36,6 +36,33 @@
             "USER": "Usuario no encontrado"
         },
 
+        "sort": {
+            "name_asc": "Nombre",
+            "name_desc": "Nombre inverso",
+            "level_asc": "Menor nivel",
+            "level_desc": "Mayor nivel"
+        },
+
+        "range": {
+            "FIVE_FEET": "5 pies",
+            "TEN_FEET": "10 pies",
+            "THIRTY_FEET": "30 pies",
+            "SIXTY_FEET": "60 pies",
+            "NINETY_FEET": "90 pies",
+            "HUNDRED_FEET": "100 pies",
+            "HUNDRED_AND_TWENTY_FEET": "120 pies",
+            "HUNDRED_AND_FIFTY_FEET": "150 pies",
+            "THREE_HUNDRED_FEET": "300 pies",
+            "FIVE_HUNDRED_FEET": "500 pies",
+            "ONE_MILE": "1 milla",
+            "FIVE_HUNDRED_MILES": "500 millas",
+            "UNLIMITED": "Ilimitado",
+            "SPECIAL": "Especial",
+            "SIGHT": "Vista",
+            "TOUCH": "Toque",
+            "SELF": "Personal"
+        },
+
         "component": {
             "V": "Verbal",
             "S": "Somático",
@@ -43,73 +70,111 @@
         },
 
         "areaOfEffect": {
-            "cube": "Cubo",
-            "cone": "Cono",
-            "cylinder": "Cilindro",
-            "line": "Línea",
-            "sphere": "Esfera"
+            "CUBE": "Cubo",
+            "CONE": "Cono",
+            "CYLINDER": "Cilindro",
+            "LINE": "Línea",
+            "SPHERE": "Esfera"
         },
 
         "class": {
-            "wizard": "Mago",
-            "sorcerer": "Hechicero",
-            "cleric": "Clérigo",
-            "paladin": "Paladín",
-            "ranger": "Explorador",
-            "bard": "Bardo",
-            "druid": "Druida",
-            "warlock": "Brujo"
+            "WIZARD": "Mago",
+            "SORCERER": "Hechicero",
+            "CLERIC": "Clérigo",
+            "PALADIN": "Paladín",
+            "RANGER": "Explorador",
+            "BARD": "Bardo",
+            "DRUID": "Druida",
+            "WARLOCK": "Brujo"
         },
 
         "subclass": {
-            "lore": "Sabiduría",
-            "land": "Tierra",
-            "life": "Vida",
-            "devotion": "Devoción",
-            "fiend": "Demonio"
+            "LORE": "Sabiduría",
+            "LAND": "Tierra",
+            "LIFE": "Vida",
+            "DEVOTION": "Devoción",
+            "FIEND": "Demonio"
         },
 
         "school": {
-            "evocation": "Evocación",
-            "conjuration": "Conjuración",
-            "abjuration": "Abjuración",
-            "transmutation": "Transmutación",
-            "enchantment": "Encantamiento",
-            "necromancy": "Nigromancia",
-            "divination": "Adivinación",
-            "illusion": "Ilusión"
+            "EVOCATION": "Evocación",
+            "CONJURATION": "Conjuración",
+            "ABJURATION": "Abjuración",
+            "TRANSMUTATION": "Transmutación",
+            "ENCHANTMENT": "Encantamiento",
+            "NECROMANCY": "Nigromancia",
+            "DIVINATION": "Adivinación",
+            "ILLUSION": "Ilusión"
         },
 
         "damageType": {
-            "acid": "Ácido",
-            "force": "Fuerza",
-            "bludgeoning": "Contundente",
-            "slashing": "Cortante",
-            "necrotic": "Necrótico",
-            "radiant": "Radiante",
-            "fire": "Fuego",
-            "lightning": "Eléctrico",
-            "poison": "Veneno",
-            "cold": "Frío",
-            "psychic": "Psíquico",
-            "piercing": "Perforante",
-            "thunder": "Trueno"
+            "ACID": "Ácido",
+            "FORCE": "Fuerza",
+            "BLUDGEONING": "Contundente",
+            "SLASHING": "Cortante",
+            "NECROTIC": "Necrótico",
+            "RADIANT": "Radiante",
+            "FIRE": "Fuego",
+            "LIGHTNING": "Eléctrico",
+            "POISON": "Veneno",
+            "COLD": "Frío",
+            "PSYCHIC": "Psíquico",
+            "PIERCING": "Perforante",
+            "THUNDER": "Trueno"
         },
 
         "difficultyClassType": {
-            "dex": "DES",
-            "wis": "SAB",
-            "cha": "CAR",
-            "con": "CON",
-            "int": "INT",
-            "str": "FUE"
+            "DEX": "DES",
+            "WIS": "SAB",
+            "CHA": "CAR",
+            "CON": "CON",
+            "INT": "INT",
+            "STR": "FUE"
         },
 
-        "sort": {
-            "name_asc": "Nombre",
-            "name_desc": "Nombre inverso",
-            "level_asc": "Menor nivel",
-            "level_desc": "Mayor nivel"
+        "difficultyClassSuccess": {
+            "OTHER": "Otro",
+            "NONE": "Ninguno",
+            "HALF": "Mitad"
+        },
+
+        "duration": {
+            "INSTANTANEOUS": "Instantánea",
+            "ONE_ROUND": "1 ronda",
+            "ONE_MINUTE": "1 minuto",
+            "TEN_MINUTES": "10 minutos",
+            "ONE_HOUR": "1 hora",
+            "EIGHT_HOURS": "8 horas",
+            "TWENTY_FOUR_HOURS": "24 horas",
+            "SEVEN_DAYS": "7 días",
+            "TEN_DAYS": "10 días",
+            "THIRTY_DAYS": "30 días",
+            "UP_TO_ONE_ROUND": "Hasta 1 ronda",
+            "UP_TO_ONE_MINUTE": "Hasta 1 minuto",
+            "UP_TO_TEN_MINUTES": "Hasta 10 minutos",
+            "UP_TO_ONE_HOUR": "Hasta 1 hora",
+            "UP_TO_EIGHT_HOURS": "Hasta 8 horas",
+            "UP_TO_TWO_HOURS": "Hasta 2 horas",
+            "UP_TO_TWENTY_FOUR_HOURS": "Hasta 24 horas",
+            "SPECIAL": "Especial",
+            "UNTIL_DISPELLED": "Hasta disipar"
+        },
+
+        "castingTime": {
+            "ONE_ACTION": "1 acción",
+            "ONE_REACTION": "1 reacción",
+            "ONE_BONUS_ACTION": "1 acción adicional",
+            "ONE_MINUTE": "1 minuto",
+            "TEN_MINUTES": "10 minutos",
+            "ONE_HOUR": "1 hora",
+            "EIGHT_HOURS": "8 horas",
+            "TWELVE_HOURS": "12 horas",
+            "TWENTY_FOUR_HOURS": "24 horas"
+        },
+
+        "attackType": {
+            "RANGED": "A distancia",
+            "MELEE": "Melé"
         }
     },
 

@@ -8,7 +8,7 @@ import { useUrlState } from "@/hook/useUrlState";
 import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
-import { SchoolType, Sort } from "@/type/Spell";
+import { Sort } from "@/type/Spell";
 import { Fragment } from "react";
 import { z } from "zod";
 
@@ -21,28 +21,26 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
-    const [school, setSchool] = useUrlState("school", null, z.nativeEnum(SchoolType).nullable());
     const [sort, setSort] = useUrlState("sort", Sort.LEVEL_ASC, z.nativeEnum(Sort));
 
     const spells = useSpells(initialSpellsData);
     const filteredSpells = spells.data
         .filter((spell) => {
-            if (school && spell.school.index !== school) return false;
-            if (query && !spell.name.toLowerCase().includes(query.toLowerCase())) return false;
+            if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
             return true;
         })
         .sort((a, b) => {
             switch (sort) {
                 case Sort.LEVEL_ASC:
-                    if (a.level === b.level) return a.name.localeCompare(b.name);
+                    if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
                     return a.level - b.level;
                 case Sort.LEVEL_DESC:
-                    if (a.level === b.level) return a.name.localeCompare(b.name);
+                    if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
                     return b.level - a.level;
                 case Sort.NAME_ASC:
-                    return a.name.localeCompare(b.name);
+                    return a.name[language].localeCompare(b.name[language]);
                 case Sort.NAME_DESC:
-                    return b.name.localeCompare(a.name);
+                    return b.name[language].localeCompare(a.name[language]);
             }
         });
 
@@ -54,7 +52,6 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
 
                 <div className="flex flex-row justify-end gap-2">
-                    {/* <SchoolFilter language={language} school={school} setSchool={setSchool} /> */}
                     <SortFilter language={language} sort={sort} setSort={setSort} />
                 </div>
             </div>

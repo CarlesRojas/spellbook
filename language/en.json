@@ -36,6 +36,33 @@
             "USER": "User not found"
         },
 
+        "sort": {
+            "name_asc": "Name",
+            "name_desc": "Name reversed",
+            "level_asc": "Lowest level",
+            "level_desc": "Highest level"
+        },
+
+        "range": {
+            "FIVE_FEET": "5 feet",
+            "TEN_FEET": "10 feet",
+            "THIRTY_FEET": "30 feet",
+            "SIXTY_FEET": "60 feet",
+            "NINETY_FEET": "90 feet",
+            "HUNDRED_FEET": "100 feet",
+            "HUNDRED_AND_TWENTY_FEET": "120 feet",
+            "HUNDRED_AND_FIFTY_FEET": "150 feet",
+            "THREE_HUNDRED_FEET": "300 feet",
+            "FIVE_HUNDRED_FEET": "500 feet",
+            "ONE_MILE": "1 mile",
+            "FIVE_HUNDRED_MILES": "500 miles",
+            "UNLIMITED": "Unlimited",
+            "SPECIAL": "Special",
+            "SIGHT": "Sight",
+            "TOUCH": "Touch",
+            "SELF": "Self"
+        },
+
         "component": {
             "V": "Verbal",
             "S": "Somatic",
@@ -43,73 +70,111 @@
         },
 
         "areaOfEffect": {
-            "cube": "Cube",
-            "cone": "Cone",
-            "cylinder": "Cylinder",
-            "line": "Line",
-            "sphere": "Sphere"
+            "CUBE": "Cube",
+            "CONE": "Cone",
+            "CYLINDER": "Cylinder",
+            "LINE": "Line",
+            "SPHERE": "Sphere"
         },
 
         "class": {
-            "wizard": "Wizard",
-            "sorcerer": "Sorcerer",
-            "cleric": "Cleric",
-            "paladin": "Paladin",
-            "ranger": "Ranger",
-            "bard": "Bard",
-            "druid": "Druid",
-            "warlock": "Warlock"
+            "WIZARD": "Wizard",
+            "SORCERER": "Sorcerer",
+            "CLERIC": "Cleric",
+            "PALADIN": "Paladin",
+            "RANGER": "Ranger",
+            "BARD": "Bard",
+            "DRUID": "Druid",
+            "WARLOCK": "Warlock"
         },
 
         "subclass": {
-            "lore": "Lore",
-            "land": "Land",
-            "life": "Life",
-            "devotion": "Devotion",
-            "fiend": "Fiend"
+            "LORE": "Lore",
+            "LAND": "Land",
+            "LIFE": "Life",
+            "DEVOTION": "Devotion",
+            "FIEND": "Fiend"
         },
 
         "school": {
-            "evocation": "Evocation",
-            "conjuration": "Conjuration",
-            "abjuration": "Abjuration",
-            "transmutation": "Transmutation",
-            "enchantment": "Enchantment",
-            "necromancy": "Necromancy",
-            "divination": "Divination",
-            "illusion": "Illusion"
+            "EVOCATION": "Evocation",
+            "CONJURATION": "Conjuration",
+            "ABJURATION": "Abjuration",
+            "TRANSMUTATION": "Transmutation",
+            "ENCHANTMENT": "Enchantment",
+            "NECROMANCY": "Necromancy",
+            "DIVINATION": "Divination",
+            "ILLUSION": "Illusion"
         },
 
         "damageType": {
-            "acid": "Acid",
-            "force": "Force",
-            "bludgeoning": "Bludgeoning",
-            "slashing": "Slashing",
-            "necrotic": "Necrotic",
-            "radiant": "Radiant",
-            "fire": "Fire",
-            "lightning": "Lightning",
-            "poison": "Poison",
-            "cold": "Cold",
-            "psychic": "Psychic",
-            "piercing": "Piercing",
-            "thunder": "Thunder"
+            "ACID": "Acid",
+            "FORCE": "Force",
+            "BLUDGEONING": "Bludgeoning",
+            "SLASHING": "Slashing",
+            "NECROTIC": "Necrotic",
+            "RADIANT": "Radiant",
+            "FIRE": "Fire",
+            "LIGHTNING": "Lightning",
+            "POISON": "Poison",
+            "COLD": "Cold",
+            "PSYCHIC": "Psychic",
+            "PIERCING": "Piercing",
+            "THUNDER": "Thunder"
         },
 
         "difficultyClassType": {
-            "dex": "DEX",
-            "wis": "WIS",
-            "cha": "CHA",
-            "con": "CON",
-            "int": "INT",
-            "str": "STR"
+            "DEX": "DEX",
+            "WIS": "WIS",
+            "CHA": "CHA",
+            "CON": "CON",
+            "INT": "INT",
+            "STR": "STR"
         },
 
-        "sort": {
-            "name_asc": "Name",
-            "name_desc": "Name reversed",
-            "level_asc": "Lowest level",
-            "level_desc": "Highest level"
+        "difficultyClassSuccess": {
+            "OTHER": "Other",
+            "NONE": "None",
+            "HALF": "Half"
+        },
+
+        "duration": {
+            "INSTANTANEOUS": "Instantaneous",
+            "ONE_ROUND": "1 round",
+            "ONE_MINUTE": "1 minute",
+            "TEN_MINUTES": "10 minutes",
+            "ONE_HOUR": "1 hour",
+            "EIGHT_HOURS": "8 hours",
+            "TWENTY_FOUR_HOURS": "24 hours",
+            "SEVEN_DAYS": "7 days",
+            "TEN_DAYS": "10 days",
+            "THIRTY_DAYS": "30 days",
+            "UP_TO_ONE_ROUND": "Up to 1 round",
+            "UP_TO_ONE_MINUTE": "Up to 1 minute",
+            "UP_TO_TEN_MINUTES": "Up to 10 minutes",
+            "UP_TO_ONE_HOUR": "Up to 1 hour",
+            "UP_TO_EIGHT_HOURS": "Up to 8 hours",
+            "UP_TO_TWO_HOURS": "Up to 2 hours",
+            "UP_TO_TWENTY_FOUR_HOURS": "Up to 24 hours",
+            "SPECIAL": "Special",
+            "UNTIL_DISPELLED": "Until dispelled"
+        },
+
+        "castingTime": {
+            "ONE_ACTION": "1 action",
+            "ONE_REACTION": "1 reaction",
+            "ONE_BONUS_ACTION": "1 bonus action",
+            "ONE_MINUTE": "1 minute",
+            "TEN_MINUTES": "10 minutes",
+            "ONE_HOUR": "1 hour",
+            "EIGHT_HOURS": "8 hours",
+            "TWELVE_HOURS": "12 hours",
+            "TWENTY_FOUR_HOURS": "24 hours"
+        },
+
+        "attackType": {
+            "RANGED": "Ranged",
+            "MELEE": "Melee"
         }
     },
 

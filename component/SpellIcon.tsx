@@ -13,7 +13,7 @@ interface Props {
 
 const SpellRow = ({ spell, language, children }: Props) => {
     const { t } = useTranslation(language);
-    const { index, icon, color, name, school } = spell;
+    const { index, icon, color, name } = spell;
 
     return (
         <div className="flex flex-col items-center gap-2">
@@ -36,7 +36,7 @@ const SpellRow = ({ spell, language, children }: Props) => {
 
                 <div className="relative flex w-full">
                     <h3 className="user-select-none pointer-events-none w-full text-center text-sm font-semibold opacity-75 mouse:group-hover:opacity-0">
-                        {name}
+                        {name[language]}
                     </h3>
 
                     <h3
@@ -45,7 +45,7 @@ const SpellRow = ({ spell, language, children }: Props) => {
                             color: getSpellColor(color),
                         }}
                     >
-                        {name}
+                        {name[language]}
                     </h3>
                 </div>
             </Link>

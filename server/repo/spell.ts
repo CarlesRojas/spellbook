@@ -5,7 +5,15 @@ import { spell } from "@/server/database/schema/spell";
 import { Spell, SpellSchema } from "@/type/Spell";
 
 type NewSpell = typeof spell.$inferInsert;
-type SelectedSpell = InferResultType<"spell">;
+type SelectedSpell = InferResultType<
+    "spell",
+    {
+        name: true;
+        description: true;
+        highLevelDescription: true;
+        material: true;
+    }
+>;
 
 export const createSpell = async (newSpell: NewSpell) => {
     const result = await db.insert(spell).values(newSpell).returning();
@@ -16,15 +24,35 @@ export const createSpell = async (newSpell: NewSpell) => {
 export const getSpell = async (index: string) => {
     const result = await db.query.spell.findFirst({
         where: (spell, { eq }) => eq(spell.index, index),
+        with: {
+            name: true,
+            description: true,
+            highLevelDescription: true,
+            material: true,
+        },
     });
 
     if (!result) return null;
     return toDomain(result);
 };
 
+export const existsSpell = async (index: string) => {
+    const result = await db.query.spell.findFirst({
+        where: (spell, { eq }) => eq(spell.index, index),
+    });
+
+    return !!result;
+};
+
 export const getAllSpells = async () => {
     const result = await db.query.spell.findMany({
-        orderBy: (spell, { asc }) => asc(spell.name),
+        orderBy: (spell, { asc }) => asc(spell.index), // TODO sort by name
+        with: {
+            name: true,
+            description: true,
+            highLevelDescription: true,
+            material: true,
+        },
     });
 
     return result.map(toDomain);
