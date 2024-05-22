@@ -16,7 +16,7 @@ const SpellRow = ({ spell, language, children }: Props) => {
     const { index, icon, color, name } = spell;
 
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="anim-enter-view flex flex-col items-center gap-2">
             <Link
                 href={`/${language}/spell/${index}`}
                 className="focus-shadow group relative flex w-full flex-col items-center"

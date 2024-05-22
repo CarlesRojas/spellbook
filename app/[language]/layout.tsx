@@ -7,6 +7,7 @@ import { getTranslation } from "@/hook/useTranslation";
 import { Language, LANGUAGES } from "@/type/Language";
 import { type Metadata, type Viewport } from "next";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 import { ReactNode } from "react";
 import "../globals.css";
 
@@ -44,7 +45,10 @@ export const viewport: Viewport = {
 const RootLayout = ({ children, modal, params: { language } }: Props) => {
     return (
         <html lang={language} suppressHydrationWarning>
-            <head />
+            <head>
+                <Script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js" />
+            </head>
+
             <QueryProvider>
                 <AuthProvider>
                     <body
