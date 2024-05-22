@@ -95,9 +95,11 @@ th {
     mask-size: cover;
 }
 
+/* SCROLL ANIMATIONS */
+
 @keyframes scale-in {
     from {
-        transform: scale(0);
+        transform: scale(0.5);
         opacity: 0;
     }
     to {
@@ -112,19 +114,29 @@ th {
         opacity: 1;
     }
     to {
-        transform: scale(0);
+        transform: scale(0.5);
         opacity: 0;
     }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .anim-enter-view {
-        animation:
-            scale-in linear forwards,
-            scale-out linear forwards;
-        animation-timeline: view(block);
-        animation-range:
-            cover 0% entry-crossing 100%,
-            exit-crossing calc(0% - 7.25rem) cover calc(100% - 7.25rem);
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .anim-enter-view {
+            animation:
+                scale-in linear forwards,
+                scale-out linear forwards;
+            animation-timeline: view(block);
+            animation-range:
+                cover calc(0% + 4rem) entry-crossing calc(100% + 4rem),
+                exit-crossing calc(0% - 3.25rem) cover calc(100% - 3.25rem);
+        }
+
+        @media (min-width: 768px) {
+            .anim-enter-view {
+                animation-range:
+                    cover 0% entry-crossing 100%,
+                    exit-crossing calc(0% - 7.25rem) cover calc(100% - 7.25rem);
+            }
+        }
     }
 }
