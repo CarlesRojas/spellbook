@@ -4,9 +4,11 @@ import NotFound from "@/component/navigation/NotFound";
 import { useTranslation } from "@/hook/useTranslation";
 import { parseParagraphsWithDice } from "@/lib/dice";
 import { getSpellColor } from "@/lib/spell";
+import { renderObject } from "@/lib/util";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
+import { VscTools } from "react-icons/vsc";
 
 interface Props extends PageProps {
     params: { language: Language; spellId: string };
@@ -73,6 +75,12 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
                 <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
                     {parseParagraphsWithDice(description[language])}
+                </div>
+
+                <div className="col mt-32 flex flex-col gap-4 border-4 border-dashed border-yellow-500 p-4">
+                    <VscTools className="h-10 w-10" />
+
+                    {renderObject(spell)}
                 </div>
             </div>
         </main>
