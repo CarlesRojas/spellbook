@@ -114,7 +114,7 @@ export const diceTextToWidget = (diceText: string) => {
     );
 };
 
-export const parceParagraphsWithDice = (paragraph: string) => {
+export const parseParagraphsWithDice = (paragraph: string) => {
     const newParagraph: ReactElement[] = [];
     let paragraphPart = "";
 

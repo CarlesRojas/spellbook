@@ -36,7 +36,7 @@ const SortFilter = ({ language, sort, setSort, isLoading = false }: Props) => {
                             key={sortFilter}
                             onClick={() => setSort(sortFilter)}
                             disabled={isLoading}
-                            className={`font-semibold ${sortFilter === sort ? "!text-orange-500" : ""}`}
+                            className={`font-semibold ${sortFilter === sort ? "!text-sky-500" : ""}`}
                         >
                             <p>{t.enum.sort[sortFilter]}</p>
                         </DropdownMenuItem>

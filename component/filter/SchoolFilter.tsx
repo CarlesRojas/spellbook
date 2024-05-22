@@ -3,22 +3,22 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/component/ui/dropdown-menu";
 import { useTranslation } from "@/hook/useTranslation";
 import { Language } from "@/type/Language";
-import { SchoolType } from "@/type/Spell";
+import { School } from "@/type/Spell";
 import { LuChevronDown } from "react-icons/lu";
 import { Button } from "../ui/button";
 
 interface Props {
     language: Language;
-    school: SchoolType | null;
-    schoolsAvailable?: SchoolType[];
-    setSchool: (school: SchoolType | null) => void;
+    school: School | null;
+    schoolsAvailable?: School[];
+    setSchool: (school: School | null) => void;
     isLoading?: boolean;
 }
 
 const SchoolFilter = ({
     language,
     school,
-    schoolsAvailable = Object.values(SchoolType),
+    schoolsAvailable = Object.values(School),
     setSchool,
     isLoading = false,
 }: Props) => {
