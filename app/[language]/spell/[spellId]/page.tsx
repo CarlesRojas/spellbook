@@ -2,11 +2,11 @@ import { PageProps } from "@/app/[language]/layout";
 import BackButton from "@/component/navigation/BackButton";
 import NotFound from "@/component/navigation/NotFound";
 import { useTranslation } from "@/hook/useTranslation";
+import { parseParagraphsWithDice } from "@/lib/dice";
 import { getSpellColor } from "@/lib/spell";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
-import { convertHtmlToReact } from "@hedgedoc/html-to-react";
 
 interface Props extends PageProps {
     params: { language: Language; spellId: string };
@@ -71,9 +71,8 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <small className="text-sm opacity-60">{t.enum.school[school]}</small>
                 </div>
 
-                <div className="prose prose-stone flex w-full max-w-screen-lg flex-col gap-4 dark:prose-invert">
-                    {/* TODO <p key={i}>{parseParagraphsWithDice(description[language]).map((paragraphPart) => paragraphPart)}</p> */}
-                    {convertHtmlToReact(description[language])}
+                <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
+                    {parseParagraphsWithDice(description[language])}
                 </div>
             </div>
         </main>

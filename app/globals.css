@@ -48,3 +48,49 @@ button {
     outline: none;
     cursor: pointer;
 }
+
+hr {
+    @apply !m-0 h-4 border-none !p-0;
+}
+
+th {
+    @apply text-left;
+}
+
+/* DICE */
+
+.dice_D4 {
+    mask-image: url("/dice/D4.png");
+    mask-mode: alpha;
+    mask-size: cover;
+}
+
+.dice_D6 {
+    mask-image: url("/dice/D6.png");
+    mask-mode: alpha;
+    mask-size: cover;
+}
+
+.dice_D8 {
+    mask-image: url("/dice/D8.png");
+    mask-mode: alpha;
+    mask-size: cover;
+}
+
+.dice_D10 {
+    mask-image: url("/dice/D10.png");
+    mask-mode: alpha;
+    mask-size: cover;
+}
+
+.dice_D12 {
+    mask-image: url("/dice/D12.png");
+    mask-mode: alpha;
+    mask-size: cover;
+}
+
+.dice_D20 {
+    mask-image: url("/dice/D20.png");
+    mask-mode: alpha;
+    mask-size: cover;
+}
