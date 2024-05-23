@@ -1,4 +1,5 @@
 import { SpellColor } from "@/lib/spell";
+import { Ability } from "@/type/Character";
 import { TranslationSchema } from "@/type/Translation";
 import { z } from "zod";
 
@@ -90,15 +91,6 @@ export enum DamageType {
     THUNDER = "THUNDER",
 }
 
-export enum DifficultyClassType {
-    DEX = "DEX",
-    WIS = "WIS",
-    CHA = "CHA",
-    CON = "CON",
-    INT = "INT",
-    STR = "STR",
-}
-
 export enum DifficultyClassSuccess {
     OTHER = "OTHER",
     NONE = "NONE",
@@ -164,13 +156,13 @@ const DamageSchema = z.object({
 export type Damage = z.infer<typeof DamageSchema>;
 
 const DbDifficultyClassSchema = z.object({
-    type: z.nativeEnum(DifficultyClassType),
+    type: z.nativeEnum(Ability),
     success: z.nativeEnum(DifficultyClassSuccess),
     descriptionId: z.number().optional().nullable(),
 });
 export type DbDifficultyClass = z.infer<typeof DbDifficultyClassSchema>;
 const DifficultyClassSchema = z.object({
-    type: z.nativeEnum(DifficultyClassType),
+    type: z.nativeEnum(Ability),
     success: z.nativeEnum(DifficultyClassSuccess),
     description: TranslationSchema.optional().nullable(),
 });

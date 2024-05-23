@@ -1,3 +1,4 @@
+import { Ability } from "@/type/Character";
 import { NotFoundType } from "@/type/NotFoundType";
 import { Route } from "@/type/Route";
 import {
@@ -8,7 +9,6 @@ import {
     Component,
     DamageType,
     DifficultyClassSuccess,
-    DifficultyClassType,
     Duration,
     RangeType,
     School,
@@ -65,9 +65,7 @@ export const LanguageObjectSchema = z.object({
         subclass: z.object(Object.fromEntries(Object.values(Subclass).map((item) => [item, z.string()]))),
         school: z.object(Object.fromEntries(Object.values(School).map((item) => [item, z.string()]))),
         damageType: z.object(Object.fromEntries(Object.values(DamageType).map((item) => [item, z.string()]))),
-        difficultyClassType: z.object(
-            Object.fromEntries(Object.values(DifficultyClassType).map((item) => [item, z.string()])),
-        ),
+        difficultyClassType: z.object(Object.fromEntries(Object.values(Ability).map((item) => [item, z.string()]))),
         difficultyClassSuccess: z.object(
             Object.fromEntries(Object.values(DifficultyClassSuccess).map((item) => [item, z.string()])),
         ),

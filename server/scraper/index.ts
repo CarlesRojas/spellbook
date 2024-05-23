@@ -1,6 +1,7 @@
 import { SpellColor } from "@/lib/spell";
 import { createSpell, existsSpell } from "@/server/repo/spell";
 import { createTranslation, translate } from "@/server/repo/translation";
+import { Ability } from "@/type/Character";
 import { Language } from "@/type/Language";
 import {
     AreaOfEffect,
@@ -14,7 +15,6 @@ import {
     DbSpell,
     DbSpellSchema,
     DifficultyClassSuccess,
-    DifficultyClassType,
     Duration,
     RangeType,
     School,
@@ -96,13 +96,13 @@ const damageTypeMap: Record<string, DamageType> = {
     thunder: DamageType.THUNDER,
 };
 
-const difficultyClassTypeMap: Record<string, DifficultyClassType> = {
-    dex: DifficultyClassType.DEX,
-    wis: DifficultyClassType.WIS,
-    cha: DifficultyClassType.CHA,
-    con: DifficultyClassType.CON,
-    int: DifficultyClassType.INT,
-    str: DifficultyClassType.STR,
+const difficultyClassTypeMap: Record<string, Ability> = {
+    dex: Ability.DEX,
+    wis: Ability.WIS,
+    cha: Ability.CHA,
+    con: Ability.CON,
+    int: Ability.INT,
+    str: Ability.STR,
 };
 
 const difficultyClassSuccessMap: Record<string, DifficultyClassSuccess> = {

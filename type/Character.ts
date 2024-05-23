@@ -1,6 +1,15 @@
-import { ClassType, DifficultyClassType } from "@/type/Spell";
+import { ClassType, SpellSchema } from "@/type/Spell";
 import { ArrayWith20Positions } from "@/type/utils";
 import { z } from "zod";
+
+export enum Ability {
+    STR = "STR",
+    DEX = "DEX",
+    CON = "CON",
+    INT = "INT",
+    WIS = "WIS",
+    CHA = "CHA",
+}
 
 export const SpellSlotsSchema = z.object({
     level1: z.number(),
@@ -15,12 +24,20 @@ export const SpellSlotsSchema = z.object({
 });
 export type SpellSlots = z.infer<typeof SpellSlotsSchema>;
 
-export const SpellBookSchema = z.object({
+export const CharacterSchema = z.object({
     id: z.number(),
-    characterLevel: z.number().min(0).max(20),
-    availableSpellSlots: SpellSlotsSchema,
+
+    name: z.string(),
+    level: z.number().min(0).max(20),
+    class: z.nativeEnum(ClassType),
+    ability: z.number(),
+
+    knownSpells: z.array(SpellSchema),
+    preparedSpells: z.array(SpellSchema),
+    spellSlotsAvailable: SpellSlotsSchema,
+    knownCantrips: z.array(SpellSlotsSchema),
 });
-export type SpellBook = z.infer<typeof SpellBookSchema>;
+export type Character = z.infer<typeof CharacterSchema>;
 
 const WIZARD_SPELL_SLOTS: ArrayWith20Positions<SpellSlots> = [
     { level1: 2, level2: 0, level3: 0, level4: 0, level5: 0, level6: 0, level7: 0, level8: 0, level9: 0 },
@@ -91,137 +108,106 @@ const WARLOCK_SPELL_SLOTS: ArrayWith20Positions<SpellSlots> = [
     { level1: 0, level2: 0, level3: 0, level4: 0, level5: 4, level6: 0, level7: 0, level8: 0, level9: 0 },
 ];
 
-export const classSpellSlotsByLevel: Record<ClassType, ArrayWith20Positions<SpellSlots>> = {
-    [ClassType.BARD]: WIZARD_SPELL_SLOTS,
-    [ClassType.CLERIC]: WIZARD_SPELL_SLOTS,
-    [ClassType.DRUID]: WIZARD_SPELL_SLOTS,
-    [ClassType.SORCERER]: WIZARD_SPELL_SLOTS,
-    [ClassType.WIZARD]: WIZARD_SPELL_SLOTS,
-    [ClassType.PALADIN]: PALADIN_SPELL_SLOTS,
-    [ClassType.RANGER]: PALADIN_SPELL_SLOTS,
-    [ClassType.WARLOCK]: WARLOCK_SPELL_SLOTS,
+const ZERO: ArrayWith20Positions<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+// TODO Sorcerer swap spell slots and sorcery points
+// export const SORCERER = {
+//     spellSlotCostInSorceryPoints: [2, 3, 5, 6, 7],
+//     sorceryPoints: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+// };
+
+export const getAbility = (character: Character) => {
+    const map: Record<ClassType, Ability> = {
+        [ClassType.WIZARD]: Ability.INT,
+        [ClassType.SORCERER]: Ability.CHA,
+        [ClassType.CLERIC]: Ability.WIS,
+        [ClassType.PALADIN]: Ability.CHA,
+        [ClassType.RANGER]: Ability.WIS,
+        [ClassType.BARD]: Ability.CHA,
+        [ClassType.DRUID]: Ability.WIS,
+        [ClassType.WARLOCK]: Ability.CHA,
+    };
+
+    return map[character.class];
 };
 
-// CLERIC
-// At long rest can prepare spells equal to WIS modifier + cleric level
+export const getKnowSpells = (character: Character) => {
+    const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
+        [ClassType.WIZARD]: null, // ALL - SPELLBOOK - PREPARED
+        [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15], // ALL - KNOWN
+        [ClassType.CLERIC]: ZERO, // ALL - PREPARED (DOMAIN)
+        [ClassType.PALADIN]: ZERO, // ALL - PREPARED (OATH)
+        [ClassType.RANGER]: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11], // ALL - KNOWN
+        [ClassType.BARD]: [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22], // ALL - KNOWN
+        [ClassType.DRUID]: ZERO, // ALL - PREPARED
+        [ClassType.WARLOCK]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15], // ALL - KNOWN
+    };
 
-interface ClassInfo {
-    spellSlots: ArrayWith20Positions<SpellSlots>;
-    cantripsPerLevel?: ArrayWith20Positions<number>;
-    proficiencyBonus: ArrayWith20Positions<number>;
-    knownSpells: "CLASS" | "SPELLBOOK" | ArrayWith20Positions<number>;
-    preparedSpellsAmount?: DifficultyClassType;
-    spellCastingAbility: DifficultyClassType;
-    difficultyClass: DifficultyClassType;
-    attackModifier: DifficultyClassType;
-    ritual: boolean;
-    spellSlotCostInSorceryPoints?: number[];
-    sorceryPoints?: ArrayWith20Positions<number>;
-}
-
-// ALL (Class) - SPELLBOOK - PREPARED
-export const WIZARD: ClassInfo = {
-    spellSlots: WIZARD_SPELL_SLOTS,
-    cantripsPerLevel: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], // Prepare from all Wizard Cantrips
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: "SPELLBOOK", // Spellbook contains list of known spells
-    preparedSpellsAmount: DifficultyClassType.INT, // + character level
-    spellCastingAbility: DifficultyClassType.INT,
-    difficultyClass: DifficultyClassType.INT, // + Proficiency Bonus + 8
-    attackModifier: DifficultyClassType.INT, // + Proficiency Bonus
-    ritual: true, // No need to prepare
+    const knownSpellsPerLevel = map[character.class];
+    return knownSpellsPerLevel ? knownSpellsPerLevel[character.level] : null;
 };
 
-// ALL (Class) - KNOWN
-export const SORCERER: ClassInfo = {
-    spellSlots: WIZARD_SPELL_SLOTS,
-    cantripsPerLevel: [4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6], // Prepare from all Wizard Cantrips
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15],
-    preparedSpellsAmount: undefined, // No need to prepare spells
-    spellCastingAbility: DifficultyClassType.CHA,
-    difficultyClass: DifficultyClassType.CHA, // + Proficiency Bonus + 8
-    attackModifier: DifficultyClassType.CHA, // + Proficiency Bonus
-    ritual: false, // No need to prepare
-    spellSlotCostInSorceryPoints: [2, 3, 5, 6, 7],
-    sorceryPoints: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+export const getPreparedSpellsAmount = (character: Character) => {
+    const map: Record<ClassType, number> = {
+        [ClassType.WIZARD]: Math.max(1, character.ability + character.level),
+        [ClassType.SORCERER]: 0,
+        [ClassType.CLERIC]: Math.max(1, character.ability + character.level), // + DOMAIN (That do not count)
+        [ClassType.PALADIN]: Math.max(1, character.ability + Math.floor(character.level / 2)), // + OATH (That do not count)
+        [ClassType.RANGER]: 0,
+        [ClassType.BARD]: 0,
+        [ClassType.DRUID]: Math.max(1, character.ability + character.level),
+        [ClassType.WARLOCK]: 0,
+    };
+
+    return map[character.class];
 };
 
-// ALL (Class) - PREPARED + DOMAIN
-export const CLERIC: ClassInfo = {
-    spellSlots: WIZARD_SPELL_SLOTS,
-    cantripsPerLevel: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: "CLASS",
-    preparedSpellsAmount: DifficultyClassType.WIS, // + character level + Domain
-    spellCastingAbility: DifficultyClassType.WIS,
-    difficultyClass: DifficultyClassType.WIS, // + Proficiency Bonus
-    ritual: true,
-    attackModifier: DifficultyClassType.WIS,
+export const getTotalSpellSlots = (character: Character) => {
+    const map: Record<ClassType, ArrayWith20Positions<SpellSlots>> = {
+        [ClassType.WIZARD]: WIZARD_SPELL_SLOTS,
+        [ClassType.SORCERER]: WIZARD_SPELL_SLOTS,
+        [ClassType.CLERIC]: WIZARD_SPELL_SLOTS,
+        [ClassType.PALADIN]: PALADIN_SPELL_SLOTS,
+        [ClassType.RANGER]: PALADIN_SPELL_SLOTS,
+        [ClassType.BARD]: WIZARD_SPELL_SLOTS,
+        [ClassType.DRUID]: WIZARD_SPELL_SLOTS,
+        [ClassType.WARLOCK]: WARLOCK_SPELL_SLOTS, // Can regain all spent spell slots using Eldritch Master
+    };
+
+    return map[character.class][character.level];
 };
 
-// ALL (Class) - KNOWN
-export const RANGER: ClassInfo = {
-    spellSlots: PALADIN_SPELL_SLOTS,
-    cantripsPerLevel: undefined, // Can't use cantrips
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11],
-    preparedSpellsAmount: undefined, // No need to prepare spells
-    spellCastingAbility: DifficultyClassType.WIS,
-    difficultyClass: DifficultyClassType.WIS, // + Proficiency Bonus
-    ritual: false,
-    attackModifier: DifficultyClassType.WIS,
+export const getCantripsAmount = (character: Character) => {
+    const map: Record<ClassType, ArrayWith20Positions<number>> = {
+        [ClassType.WIZARD]: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+        [ClassType.SORCERER]: [4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
+        [ClassType.CLERIC]: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+        [ClassType.PALADIN]: ZERO,
+        [ClassType.RANGER]: ZERO,
+        [ClassType.BARD]: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        [ClassType.DRUID]: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        [ClassType.WARLOCK]: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    };
+
+    return map[character.class][character.level];
 };
 
-// ALL (Class) - PREPARED + OATH
-export const PALADIN: ClassInfo = {
-    spellSlots: PALADIN_SPELL_SLOTS,
-    cantripsPerLevel: undefined, // Can't use cantrips
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: "CLASS",
-    preparedSpellsAmount: DifficultyClassType.CHA, // + floor(character level / 2)  + Oath
-    spellCastingAbility: DifficultyClassType.CHA,
-    difficultyClass: DifficultyClassType.CHA, // + Proficiency Bonus
-    ritual: false,
-    attackModifier: DifficultyClassType.CHA,
+export const getProficiencyBonus = (character: Character) => {
+    const proficiencyBonus: ArrayWith20Positions<number> = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
+    return proficiencyBonus[character.level];
 };
 
-// ALL (Class) - KNOWN
-export const WARLOCK: ClassInfo = {
-    spellSlots: WARLOCK_SPELL_SLOTS, // Can regain all spent spell slots using Eldritch Master
-    cantripsPerLevel: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
-    preparedSpellsAmount: undefined, // No need to prepare spells
-    spellCastingAbility: DifficultyClassType.CHA,
-    difficultyClass: DifficultyClassType.CHA, // + Proficiency Bonus
-    ritual: false,
-    attackModifier: DifficultyClassType.CHA,
-};
+export const canCastRituals = (character: Character) => {
+    const map: Record<ClassType, boolean> = {
+        [ClassType.WIZARD]: true, // SPELLBOOK
+        [ClassType.SORCERER]: false,
+        [ClassType.CLERIC]: true, // PREPARED
+        [ClassType.PALADIN]: false,
+        [ClassType.RANGER]: false,
+        [ClassType.BARD]: true, // KNOWN
+        [ClassType.DRUID]: true, // PREPARED
+        [ClassType.WARLOCK]: false, // Book of Ancient Secrets lets you cast rituals
+    };
 
-// ALL (Class) - PREPARED
-export const DRUID: ClassInfo = {
-    spellSlots: WIZARD_SPELL_SLOTS, 
-    cantripsPerLevel: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: "CLASS",
-    preparedSpellsAmount: DifficultyClassType.WIS, // + character level
-    spellCastingAbility: DifficultyClassType.WIS,
-    difficultyClass: DifficultyClassType.WIS, // + Proficiency Bonus
-    ritual: true,
-    attackModifier: DifficultyClassType.WIS,
-};
-
-
-// ALL (Class) - KNOWN
-export const BARD: ClassInfo = {
-    spellSlots: WIZARD_SPELL_SLOTS, 
-    cantripsPerLevel: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    proficiencyBonus: [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6],
-    knownSpells: [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22],,
-    preparedSpellsAmount: undefined, // No need to prepare spells
-    spellCastingAbility: DifficultyClassType.CHA,
-    difficultyClass: DifficultyClassType.CHA, // + Proficiency Bonus
-    ritual: true,
-    attackModifier: DifficultyClassType.CHA,
+    return map[character.class];
 };
