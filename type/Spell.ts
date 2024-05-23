@@ -1,4 +1,3 @@
-import { Ability } from "@/type/Character";
 import { TranslationSchema } from "@/type/Translation";
 import { z } from "zod";
 
@@ -8,6 +7,15 @@ export enum Sort {
 
     NAME_ASC = "name_asc",
     NAME_DESC = "name_desc",
+}
+
+export enum Ability {
+    STR = "STR",
+    DEX = "DEX",
+    CON = "CON",
+    INT = "INT",
+    WIS = "WIS",
+    CHA = "CHA",
 }
 
 export enum RangeType {

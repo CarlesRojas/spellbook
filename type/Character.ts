@@ -3,15 +3,6 @@ import { SpellSlotsSchema } from "@/type/SpellSlots";
 import { ArrayWith20Positions } from "@/type/utils";
 import { z } from "zod";
 
-export enum Ability {
-    STR = "STR",
-    DEX = "DEX",
-    CON = "CON",
-    INT = "INT",
-    WIS = "WIS",
-    CHA = "CHA",
-}
-
 export const CharacterSchema = z.object({
     id: z.number(),
 

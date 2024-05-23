@@ -1,8 +1,8 @@
 import { createSpell, existsSpell } from "@/server/repo/spell";
 import { createTranslation, translate } from "@/server/repo/translation";
-import { Ability } from "@/type/Character";
 import { Language } from "@/type/Language";
 import {
+    Ability,
     AreaOfEffect,
     AreaOfEffectType,
     AttackType,

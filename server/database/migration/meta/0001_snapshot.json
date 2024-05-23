@@ -1,0 +1,390 @@
+{
+  "id": "7e29c3b1-cae9-4f99-92d6-12c4999c7c45",
+  "prevId": "3b244ea9-76c5-4607-9d02-0a888a8f3b81",
+  "version": "6",
+  "dialect": "postgresql",
+  "tables": {
+    "public.character": {
+      "name": "character",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "class": {
+          "name": "class",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ability": {
+          "name": "ability",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "spellSlotsAvailableId": {
+          "name": "spellSlotsAvailableId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "character_spellSlotsAvailableId_spellSlots_id_fk": {
+          "name": "character_spellSlotsAvailableId_spellSlots_id_fk",
+          "tableFrom": "character",
+          "tableTo": "spellSlots",
+          "columnsFrom": [
+            "spellSlotsAvailableId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.spell": {
+      "name": "spell",
+      "schema": "",
+      "columns": {
+        "index": {
+          "name": "index",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nameId": {
+          "name": "nameId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "descriptionId": {
+          "name": "descriptionId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "highLevelDescriptionId": {
+          "name": "highLevelDescriptionId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "range": {
+          "name": "range",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "components": {
+          "name": "components",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "materialId": {
+          "name": "materialId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "areaOfEffect": {
+          "name": "areaOfEffect",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ritual": {
+          "name": "ritual",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "duration": {
+          "name": "duration",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "concentration": {
+          "name": "concentration",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "castingTime": {
+          "name": "castingTime",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attackType": {
+          "name": "attackType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "school": {
+          "name": "school",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classes": {
+          "name": "classes",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "subclasses": {
+          "name": "subclasses",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "damage": {
+          "name": "damage",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "difficultyClass": {
+          "name": "difficultyClass",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icon": {
+          "name": "icon",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "color": {
+          "name": "color",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "spell_nameId_translation_id_fk": {
+          "name": "spell_nameId_translation_id_fk",
+          "tableFrom": "spell",
+          "tableTo": "translation",
+          "columnsFrom": [
+            "nameId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "spell_descriptionId_translation_id_fk": {
+          "name": "spell_descriptionId_translation_id_fk",
+          "tableFrom": "spell",
+          "tableTo": "translation",
+          "columnsFrom": [
+            "descriptionId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "spell_highLevelDescriptionId_translation_id_fk": {
+          "name": "spell_highLevelDescriptionId_translation_id_fk",
+          "tableFrom": "spell",
+          "tableTo": "translation",
+          "columnsFrom": [
+            "highLevelDescriptionId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        },
+        "spell_materialId_translation_id_fk": {
+          "name": "spell_materialId_translation_id_fk",
+          "tableFrom": "spell",
+          "tableTo": "translation",
+          "columnsFrom": [
+            "materialId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.translation": {
+      "name": "translation",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "en": {
+          "name": "en",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "es": {
+          "name": "es",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.spellSlots": {
+      "name": "spellSlots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "level1": {
+          "name": "level1",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level2": {
+          "name": "level2",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level3": {
+          "name": "level3",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level4": {
+          "name": "level4",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level5": {
+          "name": "level5",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level6": {
+          "name": "level6",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level7": {
+          "name": "level7",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level8": {
+          "name": "level8",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "level9": {
+          "name": "level9",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

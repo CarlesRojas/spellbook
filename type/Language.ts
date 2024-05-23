@@ -1,7 +1,7 @@
-import { Ability } from "@/type/Character";
 import { NotFoundType } from "@/type/NotFoundType";
 import { Route } from "@/type/Route";
 import {
+    Ability,
     AreaOfEffectType,
     AttackType,
     CastingTime,

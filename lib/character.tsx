@@ -1,5 +1,5 @@
-import { Ability, Character, ZERO } from "@/type/Character";
-import { ClassType } from "@/type/Spell";
+import { Character, ZERO } from "@/type/Character";
+import { Ability, ClassType } from "@/type/Spell";
 import { PALADIN_SPELL_SLOTS, SpellSlots, WARLOCK_SPELL_SLOTS, WIZARD_SPELL_SLOTS } from "@/type/SpellSlots";
 import { ArrayWith20Positions } from "@/type/utils";
 

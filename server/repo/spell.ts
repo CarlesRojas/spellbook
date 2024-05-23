@@ -62,5 +62,5 @@ export const clearSpells = async () => {
 };
 
 const toDomain = (spell: SelectedSpell): Spell => {
-    return SpellSchema.parse({ ...spell }) as Spell;
+    return SpellSchema.parse(spell) as Spell;
 };
