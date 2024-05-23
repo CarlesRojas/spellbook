@@ -1,4 +1,3 @@
-import { SpellColor } from "@/lib/spell";
 import { Ability } from "@/type/Character";
 import { TranslationSchema } from "@/type/Translation";
 import { z } from "zod";
@@ -134,6 +133,25 @@ export enum CastingTime {
 export enum AttackType {
     RANGED = "RANGED",
     MELEE = "MELEE",
+}
+
+export enum SpellColor {
+    DARK = "DARK",
+    LIGHTNING = "LIGHTNING",
+    ICE = "ICE",
+    MOVE = "MOVE",
+    HEAL = "HEAL",
+    SPECTRAL = "SPECTRAL",
+    POISON = "POISON",
+    ACID = "ACID",
+    WARM = "WARM",
+    HOLY = "HOLY",
+    FIRE = "FIRE",
+    SPIKE = "SPIKE",
+    MISSILE = "MISSILE",
+    COUNTER = "COUNTER",
+    FAERIE = "FAERIE",
+    SHOCK = "SHOCK",
 }
 
 const AreaOfEffectSchema = z.object({

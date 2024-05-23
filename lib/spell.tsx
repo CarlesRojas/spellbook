@@ -1,21 +1,4 @@
-export enum SpellColor {
-    DARK = "DARK",
-    LIGHTNING = "LIGHTNING",
-    ICE = "ICE",
-    MOVE = "MOVE",
-    HEAL = "HEAL",
-    SPECTRAL = "SPECTRAL",
-    POISON = "POISON",
-    ACID = "ACID",
-    WARM = "WARM",
-    HOLY = "HOLY",
-    FIRE = "FIRE",
-    SPIKE = "SPIKE",
-    MISSILE = "MISSILE",
-    COUNTER = "COUNTER",
-    FAERIE = "FAERIE",
-    SHOCK = "SHOCK",
-}
+import { SpellColor } from "@/type/Spell";
 
 export const getSpellColor = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {

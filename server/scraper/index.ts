@@ -1,4 +1,3 @@
-import { SpellColor } from "@/lib/spell";
 import { createSpell, existsSpell } from "@/server/repo/spell";
 import { createTranslation, translate } from "@/server/repo/translation";
 import { Ability } from "@/type/Character";
@@ -18,6 +17,7 @@ import {
     Duration,
     RangeType,
     School,
+    SpellColor,
     Subclass,
 } from "@/type/Spell";
 import { spellIndexes } from "./spells";

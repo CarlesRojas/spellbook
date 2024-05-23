@@ -1,3 +1,4 @@
+import { knownSpells } from "@/server/database/schema/relations/knownSpells";
 import { translation } from "@/server/database/schema/translation";
 import { AreaOfEffect, ClassList, Components, Damage, DifficultyClass, SubclassList } from "@/type/Spell";
 import { relations } from "drizzle-orm";
@@ -38,16 +39,23 @@ export const spellRelations = relations(spell, ({ many, one }) => ({
         fields: [spell.nameId],
         references: [translation.id],
     }),
+
     description: one(translation, {
         fields: [spell.descriptionId],
         references: [translation.id],
     }),
+
     highLevelDescription: one(translation, {
         fields: [spell.highLevelDescriptionId],
         references: [translation.id],
     }),
+
     material: one(translation, {
         fields: [spell.materialId],
         references: [translation.id],
     }),
+
+    known: many(knownSpells),
+    prepared: many(knownSpells),
+    knownCantrips: many(knownSpells),
 }));
