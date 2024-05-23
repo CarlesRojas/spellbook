@@ -11,7 +11,8 @@ import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { LuBook, LuLoader2 } from "react-icons/lu";
+import { GiVisoredHelm } from "react-icons/gi";
+import { LuLoader2 } from "react-icons/lu";
 
 export interface Props {
     language: Language;
@@ -34,11 +35,11 @@ const Navbar = ({ language }: Props) => {
                 </Link>
 
                 {user.data ? (
-                    <Link href={`/${language}${Route.SPELLBOOKS}/${user.data.id}`} className="relative h-full w-full">
+                    <Link href={`/${language}${Route.CHARACTERS}/${user.data.id}`} className="relative h-full w-full">
                         <NavbarItem
-                            selected={route === Route.SPELLBOOKS}
-                            label={t.enum.route[Route.SPELLBOOKS]}
-                            icon={<LuBook className="h-6 w-6" />}
+                            selected={route === Route.CHARACTERS}
+                            label={t.enum.route[Route.CHARACTERS]}
+                            icon={<GiVisoredHelm className="h-6 w-6" />}
                         />
                     </Link>
                 ) : (
@@ -48,7 +49,10 @@ const Navbar = ({ language }: Props) => {
                         onClick={() => signIn()}
                         className="relative h-full w-full p-0"
                     >
-                        <NavbarItem label={t.enum.route[Route.SPELLBOOKS]} icon={<LuBook className="h-6 w-6" />} />
+                        <NavbarItem
+                            label={t.enum.route[Route.CHARACTERS]}
+                            icon={<GiVisoredHelm className="h-6 w-6" />}
+                        />
                     </Button>
                 )}
 

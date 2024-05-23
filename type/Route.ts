@@ -1,6 +1,6 @@
 export enum Route {
     SPELLS = "/",
-    SPELLBOOKS = "/spellbooks",
+    CHARACTERS = "/characters",
 }
 
-export const DYNAMIC_ROUTES: Route[] = [Route.SPELLBOOKS];
+export const DYNAMIC_ROUTES: Route[] = [Route.CHARACTERS];

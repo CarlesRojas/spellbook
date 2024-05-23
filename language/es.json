@@ -28,7 +28,7 @@
 
         "route": {
             "/": "Hechizos",
-            "/spellbooks": "Libros"
+            "/characters": "Personajes"
         },
 
         "notFound": {

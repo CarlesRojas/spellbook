@@ -1,4 +1,4 @@
-import { Character, ZERO } from "@/type/Character";
+import { ZERO } from "@/type/Character";
 import { Ability, ClassType } from "@/type/Spell";
 import { PALADIN_SPELL_SLOTS, SpellSlots, WARLOCK_SPELL_SLOTS, WIZARD_SPELL_SLOTS } from "@/type/SpellSlots";
 import { ArrayWith20Positions } from "@/type/utils";
@@ -9,7 +9,7 @@ import { ArrayWith20Positions } from "@/type/utils";
 //     sorceryPoints: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
 // };
 
-export const getAbility = (character: Character) => {
+export const getAbility = (classType: ClassType) => {
     const map: Record<ClassType, Ability> = {
         [ClassType.WIZARD]: Ability.INT,
         [ClassType.SORCERER]: Ability.CHA,
@@ -21,10 +21,10 @@ export const getAbility = (character: Character) => {
         [ClassType.WARLOCK]: Ability.CHA,
     };
 
-    return map[character.class];
+    return map[classType];
 };
 
-export const getKnowSpells = (character: Character) => {
+export const getKnowSpells = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
         [ClassType.WIZARD]: null, // ALL - SPELLBOOK - PREPARED
         [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15], // ALL - KNOWN
@@ -36,26 +36,26 @@ export const getKnowSpells = (character: Character) => {
         [ClassType.WARLOCK]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15], // ALL - KNOWN
     };
 
-    const knownSpellsPerLevel = map[character.class];
-    return knownSpellsPerLevel ? knownSpellsPerLevel[character.level] : null;
+    const knownSpellsPerLevel = map[classType];
+    return knownSpellsPerLevel ? knownSpellsPerLevel[level] : null;
 };
 
-export const getPreparedSpellsAmount = (character: Character) => {
+export const getPreparedSpellsAmount = (classType: ClassType, ability: number, level: number) => {
     const map: Record<ClassType, number> = {
-        [ClassType.WIZARD]: Math.max(1, character.ability + character.level),
+        [ClassType.WIZARD]: Math.max(1, ability + level),
         [ClassType.SORCERER]: 0,
-        [ClassType.CLERIC]: Math.max(1, character.ability + character.level), // + DOMAIN (That do not count)
-        [ClassType.PALADIN]: Math.max(1, character.ability + Math.floor(character.level / 2)), // + OATH (That do not count)
+        [ClassType.CLERIC]: Math.max(1, ability + level), // + DOMAIN (That do not count)
+        [ClassType.PALADIN]: Math.max(1, ability + Math.floor(level / 2)), // + OATH (That do not count)
         [ClassType.RANGER]: 0,
         [ClassType.BARD]: 0,
-        [ClassType.DRUID]: Math.max(1, character.ability + character.level),
+        [ClassType.DRUID]: Math.max(1, ability + level),
         [ClassType.WARLOCK]: 0,
     };
 
-    return map[character.class];
+    return map[classType];
 };
 
-export const getTotalSpellSlots = (character: Character) => {
+export const getTotalSpellSlots = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<SpellSlots>> = {
         [ClassType.WIZARD]: WIZARD_SPELL_SLOTS,
         [ClassType.SORCERER]: WIZARD_SPELL_SLOTS,
@@ -67,10 +67,10 @@ export const getTotalSpellSlots = (character: Character) => {
         [ClassType.WARLOCK]: WARLOCK_SPELL_SLOTS, // Can regain all spent spell slots using Eldritch Master
     };
 
-    return map[character.class][character.level];
+    return map[classType][level];
 };
 
-export const getCantripsAmount = (character: Character) => {
+export const getCantripsAmount = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number>> = {
         [ClassType.WIZARD]: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
         [ClassType.SORCERER]: [4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6],
@@ -82,15 +82,15 @@ export const getCantripsAmount = (character: Character) => {
         [ClassType.WARLOCK]: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
     };
 
-    return map[character.class][character.level];
+    return map[classType][level];
 };
 
-export const getProficiencyBonus = (character: Character) => {
+export const getProficiencyBonus = (level: number) => {
     const proficiencyBonus: ArrayWith20Positions<number> = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
-    return proficiencyBonus[character.level];
+    return proficiencyBonus[level];
 };
 
-export const canCastRituals = (character: Character) => {
+export const canCastRituals = (classType: ClassType) => {
     const map: Record<ClassType, boolean> = {
         [ClassType.WIZARD]: true, // SPELLBOOK
         [ClassType.SORCERER]: false,
@@ -102,5 +102,5 @@ export const canCastRituals = (character: Character) => {
         [ClassType.WARLOCK]: false, // Book of Ancient Secrets lets you cast rituals
     };
 
-    return map[character.class];
+    return map[classType];
 };

@@ -76,7 +76,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     {parseParagraphsWithDice(description[language])}
                 </div>
 
-                <div className="col mt-32 flex flex-col gap-4 border-4 border-dashed border-yellow-500 p-4">
+                <div className="mt-32 flex w-full flex-col gap-4 border-4 border-dashed border-yellow-500 p-4">
                     <VscTools className="h-10 w-10" />
 
                     {renderObject(spell)}

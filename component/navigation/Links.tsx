@@ -40,13 +40,13 @@ const Links = ({ language }: Props) => {
                 </Button>
 
                 {user.data ? (
-                    <Button asChild variant="link" className={route === Route.SPELLBOOKS ? "!text-sky-500" : ""}>
-                        <Link href={`/${language}${Route.SPELLBOOKS}/${user.data.id}`}>
-                            {t.enum.route[Route.SPELLBOOKS]}
+                    <Button asChild variant="link" className={route === Route.CHARACTERS ? "!text-sky-500" : ""}>
+                        <Link href={`/${language}${Route.CHARACTERS}/${user.data.id}`}>
+                            {t.enum.route[Route.CHARACTERS]}
                         </Link>
                     </Button>
                 ) : (
-                    signInButton(t.enum.route[Route.SPELLBOOKS])
+                    signInButton(t.enum.route[Route.CHARACTERS])
                 )}
             </div>
 
@@ -82,15 +82,15 @@ const Links = ({ language }: Props) => {
                         </Link>
 
                         {user.data ? (
-                            <Link href={`/${language}${Route.SPELLBOOKS}/${user.data.id}`}>
+                            <Link href={`/${language}${Route.CHARACTERS}/${user.data.id}`}>
                                 <DropdownMenuItem
-                                    className={`font-semibold ${route === Route.SPELLBOOKS ? "!text-sky-500" : ""}`}
+                                    className={`font-semibold ${route === Route.CHARACTERS ? "!text-sky-500" : ""}`}
                                 >
-                                    {t.enum.route[Route.SPELLBOOKS]}
+                                    {t.enum.route[Route.CHARACTERS]}
                                 </DropdownMenuItem>
                             </Link>
                         ) : (
-                            signInDropdownButton(t.enum.route[Route.SPELLBOOKS])
+                            signInDropdownButton(t.enum.route[Route.CHARACTERS])
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>

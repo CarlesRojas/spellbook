@@ -28,7 +28,7 @@
 
         "route": {
             "/": "Spells",
-            "/spellbooks": "Spellbooks"
+            "/characters": "Characters"
         },
 
         "notFound": {
