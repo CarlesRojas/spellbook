@@ -25,6 +25,7 @@ export const useEditCharacter = (userEmail: string) => {
             context && queryClient.setQueryData(queryKey, context.previousData);
         },
         onSettled: () => {
+            queryClient.invalidateQueries({ queryKey: ["character"] });
             queryClient.invalidateQueries({ queryKey });
         },
     });

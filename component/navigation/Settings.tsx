@@ -115,7 +115,7 @@ const Settings = ({ language }: Props) => {
 
                 <DropdownMenuItem
                     disabled={!isMounted}
-                    onMouseDown={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
                 >
                     {!isMounted && <LuLoader2 className="mr-3 h-4 w-4 animate-spin" />}
                     {resolvedTheme === "dark" && <LuSun className="mr-3 h-4 w-4" />}
@@ -132,12 +132,12 @@ const Settings = ({ language }: Props) => {
                 <DropdownMenuSeparator />
 
                 {user.data ? (
-                    <DropdownMenuItem onMouseDown={() => signOut()}>
+                    <DropdownMenuItem onClick={() => signOut()}>
                         <LuLogOut className="mr-3 h-4 w-4" />
                         <p className=" font-medium">{t.auth.signOut}</p>
                     </DropdownMenuItem>
                 ) : (
-                    <DropdownMenuItem onMouseDown={() => signIn()}>
+                    <DropdownMenuItem onClick={() => signIn()}>
                         <LuLogIn className="mr-3 h-4 w-4" />
                         <p className=" font-medium">{t.auth.signIn}</p>
                     </DropdownMenuItem>

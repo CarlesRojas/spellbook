@@ -46,7 +46,7 @@ const Navbar = ({ language }: Props) => {
                     <Button
                         variant="link"
                         aria-label="Open Settings"
-                        onMouseDown={() => signIn()}
+                        onClick={() => signIn()}
                         className="relative h-full w-full p-0"
                     >
                         <NavbarItem

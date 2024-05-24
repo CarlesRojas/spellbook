@@ -15,7 +15,7 @@ const BackButton = ({ language }: Props) => {
     const { back } = useRouter();
 
     return (
-        <Button variant="outline" onMouseDown={back} className="sticky top-4 z-20 mouse:top-20">
+        <Button variant="outline" onClick={back} className="sticky top-4 z-20 mouse:top-20">
             <LuArrowLeft className="mr-3 h-4 w-4 stroke-[3]" />
             {t.settings.back}
         </Button>

@@ -59,7 +59,7 @@ const Header = ({ language }: Props) => {
     return header(
         <div className="flex items-center gap-4">
             {!user.data && (
-                <Button onMouseDown={() => signIn()} className="hidden md:flex">
+                <Button onClick={() => signIn()} className="hidden md:flex">
                     <LuLogIn className="mr-3 h-4 w-4" />
                     {t.auth.signIn}
                 </Button>
