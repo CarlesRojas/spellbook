@@ -35,7 +35,8 @@
 
         "notFound": {
             "SPELL": "Hechizo no encontrado",
-            "USER": "Usuario no encontrado"
+            "USER": "Usuario no encontrado",
+            "CHARACTER": "Personaje no encontrado"
         },
 
         "sort": {

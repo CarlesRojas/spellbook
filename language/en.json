@@ -35,7 +35,8 @@
 
         "notFound": {
             "SPELL": "Spell not found",
-            "USER": "User not found"
+            "USER": "User not found",
+            "CHARACTER": "Character not found"
         },
 
         "sort": {

@@ -3,6 +3,7 @@ import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
 import { ReactNode } from "react";
 import { AiOutlineThunderbolt } from "react-icons/ai";
+import { GiVisoredHelm } from "react-icons/gi";
 import { LuUser2 } from "react-icons/lu";
 import BackButton from "./BackButton";
 
@@ -17,6 +18,7 @@ const NotFound = ({ type, language }: Props) => {
     const icon: Record<NotFoundType, ReactNode> = {
         [NotFoundType.SPELL]: <AiOutlineThunderbolt className="h-12 w-12" />,
         [NotFoundType.USER]: <LuUser2 className="h-12 w-12" />,
+        [NotFoundType.CHARACTER]: <GiVisoredHelm className="h-12 w-12" />,
     };
 
     return (
