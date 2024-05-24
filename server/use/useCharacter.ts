@@ -6,7 +6,7 @@ export type GetCharacterReturnType = PromiseType<ReturnType<typeof getCharacter>
 
 export const useCharacter = (characterId: string) => {
     return useQuery({
-        queryKey: ["character", characterId],
+        queryKey: ["character", parseInt(characterId)],
         queryFn: () => getCharacter(parseInt(characterId)),
         staleTime: 1000 * 60 * 5, // 5 minutes
         enabled: !!characterId && !isNaN(parseInt(characterId)),

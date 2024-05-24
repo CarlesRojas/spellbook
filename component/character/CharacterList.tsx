@@ -5,7 +5,7 @@ import CreateCharacterForm from "@/component/character/CreateCharacterForm";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
 import { useTranslation } from "@/hook/useTranslation";
-import { useCharacters } from "@/server/use/useCharacters";
+import { useUserCharacters } from "@/server/use/useUserCharacters";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
 import { useState } from "react";
@@ -19,7 +19,9 @@ interface Props {
 const CharacterList = ({ language, user }: Props) => {
     const { t } = useTranslation(language);
 
-    const characters = useCharacters(user.email);
+    const { characterIds, characters } = useUserCharacters(user.email);
+    const isLoading = characterIds.isLoading || characters.some((character) => character.isLoading);
+
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
     return (
@@ -48,15 +50,23 @@ const CharacterList = ({ language, user }: Props) => {
             </div>
 
             <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-                {characters.isLoading &&
+                {isLoading &&
                     Array.from({ length: 5 }).map((_, index) => (
                         <CharacterItem isLoading key={index} user={user} language={language} />
                     ))}
 
-                {characters.data &&
-                    characters.data.map((character) => (
-                        <CharacterItem key={character.id} character={character} user={user} language={language} />
-                    ))}
+                {!isLoading &&
+                    characters.map(
+                        (character) =>
+                            character.data && (
+                                <CharacterItem
+                                    key={character.data.id}
+                                    character={character.data}
+                                    user={user}
+                                    language={language}
+                                />
+                            ),
+                    )}
             </div>
         </section>
     );

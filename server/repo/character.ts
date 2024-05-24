@@ -94,41 +94,10 @@ export const getCharacter = async (id: number) => {
 export const getUserCharacters = async (userEmail: string) => {
     const result = await db.query.characters.findMany({
         where: (characters, { eq }) => eq(characters.userEmail, userEmail),
-        with: {
-            character: {
-                with: {
-                    knownSpells: {
-                        columns: {},
-                        with: {
-                            spell: {
-                                with: { name: true, description: true, highLevelDescription: true, material: true },
-                            },
-                        },
-                    },
-                    preparedSpells: {
-                        columns: {},
-                        with: {
-                            spell: {
-                                with: { name: true, description: true, highLevelDescription: true, material: true },
-                            },
-                        },
-                    },
-                    knownCantrips: {
-                        columns: {},
-                        with: {
-                            spell: {
-                                with: { name: true, description: true, highLevelDescription: true, material: true },
-                            },
-                        },
-                    },
-                    spellSlotsAvailable: true,
-                },
-            },
-        },
         orderBy: (characters, { desc }) => desc(characters.characterId),
     });
 
-    return result.filter(({ character }) => !!character).map(({ character }) => toDomain(character!));
+    return result.map(({ characterId }) => characterId).filter((characterId) => characterId !== null) as number[];
 };
 
 export const updateCharacter = async (updatedCharacter: Character) => {
