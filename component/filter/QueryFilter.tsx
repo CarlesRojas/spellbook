@@ -44,7 +44,7 @@ const QueryFilter = ({ language, query, setQuery, isLoading = false }: Props) =>
                     type="button"
                     disabled={isLoading}
                     aria-label="Clear Search"
-                    onClick={() => {
+                    onMouseDown={() => {
                         setInternalQuery("");
                         setQuery("");
                     }}

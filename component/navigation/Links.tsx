@@ -21,13 +21,13 @@ const Links = ({ language }: Props) => {
     const { user, signIn } = useUser();
 
     const signInButton = (children: ReactNode) => (
-        <Button variant="link" onClick={() => signIn()}>
+        <Button variant="link" onMouseDown={() => signIn()}>
             {children}
         </Button>
     );
 
     const signInDropdownButton = (children: ReactNode) => (
-        <DropdownMenuItem className="font-semibold" onClick={() => signIn()}>
+        <DropdownMenuItem className="font-semibold" onMouseDown={() => signIn()}>
             {children}
         </DropdownMenuItem>
     );

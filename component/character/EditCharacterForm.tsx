@@ -91,7 +91,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                                             disabled={
                                                 field.value <= 1 || editCharacter.isPending || editCharacter.isSuccess
                                             }
-                                            onClick={() => field.onChange(field.value - 1)}
+                                            onMouseDown={() => field.onChange(field.value - 1)}
                                         >
                                             <LuMinus className="h-4 w-4 stroke-[3]" />
                                         </Button>
@@ -107,7 +107,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                                             disabled={
                                                 field.value >= 20 || editCharacter.isPending || editCharacter.isSuccess
                                             }
-                                            onClick={() => field.onChange(field.value + 1)}
+                                            onMouseDown={() => field.onChange(field.value + 1)}
                                         >
                                             <LuPlus className="h-4 w-4 stroke-[3]" />
                                         </Button>
@@ -132,7 +132,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                                             size="icon"
                                             type="button"
                                             disabled={editCharacter.isPending || editCharacter.isSuccess}
-                                            onClick={() => field.onChange(field.value - 1)}
+                                            onMouseDown={() => field.onChange(field.value - 1)}
                                         >
                                             <LuMinus className="h-4 w-4 stroke-[3]" />
                                         </Button>
@@ -146,7 +146,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                                             size="icon"
                                             type="button"
                                             disabled={editCharacter.isPending || editCharacter.isSuccess}
-                                            onClick={() => field.onChange(field.value + 1)}
+                                            onMouseDown={() => field.onChange(field.value + 1)}
                                         >
                                             <LuPlus className="h-4 w-4 stroke-[3]" />
                                         </Button>

@@ -35,12 +35,12 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent className="mx-2 my-3">
-                    <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
+                    <DropdownMenuItem onMouseDown={() => setEditDialogOpen(true)}>
                         <LuPencil className="mr-2 h-5 w-5" />
                         <p className="font-medium tracking-wide">{t.form.edit}</p>
                     </DropdownMenuItem>
 
-                    <DropdownMenuItem onClick={() => setDeleteDialogOpen(true)}>
+                    <DropdownMenuItem onMouseDown={() => setDeleteDialogOpen(true)}>
                         <LuTrash2 className="mr-2 h-5 w-5 text-red-500" />
                         <p className="font-medium tracking-wide text-red-500">{t.form.delete}</p>
                     </DropdownMenuItem>

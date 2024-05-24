@@ -34,7 +34,7 @@ const SortFilter = ({ language, sort, setSort, isLoading = false }: Props) => {
                     {Object.values(Sort).map((sortFilter) => (
                         <DropdownMenuItem
                             key={sortFilter}
-                            onClick={() => setSort(sortFilter)}
+                            onMouseDown={() => setSort(sortFilter)}
                             disabled={isLoading}
                             className={`font-semibold ${sortFilter === sort ? "!text-sky-500" : ""}`}
                         >
