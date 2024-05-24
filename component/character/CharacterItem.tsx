@@ -92,7 +92,7 @@ const CharacterItem = (props: Props) => {
 
                         <p>
                             <span className="text-sm font-semibold opacity-50">
-                                {t.enum.ability[getAbility(characterClass)]}
+                                {t.enum.abilityShort[getAbility(characterClass)]}
                             </span>{" "}
                             <strong className="text-sm font-semibold">{ability}</strong>
                         </p>

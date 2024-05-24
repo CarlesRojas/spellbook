@@ -125,13 +125,22 @@
             "THUNDER": "Trueno"
         },
 
-        "ability": {
+        "abilityShort": {
             "DEX": "DES",
             "WIS": "SAB",
             "CHA": "CAR",
             "CON": "CON",
             "INT": "INT",
             "STR": "FUE"
+        },
+
+        "ability": {
+            "DEX": "Destreza",
+            "WIS": "Sabiduría",
+            "CHA": "Carisma",
+            "CON": "Constitución",
+            "INT": "Inteligencia",
+            "STR": "Fuerza"
         },
 
         "difficultyClassSuccess": {
@@ -201,9 +210,10 @@
 
         "character": {
             "createCharacter": "Crear nuevo personaje",
-            "name": "Nombre del personaje",
-            "level": "Nivel del personaje",
-            "class": "Clase",
+            "name": "Elige un nombre",
+            "newName": "Nuevo nombre",
+            "class": "Elige una clase",
+            "level": "Nivel",
             "ability": "Habilidad",
             "deleteDisclaimer": "Eliminar el personaje y todos sus datos. Esta acción no se puede deshacer.",
 

@@ -125,13 +125,22 @@
             "THUNDER": "Thunder"
         },
 
-        "ability": {
+        "abilityShort": {
             "DEX": "DEX",
             "WIS": "WIS",
             "CHA": "CHA",
             "CON": "CON",
             "INT": "INT",
             "STR": "STR"
+        },
+
+        "ability": {
+            "DEX": "Dexterity",
+            "WIS": "Wisdom",
+            "CHA": "Charisma",
+            "CON": "Constitution",
+            "INT": "Intelligence",
+            "STR": "Strength"
         },
 
         "difficultyClassSuccess": {
@@ -201,9 +210,10 @@
 
         "character": {
             "createCharacter": "Create new character",
-            "name": "Character Name",
-            "level": "Character Level",
-            "class": "Class",
+            "name": "Choose a name",
+            "newName": "New name",
+            "class": "Choose a class",
+            "level": "Level",
             "ability": "Ability",
             "deleteDisclaimer": "Delete character and all its data. This action cannot be undone.",
 

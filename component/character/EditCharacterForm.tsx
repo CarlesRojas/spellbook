@@ -61,13 +61,12 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                             name="name"
                             render={({ field }) => (
                                 <FormItem className="space-y-1">
-                                    <FormLabel>{t.dnd.character.name}</FormLabel>
+                                    <FormLabel>{t.dnd.character.newName}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder={`${t.dnd.character.name}...`}
                                             disabled={editCharacter.isPending || editCharacter.isSuccess}
                                             {...field}
-                                            className="w-fit min-w-80 font-semibold tracking-wide placeholder:font-normal"
+                                            className="w-fit min-w-80 font-semibold tracking-wide"
                                         />
                                     </FormControl>
 
@@ -124,9 +123,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                         name="ability"
                         render={({ field }) => (
                             <FormItem className="space-y-1">
-                                <FormLabel>
-                                    {t.enum.ability[getAbility(character.class)]} {t.dnd.character.ability}
-                                </FormLabel>
+                                <FormLabel>{t.enum.ability[getAbility(character.class)]}</FormLabel>
 
                                 <FormControl>
                                     <div className="flex items-center gap-4">

@@ -74,10 +74,9 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                                 <FormLabel>{t.dnd.character.name}</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder={`${t.dnd.character.name}...`}
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
                                         {...field}
-                                        className="w-fit min-w-80 font-semibold tracking-wide placeholder:font-normal"
+                                        className="w-fit min-w-80 font-semibold tracking-wide"
                                     />
                                 </FormControl>
 
@@ -197,17 +196,14 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                         name="ability"
                         render={({ field }) => (
                             <FormItem className="space-y-1">
-                                <FormLabel>
-                                    {t.enum.ability[getAbility(form.watch("class"))]} {t.dnd.character.ability}
-                                </FormLabel>
+                                <FormLabel>{t.enum.ability[getAbility(form.watch("class"))]}</FormLabel>
 
                                 <FormControl>
                                     <Input
                                         type="number"
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
-                                        placeholder={`${t.dnd.character.name}...`}
                                         {...field}
-                                        className="w-fit min-w-80 font-semibold tracking-wide placeholder:font-normal"
+                                        className="w-fit min-w-80 font-semibold tracking-wide"
                                     />
                                 </FormControl>
 
