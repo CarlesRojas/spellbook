@@ -44,7 +44,7 @@ export const getKnowSpells = (classType: ClassType, level: number) => {
     };
 
     const knownSpellsPerLevel = map[classType];
-    return knownSpellsPerLevel ? knownSpellsPerLevel[level] : null;
+    return knownSpellsPerLevel ? knownSpellsPerLevel[level - 1] : null;
 };
 
 export const getPreparedSpellsAmount = (classType: ClassType, ability: number, level: number) => {
@@ -74,7 +74,7 @@ export const getTotalSpellSlots = (classType: ClassType, level: number) => {
         [ClassType.WARLOCK]: WARLOCK_SPELL_SLOTS, // Can regain all spent spell slots using Eldritch Master
     };
 
-    return map[classType][level];
+    return map[classType][level - 1];
 };
 
 export const getCantripsAmount = (classType: ClassType, level: number) => {
@@ -89,12 +89,12 @@ export const getCantripsAmount = (classType: ClassType, level: number) => {
         [ClassType.WARLOCK]: [2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
     };
 
-    return map[classType][level];
+    return map[classType][level - 1];
 };
 
 export const getProficiencyBonus = (level: number) => {
     const proficiencyBonus: ArrayWith20Positions<number> = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
-    return proficiencyBonus[level];
+    return proficiencyBonus[level - 1];
 };
 
 export const canCastRituals = (classType: ClassType) => {

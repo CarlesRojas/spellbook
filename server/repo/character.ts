@@ -132,7 +132,18 @@ export const getUserCharacters = async (userEmail: string) => {
 };
 
 export const updateCharacter = async (updatedCharacter: Character) => {
+    const oldCharacter = await db.query.character.findFirst({
+        where: (character, { eq }) => eq(character.id, updatedCharacter.id),
+    });
+    if (!oldCharacter) return;
+
     await db.update(character).set(updatedCharacter).where(eq(character.id, updatedCharacter.id));
+
+    if (oldCharacter.spellSlotsAvailableId && oldCharacter.level !== updatedCharacter.level)
+        await db
+            .update(spellSlots)
+            .set(getTotalSpellSlots(updatedCharacter.class, updatedCharacter.level))
+            .where(eq(spellSlots.id, oldCharacter.spellSlotsAvailableId));
 };
 
 export const deleteCharacter = async (id: number) => {
