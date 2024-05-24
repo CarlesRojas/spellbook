@@ -1,5 +1,5 @@
 import { NewCharacter } from "@/server/repo/character";
-import { Character, ZERO } from "@/type/Character";
+import { CharacterWithSpells, ZERO } from "@/type/Character";
 import { Ability, ClassType } from "@/type/Spell";
 import {
     PALADIN_SPELL_SLOTS,
@@ -183,7 +183,7 @@ export const getClassBackgroundColorOnHover = (classType: ClassType) => {
 };
 
 export const getEmptyCharacterFromDbCharacter = (character: NewCharacter) => {
-    const newCharacter: Character = {
+    const newCharacter: CharacterWithSpells = {
         ...character,
         class: character.class as ClassType,
         id: -1,
