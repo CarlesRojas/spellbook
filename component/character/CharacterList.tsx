@@ -1,13 +1,14 @@
 "use client";
 
-import CharacterItem from "@/component/CharacterItem";
-import CreateCharacterForm from "@/component/CreateCharacterForm";
+import CharacterItem from "@/component/character/CharacterItem";
+import CreateCharacterForm from "@/component/character/CreateCharacterForm";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
 import { useTranslation } from "@/hook/useTranslation";
 import { GetUserCharactersReturnType, useCharacters } from "@/server/use/useCharacters";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
+import { useState } from "react";
 import { LuPlus } from "react-icons/lu";
 
 interface Props {
@@ -21,9 +22,11 @@ const CharacterList = ({ language, initialCharacterData, user }: Props) => {
 
     const characters = useCharacters(user.email, initialCharacterData);
 
+    const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
     return (
         <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-4 p-4">
-            <Dialog>
+            <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
                     <Button>
                         <LuPlus className="mr-3 h-4 w-4 stroke-[3]" />
@@ -36,15 +39,13 @@ const CharacterList = ({ language, initialCharacterData, user }: Props) => {
                         <DialogTitle>{t.dnd.character.createCharacter}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="grid w-full gap-4 py-4">
-                        <CreateCharacterForm user={user} language={language} />
-                    </div>
+                    <CreateCharacterForm user={user} language={language} onSuccess={() => setCreateDialogOpen(false)} />
                 </DialogContent>
             </Dialog>
 
-            <div className="grid w-full grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+            <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
                 {characters.data.map((character) => (
-                    <CharacterItem key={character.id} character={character} language={language} />
+                    <CharacterItem key={character.id} character={character} user={user} language={language} />
                 ))}
             </div>
         </section>

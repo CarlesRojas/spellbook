@@ -99,7 +99,7 @@ export const LanguageObjectSchema = z.object({
             level: z.string(),
             class: z.string(),
             ability: z.string(),
-            submit: z.string(),
+            deleteDisclaimer: z.string(),
 
             error: z.object({
                 nameTooShort: z.string(),
@@ -111,6 +111,11 @@ export const LanguageObjectSchema = z.object({
     form: z.object({
         required: z.string(),
         optional: z.string(),
+        create: z.string(),
+        delete: z.string(),
+        cancel: z.string(),
+        edit: z.string(),
+        confirm: z.string(),
     }),
 });
 

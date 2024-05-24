@@ -1,5 +1,5 @@
 import { PageProps } from "@/app/[language]/layout";
-import CharacterList from "@/component/CharacterList";
+import CharacterList from "@/component/character/CharacterList";
 import NotFound from "@/component/navigation/NotFound";
 import { getUserCharacters } from "@/server/repo/character";
 import { getUserById } from "@/server/repo/user";

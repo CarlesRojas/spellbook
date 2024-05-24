@@ -198,13 +198,15 @@
         "cantrip": "Cantrip",
         "cantrips": "Cantrips",
         "level": "LVL",
+
         "character": {
-            "createCharacter": "Create new Character",
+            "createCharacter": "Create new character",
             "name": "Character Name",
             "level": "Character Level",
             "class": "Class",
             "ability": "Ability",
-            "submit": "Create",
+            "deleteDisclaimer": "Delete character and all its data. This action cannot be undone.",
+
             "error": {
                 "nameTooShort": "The name must be at least 2 characters",
                 "nameTooLong": "The name must be no more than 16 characters"
@@ -214,6 +216,11 @@
 
     "form": {
         "required": "Required",
-        "optional": "Optional"
+        "optional": "Optional",
+        "create": "Create",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "confirm": "Confirm"
     }
 }

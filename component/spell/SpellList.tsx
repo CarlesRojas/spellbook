@@ -1,8 +1,8 @@
 "use client";
 
-import SpellIcon from "@/component/SpellIcon";
 import QueryFilter from "@/component/filter/QueryFilter";
 import SortFilter from "@/component/filter/SortFilter";
+import SpellItem from "@/component/spell/SpellItem";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { cn } from "@/lib/util";
@@ -77,7 +77,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                                 </h2>
                             )}
 
-                            <SpellIcon language={language} spell={spell} />
+                            <SpellItem language={language} spell={spell} />
                         </Fragment>
                     );
                 })}

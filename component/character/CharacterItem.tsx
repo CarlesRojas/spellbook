@@ -6,7 +6,7 @@ import RangerIcon from "@/asset/class/Ranger.svg";
 import SorcererIcon from "@/asset/class/Sorcerer.svg";
 import WarlockIcon from "@/asset/class/Warlock.svg";
 import WizardIcon from "@/asset/class/Wizard.svg";
-import CharacterDropdownMenu from "@/component/CharacterDropdownMenu";
+import CharacterDropdownMenu from "@/component/character/CharacterDropdownMenu";
 import { useTranslation } from "@/hook/useTranslation";
 import { getAbility, getClassColor, getClassColorOnHover } from "@/lib/character";
 import { cn } from "@/lib/util";
@@ -14,12 +14,14 @@ import { Character } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import { ClassType } from "@/type/Spell";
+import { User } from "@/type/User";
 import Link from "next/link";
 import { ReactElement } from "react";
 
 interface Props {
     language: Language;
     character: Character;
+    user: User;
 }
 
 export const getClassIcon = (classType: ClassType, className?: string) => {
@@ -51,7 +53,7 @@ export const getClassIcon = (classType: ClassType, className?: string) => {
     return map[classType];
 };
 
-const CharacterItem = ({ language, character }: Props) => {
+const CharacterItem = ({ language, character, user }: Props) => {
     const { t } = useTranslation(language);
     const { id, name, class: characterClass, level, ability } = character;
 
@@ -84,7 +86,7 @@ const CharacterItem = ({ language, character }: Props) => {
             </Link>
 
             <div className="flex h-fit w-fit items-center gap-2 p-3">
-                <CharacterDropdownMenu language={language} />
+                <CharacterDropdownMenu character={character} language={language} user={user} />
             </div>
         </div>
     );

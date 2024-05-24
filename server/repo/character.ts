@@ -86,6 +86,10 @@ export const getUserCharacters = async (userEmail: string) => {
     return result.filter(({ character }) => !!character).map(({ character }) => toDomain(character!));
 };
 
+export const updateCharacter = async (updatedCharacter: Character) => {
+    await db.update(character).set(updatedCharacter).where(eq(character.id, updatedCharacter.id));
+};
+
 export const deleteCharacter = async (id: number) => {
     await db.delete(character).where(and(eq(character.id, id)));
 };

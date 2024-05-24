@@ -205,7 +205,8 @@
             "level": "Nivel del personaje",
             "class": "Clase",
             "ability": "Habilidad",
-            "submit": "Crear",
+            "deleteDisclaimer": "Eliminar el personaje y todos sus datos. Esta acción no se puede deshacer.",
+
             "error": {
                 "nameTooShort": "El nombre debe tener al menos 2 caracteres",
                 "nameTooLong": "El nombre debe tener no más de 16 caracteres"
@@ -214,7 +215,12 @@
     },
 
     "form": {
-        "required": "Required",
-        "optional": "Optional"
+        "required": "Requerido",
+        "optional": "Opcional",
+        "create": "Crear",
+        "delete": "Borrar",
+        "cancel": "Cancelar",
+        "edit": "Editar",
+        "confirm": "Confirmar"
     }
 }

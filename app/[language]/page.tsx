@@ -1,5 +1,5 @@
 import { PageProps } from "@/app/[language]/layout";
-import SpellList from "@/component/SpellList";
+import SpellList from "@/component/spell/SpellList";
 import { getAllSpells } from "@/server/repo/spell";
 import { Suspense } from "react";
 

@@ -12,7 +12,7 @@ interface Props {
     children?: ReactNode;
 }
 
-const SpellRow = ({ spell, language, children }: Props) => {
+const SpellItem = ({ spell, language, children }: Props) => {
     const { t } = useTranslation(language);
     const { index, icon, color, name } = spell;
 
@@ -55,4 +55,4 @@ const SpellRow = ({ spell, language, children }: Props) => {
     );
 };
 
-export default SpellRow;
+export default SpellItem;
