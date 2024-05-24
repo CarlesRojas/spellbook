@@ -19,7 +19,7 @@ const Characters = ({ params: { language, characterId } }: Props) => {
     const { user } = useUser();
 
     // TODO better loading state
-    if (character.isLoading)
+    if (character.isLoading || user.isLoading)
         return (
             <main className="relative flex h-full min-h-96 w-full flex-col items-center justify-center">
                 <LuLoader2 className="h-12 w-12 animate-spin" />
