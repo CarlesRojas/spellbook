@@ -51,7 +51,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
             <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
 
-                <div className="flex flex-row justify-end gap-2">
+                <div className="flex flex-row gap-2">
                     <SortFilter language={language} sort={sort} setSort={setSort} />
                 </div>
             </div>

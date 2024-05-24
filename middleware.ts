@@ -34,7 +34,7 @@ const isUserAuthenticated = (request: NextRequestWithAuth) => {
     return !!authToken;
 };
 
-const userRoutes: Route[] = [];
+const userRoutes: Route[] = [Route.CHARACTERS, Route.CHARACTER];
 
 export default withAuth(
     async function middleware(request: NextRequestWithAuth) {
