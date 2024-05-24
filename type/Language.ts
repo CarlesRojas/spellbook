@@ -92,7 +92,25 @@ export const LanguageObjectSchema = z.object({
         cantrip: z.string(),
         cantrips: z.string(),
         level: z.string(),
-        createCharacter: z.string(),
+
+        character: z.object({
+            createCharacter: z.string(),
+            name: z.string(),
+            level: z.string(),
+            class: z.string(),
+            ability: z.string(),
+            submit: z.string(),
+
+            error: z.object({
+                nameTooShort: z.string(),
+                nameTooLong: z.string(),
+            }),
+        }),
+    }),
+
+    form: z.object({
+        required: z.string(),
+        optional: z.string(),
     }),
 });
 

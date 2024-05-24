@@ -107,14 +107,14 @@ export const canCastRituals = (classType: ClassType) => {
 
 export const getClassColor = (classType: ClassType) => {
     const map: Record<ClassType, string> = {
-        [ClassType.WIZARD]: "text-sky-500/90",
-        [ClassType.SORCERER]: "text-pink-500/90",
-        [ClassType.CLERIC]: "text-gray-600/90 dark:text-gray-200/90",
-        [ClassType.PALADIN]: "text-red-500/90",
-        [ClassType.RANGER]: "text-amber-500/90",
-        [ClassType.BARD]: "text-teal-500/90",
-        [ClassType.DRUID]: "text-lime-500/90",
-        [ClassType.WARLOCK]: "text-fuchsia-500/90",
+        [ClassType.WIZARD]: "text-sky-500/90 dark:text-sky-500/90",
+        [ClassType.SORCERER]: "text-pink-500/90 dark:text-pink-500/90",
+        [ClassType.CLERIC]: "text-yellow-500/90 dark:text-yellow-500/90",
+        [ClassType.PALADIN]: "text-red-500/90 dark:text-red-500/90",
+        [ClassType.RANGER]: "text-amber-500/90 dark:text-amber-500/90",
+        [ClassType.BARD]: "text-teal-500/90 dark:text-teal-500/90",
+        [ClassType.DRUID]: "text-lime-500/90 dark:text-lime-500/90",
+        [ClassType.WARLOCK]: "text-fuchsia-500/90 dark:text-fuchsia-500/90",
     };
 
     return map[classType];
@@ -122,15 +122,54 @@ export const getClassColor = (classType: ClassType) => {
 
 export const getClassColorOnHover = (classType: ClassType) => {
     const map: Record<ClassType, string> = {
-        [ClassType.WIZARD]: "mouse:hover:text-sky-500/90 mouse:group-hover:text-sky-500/90",
-        [ClassType.SORCERER]: "mouse:hover:text-pink-500/90 mouse:group-hover:text-pink-500/90",
+        [ClassType.WIZARD]: "mouse:transition-colors mouse:hover:text-sky-500/90 mouse:group-hover:text-sky-500/90",
+        [ClassType.SORCERER]: "mouse:transition-colors mouse:hover:text-pink-500/90 mouse:group-hover:text-pink-500/90",
         [ClassType.CLERIC]:
-            "mouse:hover:text-gray-600/90 mouse:hover:dark:text-gray-200/90 mouse:group-hover:text-gray-600/90 mouse:group-hover:dark:text-gray-200/90",
-        [ClassType.PALADIN]: "mouse:hover:text-red-500/90 mouse:group-hover:text-red-500/90",
-        [ClassType.RANGER]: "mouse:hover:text-amber-500/90 mouse:group-hover:text-amber-500/90",
-        [ClassType.BARD]: "mouse:hover:text-teal-500/90 mouse:group-hover:text-teal-500/90",
-        [ClassType.DRUID]: "mouse:hover:text-lime-500/90 mouse:group-hover:text-lime-500/90",
-        [ClassType.WARLOCK]: "mouse:hover:text-fuchsia-500/90 mouse:group-hover:text-fuchsia-500/90",
+            "mouse:transition-colors mouse:hover:text-yellow-500/90 mouse:group-hover:text-yellow-500/90",
+        [ClassType.PALADIN]: "mouse:transition-colors mouse:hover:text-red-500/90 mouse:group-hover:text-red-500/90",
+        [ClassType.RANGER]: "mouse:transition-colors mouse:hover:text-amber-500/90 mouse:group-hover:text-amber-500/90",
+        [ClassType.BARD]: "mouse:transition-colors mouse:hover:text-teal-500/90 mouse:group-hover:text-teal-500/90",
+        [ClassType.DRUID]: "mouse:transition-colors mouse:hover:text-lime-500/90 mouse:group-hover:text-lime-500/90",
+        [ClassType.WARLOCK]:
+            "mouse:transition-colors mouse:hover:text-fuchsia-500/90 mouse:group-hover:text-fuchsia-500/90",
+    };
+
+    return map[classType];
+};
+
+export const getClassBackgroundColor = (classType: ClassType) => {
+    const map: Record<ClassType, string> = {
+        [ClassType.WIZARD]: "bg-sky-500/90 dark:bg-sky-500/90",
+        [ClassType.SORCERER]: "bg-pink-500/90 dark:bg-pink-500/90",
+        [ClassType.CLERIC]: "bg-yellow-500/90 dark:bg-yellow-500/90",
+        [ClassType.PALADIN]: "bg-red-500/90 dark:bg-red-500/90",
+        [ClassType.RANGER]: "bg-amber-500/90 dark:bg-amber-500/90",
+        [ClassType.BARD]: "bg-teal-500/90 dark:bg-teal-500/90",
+        [ClassType.DRUID]: "bg-lime-500/90 dark:bg-lime-500/90",
+        [ClassType.WARLOCK]: "bg-fuchsia-500/90 dark:bg-fuchsia-500/90",
+    };
+
+    return map[classType];
+};
+
+export const getClassBackgroundColorOnHover = (classType: ClassType) => {
+    const map: Record<ClassType, string> = {
+        [ClassType.WIZARD]:
+            "mouse:transition-colors mouse:hover:bg-sky-500/80 mouse:hover:dark:bg-sky-500/80 mouse:group-hover:bg-sky-500/80 mouse:group-hover:dark:bg-sky-500/80",
+        [ClassType.SORCERER]:
+            "mouse:transition-colors mouse:hover:bg-pink-500/80 mouse:hover:dark:bg-pink-500/80 mouse:group-hover:bg-pink-500/80 mouse:group-hover:dark:bg-pink-500/80",
+        [ClassType.CLERIC]:
+            "mouse:transition-colors mouse:hover:bg-yellow-500/80 mouse:hover:dark:bg-yellow-500/80 mouse:group-hover:bg-yellow-500/80 mouse:group-hover:dark:bg-yellow-500/80",
+        [ClassType.PALADIN]:
+            "mouse:transition-colors mouse:hover:bg-red-500/80 mouse:hover:dark:bg-red-500/80 mouse:group-hover:bg-red-500/80 mouse:group-hover:dark:bg-red-500/80",
+        [ClassType.RANGER]:
+            "mouse:transition-colors mouse:hover:bg-amber-500/80 mouse:hover:dark:bg-amber-500/80 mouse:group-hover:bg-amber-500/80 mouse:group-hover:dark:bg-amber-500/80",
+        [ClassType.BARD]:
+            "mouse:transition-colors mouse:hover:bg-teal-500/80 mouse:hover:dark:bg-teal-500/80 mouse:group-hover:bg-teal-500/80 mouse:group-hover:dark:bg-teal-500/80",
+        [ClassType.DRUID]:
+            "mouse:transition-colors mouse:hover:bg-lime-500/80 mouse:hover:dark:bg-lime-500/80 mouse:group-hover:bg-lime-500/80 mouse:group-hover:dark:bg-lime-500/80",
+        [ClassType.WARLOCK]:
+            "mouse:transition-colors mouse:hover:bg-fuchsia-500/80 mouse:hover:dark:bg-fuchsia-500/80 mouse:group-hover:bg-fuchsia-500/80 mouse:group-hover:dark:bg-fuchsia-500/80",
     };
 
     return map[classType];

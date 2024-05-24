@@ -198,6 +198,22 @@
         "cantrip": "Cantrip",
         "cantrips": "Cantrips",
         "level": "LVL",
-        "createCharacter": "Create new Character"
+        "character": {
+            "createCharacter": "Create new Character",
+            "name": "Character Name",
+            "level": "Character Level",
+            "class": "Class",
+            "ability": "Ability",
+            "submit": "Create",
+            "error": {
+                "nameTooShort": "The name must be at least 2 characters",
+                "nameTooLong": "The name must be no more than 16 characters"
+            }
+        }
+    },
+
+    "form": {
+        "required": "Required",
+        "optional": "Optional"
     }
 }

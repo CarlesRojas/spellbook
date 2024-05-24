@@ -7,7 +7,7 @@ export const CharacterSchema = z.object({
     id: z.number(),
 
     name: z.string(),
-    level: z.number().min(0).max(20),
+    level: z.number().min(1).max(20),
     class: z.nativeEnum(ClassType),
     ability: z.number(),
 

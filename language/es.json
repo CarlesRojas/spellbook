@@ -198,6 +198,23 @@
         "cantrip": "Truco",
         "cantrips": "Trucos",
         "level": "LVL",
-        "createCharacter": "Crear nuevo personaje"
+
+        "character": {
+            "createCharacter": "Crear nuevo personaje",
+            "name": "Nombre del personaje",
+            "level": "Nivel del personaje",
+            "class": "Clase",
+            "ability": "Habilidad",
+            "submit": "Crear",
+            "error": {
+                "nameTooShort": "El nombre debe tener al menos 2 caracteres",
+                "nameTooLong": "El nombre debe tener no más de 16 caracteres"
+            }
+        }
+    },
+
+    "form": {
+        "required": "Required",
+        "optional": "Optional"
     }
 }
