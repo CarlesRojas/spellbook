@@ -4,11 +4,11 @@
 
 @layer components {
     .focus-shadow {
-        @apply transition-colors focus-visible:outline-none mouse:focus-visible:z-10 mouse:focus-visible:shadow-[0_0_0_4px_#d6d3d1] mouse:focus-visible:dark:shadow-[0_0_0_4px_#44403c];
+        @apply transition-colors focus-visible:outline-none mouse:focus-visible:z-10 mouse:focus-visible:shadow-[0_0_0_4px_#d6d3d1] mouse:focus-visible:dark:shadow-[0_0_0_4px_#292524];
     }
 
     .skeleton {
-        @apply animate-pulse !border-stone-300 !bg-stone-200 !text-transparent dark:!border-stone-700 dark:!bg-stone-800;
+        @apply animate-pulse !border-stone-300 !bg-stone-200 !text-transparent dark:!border-stone-800 dark:!bg-stone-900;
     }
 }
 

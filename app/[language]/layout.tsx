@@ -52,7 +52,7 @@ const RootLayout = ({ children, modal, params: { language } }: Props) => {
             <QueryProvider>
                 <AuthProvider>
                     <body
-                        className={`${montserrat.className} bg-stone-100 text-stone-900 dark:bg-stone-900 dark:text-stone-100`}
+                        className={`${montserrat.className} bg-stone-100 text-stone-950 dark:bg-stone-950 dark:text-stone-100`}
                     >
                         <ThemeProvider>
                             <Header language={language} />

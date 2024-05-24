@@ -44,7 +44,7 @@ const CharacterItem = (props: Props) => {
     const { id, name, class: characterClass, level, ability } = props.character;
 
     return (
-        <div className="flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-950">
+        <div className="flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-black">
             <Link
                 href={`/${language}/${Route.CHARACTER}/${id}`}
                 className="focus-shadow group flex grow items-center gap-2 rounded p-3"

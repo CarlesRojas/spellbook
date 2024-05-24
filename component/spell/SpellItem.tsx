@@ -20,7 +20,7 @@ const SpellItem = ({ spell, language, children }: Props) => {
         <div className="anim-enter-view flex flex-col items-center gap-2">
             <Link
                 href={`/${language}${Route.SPELL}/${index}`}
-                className="focus-shadow group relative flex w-full flex-col items-center rounded-md"
+                className="focus-shadow group relative flex w-full flex-col items-center rounded-md  p-2"
             >
                 <div
                     className="inline-block h-20 min-h-20 w-20 min-w-20 bg-cover brightness-90 dark:brightness-100 sm:h-24 sm:min-h-24 sm:w-24 sm:min-w-24 mouse:transition-transform mouse:group-hover:scale-110"

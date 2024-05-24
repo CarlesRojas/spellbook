@@ -64,7 +64,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 </p>
             </div>
 
-            <div className="grid w-full grid-cols-3 gap-x-6 gap-y-6 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+            <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                 {filteredSpells.map((spell) => {
                     const isLevelChange = spell.level !== lastLevel;
                     lastLevel = spell.level;
@@ -72,7 +72,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                     return (
                         <Fragment key={spell.index}>
                             {[Sort.LEVEL_ASC, Sort.LEVEL_DESC].includes(sort) && isLevelChange && (
-                                <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-900 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
+                                <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
                             )}
