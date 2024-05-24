@@ -18,11 +18,21 @@ import { User } from "@/type/User";
 import Link from "next/link";
 import { ReactElement } from "react";
 
-interface Props {
+interface CommonProps {
     language: Language;
-    character: Character;
     user: User;
 }
+
+interface LoadingProps {
+    isLoading: true;
+}
+
+interface DefaultProps {
+    isLoading?: false;
+    character: Character;
+}
+
+type Props = CommonProps & (LoadingProps | DefaultProps);
 
 export const getClassIcon = (classType: ClassType, className?: string) => {
     const map: Record<ClassType, ReactElement> = {
@@ -53,9 +63,14 @@ export const getClassIcon = (classType: ClassType, className?: string) => {
     return map[classType];
 };
 
-const CharacterItem = ({ language, character, user }: Props) => {
+const CharacterItem = (props: Props) => {
+    const { isLoading, language, user } = props;
+
     const { t } = useTranslation(language);
-    const { id, name, class: characterClass, level, ability } = character;
+
+    if (isLoading) return <div className="skeleton flex h-[5.5rem] min-h-[5.5rem] w-full rounded border" />;
+
+    const { id, name, class: characterClass, level, ability } = props.character;
 
     return (
         <div className="flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-950">
@@ -86,7 +101,7 @@ const CharacterItem = ({ language, character, user }: Props) => {
             </Link>
 
             <div className="flex h-fit w-fit items-center gap-2 p-3">
-                <CharacterDropdownMenu character={character} language={language} user={user} />
+                <CharacterDropdownMenu character={props.character} language={language} user={user} />
             </div>
         </div>
     );

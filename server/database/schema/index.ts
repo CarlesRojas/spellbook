@@ -1,5 +1,6 @@
 export * from "./character";
 export * from "./relations/characters";
+export * from "./relations/knownCantrips";
 export * from "./relations/knownSpells";
 export * from "./relations/preparedSpells";
 export * from "./spell";

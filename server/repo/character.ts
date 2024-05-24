@@ -14,9 +14,18 @@ type NewCharacter = typeof character.$inferInsert;
 type SelectedCharacter = InferResultType<
     "character",
     {
-        knownSpells: { columns: {}; with: { spell: true } };
-        preparedSpells: { columns: {}; with: { spell: true } };
-        knownCantrips: { columns: {}; with: { spell: true } };
+        knownSpells: {
+            columns: {};
+            with: { spell: { with: { name: true; description: true; highLevelDescription: true; material: true } } };
+        };
+        preparedSpells: {
+            columns: {};
+            with: { spell: { with: { name: true; description: true; highLevelDescription: true; material: true } } };
+        };
+        knownCantrips: {
+            columns: {};
+            with: { spell: { with: { name: true; description: true; highLevelDescription: true; material: true } } };
+        };
         spellSlotsAvailable: true;
     }
 >;
@@ -56,9 +65,24 @@ export const getCharacter = async (id: number) => {
     const result = await db.query.character.findFirst({
         where: (character, { eq }) => eq(character.id, id),
         with: {
-            knownSpells: { columns: {}, with: { spell: true } },
-            preparedSpells: { columns: {}, with: { spell: true } },
-            knownCantrips: { columns: {}, with: { spell: true } },
+            knownSpells: {
+                columns: {},
+                with: {
+                    spell: { with: { name: true, description: true, highLevelDescription: true, material: true } },
+                },
+            },
+            preparedSpells: {
+                columns: {},
+                with: {
+                    spell: { with: { name: true, description: true, highLevelDescription: true, material: true } },
+                },
+            },
+            knownCantrips: {
+                columns: {},
+                with: {
+                    spell: { with: { name: true, description: true, highLevelDescription: true, material: true } },
+                },
+            },
             spellSlotsAvailable: true,
         },
     });
@@ -73,9 +97,30 @@ export const getUserCharacters = async (userEmail: string) => {
         with: {
             character: {
                 with: {
-                    knownSpells: { columns: {}, with: { spell: true } },
-                    preparedSpells: { columns: {}, with: { spell: true } },
-                    knownCantrips: { columns: {}, with: { spell: true } },
+                    knownSpells: {
+                        columns: {},
+                        with: {
+                            spell: {
+                                with: { name: true, description: true, highLevelDescription: true, material: true },
+                            },
+                        },
+                    },
+                    preparedSpells: {
+                        columns: {},
+                        with: {
+                            spell: {
+                                with: { name: true, description: true, highLevelDescription: true, material: true },
+                            },
+                        },
+                    },
+                    knownCantrips: {
+                        columns: {},
+                        with: {
+                            spell: {
+                                with: { name: true, description: true, highLevelDescription: true, material: true },
+                            },
+                        },
+                    },
                     spellSlotsAvailable: true,
                 },
             },
@@ -91,7 +136,15 @@ export const updateCharacter = async (updatedCharacter: Character) => {
 };
 
 export const deleteCharacter = async (id: number) => {
+    const characterToDelete = await db.query.character.findFirst({
+        where: (character, { eq }) => eq(character.id, id),
+    });
+    if (!characterToDelete) return;
+
     await db.delete(character).where(and(eq(character.id, id)));
+
+    characterToDelete.spellSlotsAvailableId &&
+        (await db.delete(spellSlots).where(and(eq(spellSlots.id, characterToDelete.spellSlotsAvailableId))));
 };
 
 const toDomain = (character: SelectedCharacter) => {

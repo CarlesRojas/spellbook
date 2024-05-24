@@ -5,7 +5,7 @@ import CreateCharacterForm from "@/component/character/CreateCharacterForm";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
 import { useTranslation } from "@/hook/useTranslation";
-import { GetUserCharactersReturnType, useCharacters } from "@/server/use/useCharacters";
+import { useCharacters } from "@/server/use/useCharacters";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
 import { useState } from "react";
@@ -13,15 +13,13 @@ import { LuPlus } from "react-icons/lu";
 
 interface Props {
     language: Language;
-    initialCharacterData: GetUserCharactersReturnType;
     user: User;
 }
 
-const CharacterList = ({ language, initialCharacterData, user }: Props) => {
+const CharacterList = ({ language, user }: Props) => {
     const { t } = useTranslation(language);
 
-    const characters = useCharacters(user.email, initialCharacterData);
-
+    const characters = useCharacters(user.email);
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
     return (
@@ -44,9 +42,15 @@ const CharacterList = ({ language, initialCharacterData, user }: Props) => {
             </Dialog>
 
             <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-                {characters.data.map((character) => (
-                    <CharacterItem key={character.id} character={character} user={user} language={language} />
-                ))}
+                {characters.isLoading &&
+                    Array.from({ length: 5 }).map((_, index) => (
+                        <CharacterItem isLoading key={index} user={user} language={language} />
+                    ))}
+
+                {characters.data &&
+                    characters.data.map((character) => (
+                        <CharacterItem key={character.id} character={character} user={user} language={language} />
+                    ))}
             </div>
         </section>
     );
