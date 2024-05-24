@@ -7,6 +7,7 @@ import { getAbility } from "@/lib/character";
 import { useEditCharacter } from "@/server/use/useEditCharacter";
 import { Character } from "@/type/Character";
 import { Language } from "@/type/Language";
+import { User } from "@/type/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LuLoader2, LuMinus, LuPencil, LuPlus } from "react-icons/lu";
@@ -15,13 +16,14 @@ import { z } from "zod";
 interface Props {
     character: Character;
     language: Language;
+    user: User;
     editName?: boolean;
-    onSuccess?: () => void;
+    onClose?: () => void;
 }
 
-const EditCharacterForm = ({ character, editName, language, onSuccess }: Props) => {
+const EditCharacterForm = ({ character, editName, language, user, onClose }: Props) => {
     const { t } = useTranslation(language);
-    const editCharacter = useEditCharacter(onSuccess);
+    const editCharacter = useEditCharacter(user.email);
 
     const formSchema = z.object({
         name: z
@@ -46,6 +48,7 @@ const EditCharacterForm = ({ character, editName, language, onSuccess }: Props) 
             ...character,
             ...values,
         });
+        onClose?.();
     };
 
     return (
@@ -64,7 +67,7 @@ const EditCharacterForm = ({ character, editName, language, onSuccess }: Props) 
                                             placeholder={`${t.dnd.character.name}...`}
                                             disabled={editCharacter.isPending || editCharacter.isSuccess}
                                             {...field}
-                                            className="w-fit min-w-80 text-lg font-semibold tracking-wide placeholder:text-lg placeholder:font-normal"
+                                            className="w-fit min-w-80 font-semibold tracking-wide placeholder:font-normal"
                                         />
                                     </FormControl>
 

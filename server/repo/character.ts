@@ -10,7 +10,7 @@ import { Character, CharacterSchema } from "@/type/Character";
 import { ClassType } from "@/type/Spell";
 import { and, eq } from "drizzle-orm";
 
-type NewCharacter = typeof character.$inferInsert;
+export type NewCharacter = typeof character.$inferInsert;
 type SelectedCharacter = InferResultType<
     "character",
     {

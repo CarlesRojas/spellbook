@@ -1,6 +1,13 @@
-import { ZERO } from "@/type/Character";
+import { NewCharacter } from "@/server/repo/character";
+import { Character, ZERO } from "@/type/Character";
 import { Ability, ClassType } from "@/type/Spell";
-import { PALADIN_SPELL_SLOTS, SpellSlots, WARLOCK_SPELL_SLOTS, WIZARD_SPELL_SLOTS } from "@/type/SpellSlots";
+import {
+    PALADIN_SPELL_SLOTS,
+    SpellSlots,
+    WARLOCK_SPELL_SLOTS,
+    WIZARD_SPELL_SLOTS,
+    ZERO_SPELL_SLOTS,
+} from "@/type/SpellSlots";
 import { ArrayWith20Positions } from "@/type/utils";
 
 // TODO Sorcerer swap spell slots and sorcery points
@@ -173,4 +180,18 @@ export const getClassBackgroundColorOnHover = (classType: ClassType) => {
     };
 
     return map[classType];
+};
+
+export const getEmptyCharacterFromDbCharacter = (character: NewCharacter) => {
+    const newCharacter: Character = {
+        ...character,
+        class: character.class as ClassType,
+        id: -1,
+        knownCantrips: [],
+        knownSpells: [],
+        preparedSpells: [],
+        spellSlotsAvailable: ZERO_SPELL_SLOTS,
+    };
+
+    return newCharacter;
 };

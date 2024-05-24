@@ -37,7 +37,7 @@ const CharacterList = ({ language, user }: Props) => {
                         <DialogTitle>{t.dnd.character.createCharacter}</DialogTitle>
                     </DialogHeader>
 
-                    <CreateCharacterForm user={user} language={language} onSuccess={() => setCreateDialogOpen(false)} />
+                    <CreateCharacterForm user={user} language={language} onClose={() => setCreateDialogOpen(false)} />
                 </DialogContent>
             </Dialog>
 

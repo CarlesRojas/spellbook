@@ -59,8 +59,9 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
 
                     <EditCharacterForm
                         character={character}
+                        user={user}
                         editName
-                        onSuccess={() => setEditDialogOpen(false)}
+                        onClose={() => setEditDialogOpen(false)}
                         language={language}
                     />
                 </DialogContent>
@@ -78,7 +79,8 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
 
                     <DeleteCharacterForm
                         character={character}
-                        onSuccess={() => setDeleteDialogOpen(false)}
+                        user={user}
+                        onClose={() => setDeleteDialogOpen(false)}
                         language={language}
                     />
                 </DialogContent>

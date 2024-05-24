@@ -26,12 +26,12 @@ import { DialogFooter } from "../ui/dialog";
 interface Props {
     user: User;
     language: Language;
-    onSuccess: () => void;
+    onClose?: () => void;
 }
 
-const CreateCharacterForm = ({ user, language, onSuccess }: Props) => {
+const CreateCharacterForm = ({ user, language, onClose }: Props) => {
     const { t } = useTranslation(language);
-    const createCharacter = useCreateCharacter(onSuccess);
+    const createCharacter = useCreateCharacter(user.email);
 
     const formSchema = z.object({
         name: z
@@ -59,6 +59,7 @@ const CreateCharacterForm = ({ user, language, onSuccess }: Props) => {
             userName: user.name,
             ...values,
         });
+        onClose?.();
     };
 
     return (
@@ -76,7 +77,7 @@ const CreateCharacterForm = ({ user, language, onSuccess }: Props) => {
                                         placeholder={`${t.dnd.character.name}...`}
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
                                         {...field}
-                                        className="w-fit min-w-80 text-lg font-semibold tracking-wide placeholder:text-lg placeholder:font-normal"
+                                        className="w-fit min-w-80 font-semibold tracking-wide placeholder:font-normal"
                                     />
                                 </FormControl>
 
@@ -206,7 +207,7 @@ const CreateCharacterForm = ({ user, language, onSuccess }: Props) => {
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
                                         placeholder={`${t.dnd.character.name}...`}
                                         {...field}
-                                        className="w-fit min-w-80 text-lg font-semibold tracking-wide placeholder:text-lg placeholder:font-normal"
+                                        className="w-fit min-w-80 font-semibold tracking-wide placeholder:font-normal"
                                     />
                                 </FormControl>
 

@@ -4,6 +4,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import { useDeleteCharacter } from "@/server/use/useDeleteCharacter";
 import { Character } from "@/type/Character";
 import { Language } from "@/type/Language";
+import { User } from "@/type/User";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
 import { LuLoader2, LuTrash2 } from "react-icons/lu";
@@ -12,17 +13,19 @@ import { DialogFooter } from "../ui/dialog";
 interface Props {
     character: Character;
     language: Language;
-    onSuccess: () => void;
+    user: User;
+    onClose?: () => void;
 }
 
-const DeleteCharacterForm = ({ character, language, onSuccess }: Props) => {
+const DeleteCharacterForm = ({ character, user, language, onClose }: Props) => {
     const { t } = useTranslation(language);
-    const deleteCharacter = useDeleteCharacter(onSuccess);
+    const deleteCharacter = useDeleteCharacter(user.email);
 
     const form = useForm();
 
     const onSubmit = () => {
         deleteCharacter.mutate(character.id);
+        onClose?.();
     };
 
     return (
