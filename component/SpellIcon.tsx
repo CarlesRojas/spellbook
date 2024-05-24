@@ -1,6 +1,7 @@
 import { useTranslation } from "@/hook/useTranslation";
 import { getSpellColor } from "@/lib/spell";
 import { Language } from "@/type/Language";
+import { Route } from "@/type/Route";
 import { Spell } from "@/type/Spell";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -18,7 +19,7 @@ const SpellRow = ({ spell, language, children }: Props) => {
     return (
         <div className="anim-enter-view flex flex-col items-center gap-2">
             <Link
-                href={`/${language}/spell/${index}`}
+                href={`/${language}${Route.SPELL}/${index}`}
                 className="focus-shadow group relative flex w-full flex-col items-center"
             >
                 <div

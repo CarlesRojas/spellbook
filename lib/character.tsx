@@ -104,3 +104,34 @@ export const canCastRituals = (classType: ClassType) => {
 
     return map[classType];
 };
+
+export const getClassColor = (classType: ClassType) => {
+    const map: Record<ClassType, string> = {
+        [ClassType.WIZARD]: "text-sky-500/90",
+        [ClassType.SORCERER]: "text-pink-500/90",
+        [ClassType.CLERIC]: "text-gray-600/90 dark:text-gray-200/90",
+        [ClassType.PALADIN]: "text-red-500/90",
+        [ClassType.RANGER]: "text-amber-500/90",
+        [ClassType.BARD]: "text-teal-500/90",
+        [ClassType.DRUID]: "text-lime-500/90",
+        [ClassType.WARLOCK]: "text-fuchsia-500/90",
+    };
+
+    return map[classType];
+};
+
+export const getClassColorOnHover = (classType: ClassType) => {
+    const map: Record<ClassType, string> = {
+        [ClassType.WIZARD]: "mouse:hover:text-sky-500/90 mouse:group-hover:text-sky-500/90",
+        [ClassType.SORCERER]: "mouse:hover:text-pink-500/90 mouse:group-hover:text-pink-500/90",
+        [ClassType.CLERIC]:
+            "mouse:hover:text-gray-600/90 mouse:hover:dark:text-gray-200/90 mouse:group-hover:text-gray-600/90 mouse:group-hover:dark:text-gray-200/90",
+        [ClassType.PALADIN]: "mouse:hover:text-red-500/90 mouse:group-hover:text-red-500/90",
+        [ClassType.RANGER]: "mouse:hover:text-amber-500/90 mouse:group-hover:text-amber-500/90",
+        [ClassType.BARD]: "mouse:hover:text-teal-500/90 mouse:group-hover:text-teal-500/90",
+        [ClassType.DRUID]: "mouse:hover:text-lime-500/90 mouse:group-hover:text-lime-500/90",
+        [ClassType.WARLOCK]: "mouse:hover:text-fuchsia-500/90 mouse:group-hover:text-fuchsia-500/90",
+    };
+
+    return map[classType];
+};

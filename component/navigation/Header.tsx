@@ -1,6 +1,6 @@
 "use client";
 
-import D20 from "@/asset/D20.svg";
+import D20 from "@/asset/dice/D20.svg";
 import Links from "@/component/navigation/Links";
 import Settings from "@/component/navigation/Settings";
 import { Button } from "@/component/ui/button";

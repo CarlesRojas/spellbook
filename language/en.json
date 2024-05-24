@@ -28,7 +28,9 @@
 
         "route": {
             "/": "Spells",
-            "/characters": "Characters"
+            "/spell": "Spell",
+            "/characters": "Characters",
+            "/character": "Character"
         },
 
         "notFound": {
@@ -123,7 +125,7 @@
             "THUNDER": "Thunder"
         },
 
-        "difficultyClassType": {
+        "ability": {
             "DEX": "DEX",
             "WIS": "WIS",
             "CHA": "CHA",
@@ -194,6 +196,8 @@
 
     "dnd": {
         "cantrip": "Cantrip",
-        "cantrips": "Cantrips"
+        "cantrips": "Cantrips",
+        "level": "LVL",
+        "createCharacter": "Create new Character"
     }
 }

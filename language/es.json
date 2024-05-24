@@ -28,7 +28,9 @@
 
         "route": {
             "/": "Hechizos",
-            "/characters": "Personajes"
+            "/spell": "Hechizo",
+            "/characters": "Personajes",
+            "/character": "Personaje"
         },
 
         "notFound": {
@@ -123,7 +125,7 @@
             "THUNDER": "Trueno"
         },
 
-        "difficultyClassType": {
+        "ability": {
             "DEX": "DES",
             "WIS": "SAB",
             "CHA": "CAR",
@@ -194,6 +196,8 @@
 
     "dnd": {
         "cantrip": "Truco",
-        "cantrips": "Trucos"
+        "cantrips": "Trucos",
+        "level": "LVL",
+        "createCharacter": "Crear nuevo personaje"
     }
 }
