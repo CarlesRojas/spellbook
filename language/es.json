@@ -126,12 +126,12 @@
         },
 
         "abilityShort": {
-            "DEX": "DES",
-            "WIS": "SAB",
-            "CHA": "CAR",
-            "CON": "CON",
-            "INT": "INT",
-            "STR": "FUE"
+            "DEX": "Des",
+            "WIS": "Sab",
+            "CHA": "Car",
+            "CON": "Con",
+            "INT": "Int",
+            "STR": "Fue"
         },
 
         "ability": {
@@ -206,7 +206,7 @@
     "dnd": {
         "cantrip": "Truco",
         "cantrips": "Trucos",
-        "level": "LVL",
+        "level": "Lvl",
 
         "character": {
             "createCharacter": "Crear nuevo personaje",

@@ -76,26 +76,30 @@ const CharacterItem = (props: Props) => {
         <div className="flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-950">
             <Link
                 href={`/${language}/${Route.CHARACTER}/${id}`}
-                className="focus-shadow group flex grow items-center gap-3 rounded p-3"
+                className="focus-shadow group flex grow items-center gap-2 rounded p-3"
                 scroll={false}
             >
                 {getClassIcon(characterClass, "mouse:transition-transform mouse:group-hover:scale-110")}
 
-                <div className="relative flex flex-col">
-                    <h3 className={`font-semibold tracking-wide ${getClassColorOnHover(characterClass)}`}>{name}</h3>
+                <div className="relative flex flex-col gap-1">
+                    <h3 className={`font-semibold sm:text-lg ${getClassColorOnHover(characterClass)}`}>{name}</h3>
 
-                    <div className="flex gap-4">
-                        <p>
-                            <span className="text-sm font-semibold opacity-50">{t.dnd.level}</span>{" "}
-                            <strong className="text-sm font-semibold">{level}</strong>
-                        </p>
+                    <div className="flex items-baseline gap-3 text-sm sm:text-base">
+                        <span className={`font-medium ${getClassColor(characterClass)}`}>
+                            {t.enum.class[characterClass]}
+                        </span>
 
-                        <p>
-                            <span className="text-sm font-semibold opacity-50">
+                        <span>
+                            <span className="font-medium opacity-50">{t.dnd.level}</span>{" "}
+                            <strong className="font-semibold">{level}</strong>
+                        </span>
+
+                        <span>
+                            <span className="font-medium opacity-50">
                                 {t.enum.abilityShort[getAbility(characterClass)]}
                             </span>{" "}
-                            <strong className="text-sm font-semibold">{ability}</strong>
-                        </p>
+                            <strong className="font-semibold">{ability}</strong>
+                        </span>
                     </div>
                 </div>
             </Link>

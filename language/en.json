@@ -126,12 +126,12 @@
         },
 
         "abilityShort": {
-            "DEX": "DEX",
-            "WIS": "WIS",
-            "CHA": "CHA",
-            "CON": "CON",
-            "INT": "INT",
-            "STR": "STR"
+            "DEX": "Dex",
+            "WIS": "Wis",
+            "CHA": "Cha",
+            "CON": "Con",
+            "INT": "Int",
+            "STR": "Str"
         },
 
         "ability": {
@@ -206,7 +206,7 @@
     "dnd": {
         "cantrip": "Cantrip",
         "cantrips": "Cantrips",
-        "level": "LVL",
+        "level": "Lvl",
 
         "character": {
             "createCharacter": "Create new character",
