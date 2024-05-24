@@ -19,7 +19,7 @@ import { User } from "@/type/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
-import { LuLoader2, LuPlus } from "react-icons/lu";
+import { LuLoader2, LuMinus, LuPlus } from "react-icons/lu";
 import { z } from "zod";
 import { DialogFooter } from "../ui/dialog";
 
@@ -68,25 +68,6 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                 <div className="h-fit max-h-[75vh] space-y-6 overflow-auto px-1 pb-1">
                     <FormField
                         control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem className="space-y-1">
-                                <FormLabel>{t.dnd.character.name}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        disabled={createCharacter.isPending || createCharacter.isSuccess}
-                                        {...field}
-                                        className="w-fit min-w-80 font-semibold tracking-wide"
-                                    />
-                                </FormControl>
-
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
                         name="class"
                         render={({ field }) => (
                             <FormItem className="space-y-1">
@@ -96,7 +77,7 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
-                                        className="grid grid-cols-4 gap-4 sm:grid-cols-6 md:grid-cols-8"
+                                        className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8"
                                     >
                                         {Object.values(ClassType).map((classType) => (
                                             <FormItem key={classType} className="group flex items-center">
@@ -143,67 +124,15 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
 
                     <FormField
                         control={form.control}
-                        name="level"
+                        name="name"
                         render={({ field }) => (
                             <FormItem className="space-y-1">
-                                <FormLabel>{t.dnd.character.level}</FormLabel>
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={(value) => field.onChange(parseInt(value))}
-                                        defaultValue={field.value.toString()}
-                                        className="flex w-full flex-wrap gap-2"
-                                    >
-                                        {Array.from({ length: 20 }, (_, index) => index + 1).map((level) => (
-                                            <FormItem key={level} className="group flex items-center">
-                                                <FormControl>
-                                                    <RadioGroupItem
-                                                        value={level.toString()}
-                                                        className="flex h-fit w-full flex-col items-center gap-1"
-                                                        asChild
-                                                    >
-                                                        <Button
-                                                            variant={field.value === level ? "default" : "outline"}
-                                                            disabled={
-                                                                createCharacter.isPending || createCharacter.isSuccess
-                                                            }
-                                                            className={cn(
-                                                                "disabled:cursor-not-allowed",
-                                                                !createCharacter.isPending ||
-                                                                    (createCharacter.isSuccess &&
-                                                                        getClassBackgroundColorOnHover(
-                                                                            form.watch("class"),
-                                                                        )),
-                                                                field.value === level &&
-                                                                    getClassBackgroundColor(form.watch("class")),
-                                                            )}
-                                                            size="icon"
-                                                        >
-                                                            {level}
-                                                        </Button>
-                                                    </RadioGroupItem>
-                                                </FormControl>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="ability"
-                        render={({ field }) => (
-                            <FormItem className="space-y-1">
-                                <FormLabel>{t.enum.ability[getAbility(form.watch("class"))]}</FormLabel>
-
+                                <FormLabel>{t.dnd.character.name}</FormLabel>
                                 <FormControl>
                                     <Input
-                                        type="number"
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
                                         {...field}
-                                        className="w-fit min-w-80 font-semibold tracking-wide"
+                                        className="w-full font-semibold tracking-wide sm:max-w-96"
                                     />
                                 </FormControl>
 
@@ -211,6 +140,94 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                             </FormItem>
                         )}
                     />
+
+                    <div className="flex h-fit flex-wrap gap-x-8 gap-y-4 sm:gap-x-10">
+                        <FormField
+                            control={form.control}
+                            name="level"
+                            render={({ field }) => (
+                                <FormItem className="space-y-1">
+                                    <FormLabel>{t.dnd.character.level}</FormLabel>
+                                    <FormControl>
+                                        <div className="flex items-center gap-4">
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={
+                                                    field.value <= 1 ||
+                                                    createCharacter.isPending ||
+                                                    createCharacter.isSuccess
+                                                }
+                                                onClick={() => field.onChange(field.value - 1)}
+                                            >
+                                                <LuMinus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+
+                                            <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
+                                                {field.value}
+                                            </p>
+
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={
+                                                    field.value >= 20 ||
+                                                    createCharacter.isPending ||
+                                                    createCharacter.isSuccess
+                                                }
+                                                onClick={() => field.onChange(field.value + 1)}
+                                            >
+                                                <LuPlus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+                                        </div>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="ability"
+                            render={({ field }) => (
+                                <FormItem className="space-y-1">
+                                    <FormLabel>{t.enum.ability[getAbility(form.watch("class"))]}</FormLabel>
+
+                                    <FormControl>
+                                        <div className="flex items-center gap-4">
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={createCharacter.isPending || createCharacter.isSuccess}
+                                                onClick={() => field.onChange(field.value - 1)}
+                                            >
+                                                <LuMinus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+
+                                            <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
+                                                {field.value}
+                                            </p>
+
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={createCharacter.isPending || createCharacter.isSuccess}
+                                                onClick={() => field.onChange(field.value + 1)}
+                                            >
+                                                <LuPlus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+                                        </div>
+                                    </FormControl>
+
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
 
                 <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
