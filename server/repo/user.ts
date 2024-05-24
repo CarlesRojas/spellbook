@@ -21,7 +21,7 @@ export const getUser = async (email: string, name: string, image?: string) => {
     });
 
     if (!result) return null;
-    return toDomain(result, image);
+    return toUser(result, image);
 };
 
 export const getUserById = async (id: number) => {
@@ -30,7 +30,7 @@ export const getUserById = async (id: number) => {
     });
 
     if (!result) return null;
-    return toDomain(result);
+    return toUser(result);
 };
 
 export const existsUser = async (email: string) => {
@@ -41,6 +41,6 @@ export const existsUser = async (email: string) => {
     return !!result;
 };
 
-const toDomain = (user: SelectedUser, image?: string): User => {
+const toUser = (user: SelectedUser, image?: string): User => {
     return UserSchema.parse({ ...user, image }) as User;
 };

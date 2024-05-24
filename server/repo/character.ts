@@ -6,12 +6,13 @@ import { spellSlots } from "@/server/database/schema";
 import { character } from "@/server/database/schema/character";
 import { characters } from "@/server/database/schema/relations/characters";
 import { createUser, existsUser } from "@/server/repo/user";
-import { Character, CharacterSchema } from "@/type/Character";
+import { Character, CharacterSchema, CharacterWithSpells, CharacterWithSpellsSchema } from "@/type/Character";
 import { ClassType } from "@/type/Spell";
 import { and, eq } from "drizzle-orm";
 
 export type NewCharacter = typeof character.$inferInsert;
-type SelectedCharacter = InferResultType<
+type SelectedCharacter = InferResultType<"character">;
+type SelectedCharacterWithSpells = InferResultType<
     "character",
     {
         knownSpells: {
@@ -88,16 +89,17 @@ export const getCharacter = async (id: number) => {
     });
 
     if (!result) return null;
-    return toDomain(result);
+    return toCharacterWithSpells(result);
 };
 
 export const getUserCharacters = async (userEmail: string) => {
     const result = await db.query.characters.findMany({
         where: (characters, { eq }) => eq(characters.userEmail, userEmail),
+        with: { character: true },
         orderBy: (characters, { desc }) => desc(characters.characterId),
     });
 
-    return result.map(({ characterId }) => characterId).filter((characterId) => characterId !== null) as number[];
+    return result.filter(({ character }) => !!character).map(({ character }) => toCharacter(character!));
 };
 
 export const updateCharacter = async (updatedCharacter: Character) => {
@@ -127,15 +129,19 @@ export const deleteCharacter = async (id: number) => {
         (await db.delete(spellSlots).where(and(eq(spellSlots.id, characterToDelete.spellSlotsAvailableId))));
 };
 
-const toDomain = (character: SelectedCharacter) => {
+const toCharacter = (character: SelectedCharacter) => {
+    return CharacterSchema.parse(character) as Character;
+};
+
+const toCharacterWithSpells = (character: SelectedCharacterWithSpells) => {
     const knownSpells = character.knownSpells.map((elem) => elem.spell);
     const preparedSpells = character.preparedSpells.map((elem) => elem.spell);
     const knownCantrips = character.knownCantrips.map((elem) => elem.spell);
 
-    return CharacterSchema.parse({
+    return CharacterWithSpellsSchema.parse({
         ...character,
         knownSpells,
         preparedSpells,
         knownCantrips,
-    }) as Character;
+    }) as CharacterWithSpells;
 };

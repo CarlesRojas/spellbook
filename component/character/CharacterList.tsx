@@ -19,8 +19,7 @@ interface Props {
 const CharacterList = ({ language, user }: Props) => {
     const { t } = useTranslation(language);
 
-    const { characterIds, characters } = useUserCharacters(user.email);
-    const isLoading = characterIds.isLoading || characters.some((character) => character.isLoading);
+    const characters = useUserCharacters(user.email);
 
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
@@ -50,23 +49,15 @@ const CharacterList = ({ language, user }: Props) => {
             </div>
 
             <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
-                {isLoading &&
+                {characters.isLoading &&
                     Array.from({ length: 5 }).map((_, index) => (
                         <CharacterItem isLoading key={index} user={user} language={language} />
                     ))}
 
-                {!isLoading &&
-                    characters.map(
-                        (character) =>
-                            character.data && (
-                                <CharacterItem
-                                    key={character.data.id}
-                                    character={character.data}
-                                    user={user}
-                                    language={language}
-                                />
-                            ),
-                    )}
+                {characters.data &&
+                    characters.data.map((character) => (
+                        <CharacterItem key={character.id} character={character} user={user} language={language} />
+                    ))}
             </div>
         </section>
     );

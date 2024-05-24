@@ -1,24 +1,39 @@
 import { getCharacter, getUserCharacters } from "@/server/repo/character";
-import { useQueries, useQuery } from "@tanstack/react-query";
-
-type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
-export type GetUserCharactersReturnType = PromiseType<ReturnType<typeof getUserCharacters>>;
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export const useUserCharacters = (userEmail: string) => {
-    const characterIds = useQuery({
+    const queryClient = useQueryClient();
+
+    const result = useQuery({
         queryKey: ["characters", userEmail],
         queryFn: () => getUserCharacters(userEmail),
         staleTime: 1000 * 60 * 5, // 5 minutes
     });
 
-    const characters = useQueries({
-        queries: (characterIds.data ?? []).map((characterId) => ({
-            queryKey: ["character", characterId],
-            queryFn: () => getCharacter(characterId),
-            staleTime: 1000 * 60 * 5,
-            enabled: !!characterIds.data,
-        })),
-    });
+    useEffect(() => {
+        if (queryClient && result.data)
+            preloadCharacters(
+                queryClient,
+                result.data.map((character) => character.id),
+            );
 
-    return { characters, characterIds };
+        return () => {
+            queryClient.cancelQueries({ queryKey: ["character"] });
+        };
+    }, [queryClient, result.data]);
+
+    return result;
+};
+
+const preloadCharacters = async (queryClient: QueryClient, characterIds: number[]) => {
+    await Promise.all(
+        characterIds.map(
+            async (characterId) =>
+                await queryClient.prefetchQuery({
+                    queryKey: ["character", characterId],
+                    queryFn: () => getCharacter(characterId),
+                }),
+        ),
+    );
 };

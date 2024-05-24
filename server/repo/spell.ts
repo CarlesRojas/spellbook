@@ -33,7 +33,7 @@ export const getSpell = async (index: string) => {
     });
 
     if (!result) return null;
-    return toDomain(result);
+    return toSpell(result);
 };
 
 export const existsSpell = async (index: string) => {
@@ -54,13 +54,13 @@ export const getAllSpells = async () => {
         },
     });
 
-    return result.map(toDomain);
+    return result.map(toSpell);
 };
 
 export const clearSpells = async () => {
     await db.delete(spell).execute();
 };
 
-const toDomain = (spell: SelectedSpell): Spell => {
+const toSpell = (spell: SelectedSpell): Spell => {
     return SpellSchema.parse(spell) as Spell;
 };

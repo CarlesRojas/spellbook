@@ -10,13 +10,15 @@ export const CharacterSchema = z.object({
     level: z.number().min(1).max(20),
     class: z.nativeEnum(ClassType),
     ability: z.number(),
+});
+export type Character = z.infer<typeof CharacterSchema>;
 
+export const CharacterWithSpellsSchema = CharacterSchema.extend({
     knownSpells: z.array(SpellSchema),
     preparedSpells: z.array(SpellSchema),
     knownCantrips: z.array(SpellSchema),
-
     spellSlotsAvailable: SpellSlotsSchema,
 });
-export type Character = z.infer<typeof CharacterSchema>;
+export type CharacterWithSpells = z.infer<typeof CharacterWithSpellsSchema>;
 
 export const ZERO: ArrayWith20Positions<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];

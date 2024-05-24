@@ -1,9 +1,6 @@
 import { getCharacter } from "@/server/repo/character";
 import { useQuery } from "@tanstack/react-query";
 
-type PromiseType<T extends Promise<any>> = T extends Promise<infer U> ? U : never;
-export type GetCharacterReturnType = PromiseType<ReturnType<typeof getCharacter>>;
-
 export const useCharacter = (characterId: string) => {
     return useQuery({
         queryKey: ["character", parseInt(characterId)],

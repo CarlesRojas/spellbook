@@ -34,35 +34,6 @@ interface DefaultProps {
 
 type Props = CommonProps & (LoadingProps | DefaultProps);
 
-export const getClassIcon = (classType: ClassType, className?: string) => {
-    const map: Record<ClassType, ReactElement> = {
-        [ClassType.WIZARD]: (
-            <WizardIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.WIZARD), className)} />
-        ),
-        [ClassType.SORCERER]: (
-            <SorcererIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.SORCERER), className)} />
-        ),
-        [ClassType.CLERIC]: (
-            <ClericIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.CLERIC), className)} />
-        ),
-        [ClassType.PALADIN]: (
-            <PaladinIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.PALADIN), className)} />
-        ),
-        [ClassType.RANGER]: (
-            <RangerIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.RANGER), className)} />
-        ),
-        [ClassType.BARD]: <BardIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.BARD), className)} />,
-        [ClassType.DRUID]: (
-            <DruidIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.DRUID), className)} />
-        ),
-        [ClassType.WARLOCK]: (
-            <WarlockIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.WARLOCK), className)} />
-        ),
-    };
-
-    return map[classType];
-};
-
 const CharacterItem = (props: Props) => {
     const { isLoading, language, user } = props;
 
@@ -112,3 +83,32 @@ const CharacterItem = (props: Props) => {
 };
 
 export default CharacterItem;
+
+export const getClassIcon = (classType: ClassType, className?: string) => {
+    const map: Record<ClassType, ReactElement> = {
+        [ClassType.WIZARD]: (
+            <WizardIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.WIZARD), className)} />
+        ),
+        [ClassType.SORCERER]: (
+            <SorcererIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.SORCERER), className)} />
+        ),
+        [ClassType.CLERIC]: (
+            <ClericIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.CLERIC), className)} />
+        ),
+        [ClassType.PALADIN]: (
+            <PaladinIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.PALADIN), className)} />
+        ),
+        [ClassType.RANGER]: (
+            <RangerIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.RANGER), className)} />
+        ),
+        [ClassType.BARD]: <BardIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.BARD), className)} />,
+        [ClassType.DRUID]: (
+            <DruidIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.DRUID), className)} />
+        ),
+        [ClassType.WARLOCK]: (
+            <WarlockIcon className={cn("h-16 min-h-16 w-16", getClassColor(ClassType.WARLOCK), className)} />
+        ),
+    };
+
+    return map[classType];
+};
