@@ -31,6 +31,7 @@ const isLanguageInPathname = (request: NextRequestWithAuth) => {
 
 const isUserAuthenticated = (request: NextRequestWithAuth) => {
     const authToken = request.nextauth.token;
+    console.log("AUTH TOKEN", !!authToken);
     return !!authToken;
 };
 
