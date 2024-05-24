@@ -64,7 +64,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 </p>
             </div>
 
-            <div className="grid w-full grid-cols-3 gap-6 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+            <div className="grid w-full grid-cols-3 gap-6 gap-y-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
                 {filteredSpells.map((spell) => {
                     const isLevelChange = spell.level !== lastLevel;
                     lastLevel = spell.level;

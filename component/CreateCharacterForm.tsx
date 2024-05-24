@@ -97,7 +97,7 @@ const CreateCharacterForm = ({ user, language }: Props) => {
                                             <FormControl>
                                                 <RadioGroupItem
                                                     value={classType}
-                                                    className="flex h-fit w-full flex-col items-center gap-1 mouse:cursor-pointer"
+                                                    className="flex h-fit w-full flex-col items-center gap-1 rounded-md p-2 mouse:cursor-pointer"
                                                 >
                                                     {getClassIcon(
                                                         classType,
@@ -109,7 +109,7 @@ const CreateCharacterForm = ({ user, language }: Props) => {
 
                                                     <h3
                                                         className={cn(
-                                                            `font-medium tracking-wide opacity-90 ${getClassColorOnHover(classType)}`,
+                                                            `text-sm font-medium tracking-wide opacity-90 ${getClassColorOnHover(classType)}`,
                                                             field.value === classType && getClassColor(classType),
                                                         )}
                                                     >

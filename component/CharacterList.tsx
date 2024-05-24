@@ -42,7 +42,7 @@ const CharacterList = ({ language, initialCharacterData, user }: Props) => {
                 </DialogContent>
             </Dialog>
 
-            <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid w-full grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
                 {characters.data.map((character) => (
                     <CharacterItem key={character.id} character={character} language={language} />
                 ))}

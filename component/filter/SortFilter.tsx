@@ -21,7 +21,7 @@ const SortFilter = ({ language, sort, setSort, isLoading = false }: Props) => {
         <div className="relative flex w-fit flex-row">
             <DropdownMenu modal={true}>
                 <DropdownMenuTrigger className="group" asChild>
-                    <Button variant="outline" type="button" className="min-w-fit rounded-r-none" disabled={isLoading}>
+                    <Button variant="outline" type="button" className="min-w-fit" disabled={isLoading}>
                         <span className="mr-2 font-medium opacity-60">{t.filter.title.sort}</span>
 
                         {t.enum.sort[sort]}

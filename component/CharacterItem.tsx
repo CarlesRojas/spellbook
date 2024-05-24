@@ -6,7 +6,7 @@ import RangerIcon from "@/asset/class/Ranger.svg";
 import SorcererIcon from "@/asset/class/Sorcerer.svg";
 import WarlockIcon from "@/asset/class/Warlock.svg";
 import WizardIcon from "@/asset/class/Wizard.svg";
-import { Button } from "@/component/ui/button";
+import CharacterDropdownMenu from "@/component/CharacterDropdownMenu";
 import { useTranslation } from "@/hook/useTranslation";
 import { getAbility, getClassColor, getClassColorOnHover } from "@/lib/character";
 import { cn } from "@/lib/util";
@@ -16,7 +16,6 @@ import { Route } from "@/type/Route";
 import { ClassType } from "@/type/Spell";
 import Link from "next/link";
 import { ReactElement } from "react";
-import { LuMoreHorizontal } from "react-icons/lu";
 
 interface Props {
     language: Language;
@@ -60,7 +59,7 @@ const CharacterItem = ({ language, character }: Props) => {
         <div className="flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-stone-950">
             <Link
                 href={`/${language}/${Route.CHARACTER}/${id}`}
-                className="focus-shadow group flex grow items-center gap-3 p-3"
+                className="focus-shadow group flex grow items-center gap-3 rounded p-3"
                 scroll={false}
             >
                 {getClassIcon(characterClass, "mouse:transition-transform mouse:group-hover:scale-110")}
@@ -85,9 +84,7 @@ const CharacterItem = ({ language, character }: Props) => {
             </Link>
 
             <div className="flex h-fit w-fit items-center gap-2 p-3">
-                <Button variant="outline" size="icon">
-                    <LuMoreHorizontal className="h-4 w-4 stroke-[3]" />
-                </Button>
+                <CharacterDropdownMenu />
             </div>
         </div>
     );

@@ -54,7 +54,7 @@ const Settings = ({ language }: Props) => {
                                 />
                                 <AvatarFallback className="bg-transparent p-3">
                                     {user.data.name ? (
-                                        <p className="pt-[2px] text-lg">{user.data.name[0]}</p>
+                                        <p className="pt-[2px] text-lg font-medium">{user.data.name[0]}</p>
                                     ) : (
                                         <LuUser className="h-full w-full" />
                                     )}
@@ -95,7 +95,7 @@ const Settings = ({ language }: Props) => {
                 <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                         <LuLanguages className="mr-3 h-4 w-4" />
-                        <p className="mr-3">{t.settings.language}</p>
+                        <p className="mr-3 font-medium">{t.settings.language}</p>
                     </DropdownMenuSubTrigger>
 
                     <DropdownMenuPortal>
@@ -121,7 +121,7 @@ const Settings = ({ language }: Props) => {
                     {resolvedTheme === "dark" && <LuSun className="mr-3 h-4 w-4" />}
                     {resolvedTheme !== "dark" && <LuMoon className="mr-3 h-4 w-4" />}
 
-                    <p>
+                    <p className=" font-medium">
                         {!isMounted && t.settings.theme.loading}
                         {isMounted && resolvedTheme === "dark"
                             ? t.settings.theme.switchToLight
@@ -134,12 +134,12 @@ const Settings = ({ language }: Props) => {
                 {user.data ? (
                     <DropdownMenuItem onClick={() => signOut()}>
                         <LuLogOut className="mr-3 h-4 w-4" />
-                        <p>{t.auth.signOut}</p>
+                        <p className=" font-medium">{t.auth.signOut}</p>
                     </DropdownMenuItem>
                 ) : (
                     <DropdownMenuItem onClick={() => signIn()}>
                         <LuLogIn className="mr-3 h-4 w-4" />
-                        <p>{t.auth.signIn}</p>
+                        <p className=" font-medium">{t.auth.signIn}</p>
                     </DropdownMenuItem>
                 )}
             </DropdownMenuContent>
