@@ -84,7 +84,7 @@ const CharacterItem = ({ language, character }: Props) => {
             </Link>
 
             <div className="flex h-fit w-fit items-center gap-2 p-3">
-                <CharacterDropdownMenu />
+                <CharacterDropdownMenu language={language} />
             </div>
         </div>
     );
