@@ -6,6 +6,7 @@ import Settings from "@/component/navigation/Settings";
 import { Button } from "@/component/ui/button";
 import { useRoute } from "@/hook/useRoute";
 import { useTranslation } from "@/hook/useTranslation";
+import { cn } from "@/lib/util";
 import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
@@ -46,8 +47,9 @@ const Navbar = ({ language }: Props) => {
                     <Button
                         variant="link"
                         aria-label="Open Settings"
+                        disabled={user.isLoading}
                         onClick={() => signIn(`/${language}${Route.CHARACTERS}`)}
-                        className="relative h-full w-full p-0"
+                        className={cn("relative h-full w-full p-0", user.isLoading && "text-skeleton")}
                     >
                         <NavbarItem
                             label={t.enum.route[Route.CHARACTERS]}

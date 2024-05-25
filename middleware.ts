@@ -22,11 +22,13 @@ const excludedPaths = [
     ".ico",
 ];
 
-const isLanguageInPathname = (request: NextRequestWithAuth) => {
-    return (
-        LANGUAGES.some((location) => request.nextUrl.pathname.startsWith(`/${location}`)) ||
-        request.nextUrl.pathname.startsWith("/_next")
-    );
+const getLanguageInPathname = (pathname: string) => {
+    for (const language of LANGUAGES) if (pathname.startsWith(`/${language}`)) return language;
+    return null;
+};
+
+const isLanguageInPathname = (pathname: string) => {
+    return !!getLanguageInPathname(pathname) || pathname.startsWith("/_next");
 };
 
 const isUserAuthenticated = (request: NextRequestWithAuth) => {
@@ -41,14 +43,16 @@ export default withAuth(
         const path = request.nextUrl.pathname;
         if (excludedPaths.some((excludedPath) => path.includes(excludedPath))) return NextResponse.next();
 
-        let language = acceptLanguage.get(request.headers.get("Accept-Language")) ?? DEFAULT_LANGUAGE;
+        let language =
+            getLanguageInPathname(path) ??
+            acceptLanguage.get(request.headers.get("Accept-Language")) ??
+            DEFAULT_LANGUAGE;
 
-        if (!isLanguageInPathname(request)) return NextResponse.redirect(new URL(`/${language}${path}`, request.url));
+        if (!isLanguageInPathname(path)) return NextResponse.redirect(new URL(`/${language}${path}`, request.url));
 
-        const currentRoute = pathnameToRoute(path.replace(`/${language}`, "") || "/");
-
+        const currentRoute = pathnameToRoute(path || "/");
         if (userRoutes.includes(currentRoute) && !isUserAuthenticated(request))
-            return NextResponse.redirect(new URL(Route.SPELLS, request.url));
+            return NextResponse.redirect(new URL(`/${language}${Route.SPELLS}`, request.url));
 
         return NextResponse.next();
     },

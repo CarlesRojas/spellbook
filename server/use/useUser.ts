@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { getSession, signIn as signInWithGoogle, signOut as signOutFromGoogle } from "next-auth/react";
 
-const getUserFromSession = async (session: Session | null) => {
+export const getUserFromSession = async (session: Session | null) => {
     if (!session?.user || !session.user.email) return null;
 
     const email = session.user.email;
@@ -30,8 +30,8 @@ export const useUser = () => {
         signInWithGoogle("google", { callbackUrl });
     };
 
-    const signOut = async () => {
-        signOutFromGoogle();
+    const signOut = async (callbackUrl: string = Route.SPELLS) => {
+        signOutFromGoogle({ callbackUrl: callbackUrl });
     };
 
     const requireUser = (callback: () => void) => {

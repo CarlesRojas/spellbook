@@ -134,7 +134,7 @@ const Settings = ({ language }: Props) => {
                 <DropdownMenuSeparator />
 
                 {user.data ? (
-                    <DropdownMenuItem onClick={() => signOut()}>
+                    <DropdownMenuItem onClick={() => signOut(pathname)}>
                         <LuLogOut className="mr-3 h-4 w-4" />
                         <p className=" font-medium">{t.auth.signOut}</p>
                     </DropdownMenuItem>

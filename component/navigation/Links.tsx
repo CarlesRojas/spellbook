@@ -8,7 +8,7 @@ import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { LuMenu, LuX } from "react-icons/lu";
+import { LuLoader2, LuMenu, LuX } from "react-icons/lu";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 export interface Props {
@@ -21,13 +21,14 @@ const Links = ({ language }: Props) => {
     const { user, signIn } = useUser();
 
     const signInButton = (children: ReactNode, route: string) => (
-        <Button variant="link" onClick={() => signIn(route)}>
+        <Button disabled={user.isLoading} variant="link" onClick={() => signIn(route)}>
             {children}
+            {user.isLoading && <LuLoader2 className="ml-2 h-4 w-4 animate-spin stroke-[3]" />}
         </Button>
     );
 
     const signInDropdownButton = (children: ReactNode, route: string) => (
-        <DropdownMenuItem className="font-semibold" onClick={() => signIn(route)}>
+        <DropdownMenuItem disabled={user.isLoading} className="font-semibold" onClick={() => signIn(route)}>
             {children}
         </DropdownMenuItem>
     );

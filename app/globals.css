@@ -10,6 +10,23 @@
     .skeleton {
         @apply animate-pulse !border-stone-300 !bg-stone-200 !text-transparent dark:!border-stone-700 dark:!bg-stone-900;
     }
+
+    @keyframes pulse {
+        0% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .text-skeleton {
+        @apply !text-stone-900 dark:!text-stone-100;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
 }
 
 * {
