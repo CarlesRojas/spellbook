@@ -1,5 +1,5 @@
-import { getEmptyCharacterFromDbCharacter } from "@/lib/character";
 import { Character } from "@/type/Character";
+import { ClassType } from "@/type/Spell";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createCharacter } from "../repo/character";
 
@@ -14,7 +14,7 @@ export const useCreateCharacter = (userEmail: string) => {
             const previousData: Character[] | undefined = queryClient.getQueryData(queryKey);
 
             const newData: Character[] | undefined = previousData
-                ? [getEmptyCharacterFromDbCharacter(newCharacter), ...previousData]
+                ? [{ ...newCharacter, class: newCharacter.class as ClassType, id: -1 }, ...previousData]
                 : undefined;
             queryClient.setQueryData(queryKey, newData);
 
