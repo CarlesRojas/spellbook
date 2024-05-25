@@ -15,10 +15,9 @@ import { z } from "zod";
 interface Props {
     language: Language;
     initialSpellsData: GetAllSpellsReturnType;
-    showSort?: boolean;
 }
 
-const SpellList = ({ language, initialSpellsData, showSort }: Props) => {
+const SpellList = ({ language, initialSpellsData }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
@@ -52,11 +51,9 @@ const SpellList = ({ language, initialSpellsData, showSort }: Props) => {
             <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
 
-                {showSort && (
-                    <div className="flex flex-row gap-2">
-                        <SortFilter language={language} sort={sort} setSort={setSort} />
-                    </div>
-                )}
+                <div className="flex flex-row gap-2">
+                    <SortFilter language={language} sort={sort} setSort={setSort} />
+                </div>
             </div>
 
             <div className={cn("flex justify-end pt-1", spells.isLoading ? "pointer-events-none opacity-0" : "")}>
