@@ -1,10 +1,14 @@
 import { getClassIcon } from "@/component/character/CharacterItem";
+import EditCharacterForm from "@/component/character/EditCharacterForm";
 import { Button } from "@/component/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
 import { useTranslation } from "@/hook/useTranslation";
 import { getAbility, getClassBackgroundColor, getTotalSpellSlots } from "@/lib/character";
 import { cn } from "@/lib/util";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
+import { User } from "@/type/User";
+import { useState } from "react";
 import { LuPencil } from "react-icons/lu";
 import { PiCampfireDuotone } from "react-icons/pi";
 
@@ -19,17 +23,18 @@ interface LoadingProps {
 interface DefaultProps {
     isLoading?: false;
     character: CharacterWithSpells;
+    user: User;
 }
 
 type Props = CommonProps & (LoadingProps | DefaultProps);
 
 const CharacterStatus = (props: Props) => {
     const { isLoading, language } = props;
-
     const { t } = useTranslation(language);
 
-    if (isLoading) return <div className="skeleton flex h-[5.5rem] min-h-[5.5rem] w-full rounded border" />;
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
 
+    if (isLoading) return <div className="skeleton flex h-[5.5rem] min-h-[5.5rem] w-full rounded border" />;
     const { id, name, class: characterClass, level, ability, spellSlotsAvailable } = props.character;
 
     return (
@@ -55,11 +60,31 @@ const CharacterStatus = (props: Props) => {
                     </div>
                 </div>
 
-                <Button variant="outline" size="icon" className="sm:ml-4">
-                    <LuPencil className="h-4 w-4" />
-                </Button>
+                <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+                    <DialogTrigger asChild>
+                        <Button variant="outline" size="icon" className="sm:ml-4">
+                            <LuPencil className="h-4 w-4" />
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader className="flex flex-row items-center gap-2">
+                            {getClassIcon(characterClass, "h-8 min-h-8 w-8")}
 
-                <Button variant="outline" size="icon" className="">
+                            <DialogTitle>
+                                {t.form.edit} {name}
+                            </DialogTitle>
+                        </DialogHeader>
+
+                        <EditCharacterForm
+                            character={props.character}
+                            user={props.user}
+                            onClose={() => setEditDialogOpen(false)}
+                            language={language}
+                        />
+                    </DialogContent>
+                </Dialog>
+
+                <Button variant="outline" size="icon">
                     <PiCampfireDuotone className="h-6 w-6" />
                 </Button>
             </div>

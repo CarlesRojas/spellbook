@@ -27,7 +27,7 @@ const Characters = ({ params: { language, characterId } }: Props) => {
     if (!character.data) return <NotFound type={NotFoundType.CHARACTER} language={language} />;
     if (!user.data) return <NotFound type={NotFoundType.USER} language={language} />;
 
-    return wrapper(<CharacterStatus character={character.data} language={language} />);
+    return wrapper(<CharacterStatus character={character.data} language={language} user={user.data} />);
 };
 
 export default Characters;
