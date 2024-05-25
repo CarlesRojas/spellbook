@@ -29,7 +29,10 @@ export const useEditCharacter = (userEmail: string) => {
                       name: modifiedCharacter.name,
                       level: modifiedCharacter.level,
                       ability: modifiedCharacter.ability,
-                      spellSlotsAvailable: getTotalSpellSlots(previousCharacterData.class, modifiedCharacter.level),
+                      spellSlotsAvailable:
+                          previousCharacterData.level !== modifiedCharacter.level
+                              ? getTotalSpellSlots(previousCharacterData.class, modifiedCharacter.level)
+                              : previousCharacterData.spellSlotsAvailable,
                   }
                 : undefined;
 

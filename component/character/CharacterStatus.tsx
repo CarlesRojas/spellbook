@@ -25,7 +25,7 @@ import { ClassType, SpellSection } from "@/type/Spell";
 import { SpellSlots } from "@/type/SpellSlots";
 import { User } from "@/type/User";
 import { useState } from "react";
-import { LuMinus, LuPencil, LuPlus } from "react-icons/lu";
+import { LuEye, LuEyeOff, LuMinus, LuPencil, LuPlus } from "react-icons/lu";
 import { PiCampfireDuotone } from "react-icons/pi";
 
 interface CommonProps {
@@ -51,6 +51,8 @@ const CharacterStatus = (props: Props) => {
     const { t } = useTranslation(language);
 
     const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [showSpellSlots, setShowSpellSlots] = useState(true);
+
     const updateSpellSlots = useUpdateSpellSlots();
 
     if (isLoading) return <div className="skeleton flex h-[5.5rem] min-h-[5.5rem] w-full rounded border" />;
@@ -98,8 +100,13 @@ const CharacterStatus = (props: Props) => {
     const numberOfSections = 1 + (showKnown ? 1 : 0) + (showPrepared ? 1 : 0);
 
     return (
-        <div className="sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16">
-            <div className="flex w-full flex-col items-center gap-2 md:flex-row md:justify-between md:gap-4">
+        <div
+            className={cn(
+                "sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16",
+                !showSpellSlots && "gap-2 md:gap-4",
+            )}
+        >
+            <div className="flex w-full flex-col items-center gap-2 sm:gap-4 md:flex-row md:justify-between">
                 <div className="relative flex w-full items-center gap-2 md:w-fit">
                     {getClassIcon(characterClass, "h-12 min-h-12 w-12 -my-2")}
 
@@ -127,6 +134,7 @@ const CharacterStatus = (props: Props) => {
                                 <LuPencil className="h-4 w-4" />
                             </Button>
                         </DialogTrigger>
+
                         <DialogContent>
                             <DialogHeader className="flex flex-row items-center gap-2">
                                 {getClassIcon(characterClass, "h-8 min-h-8 w-8")}
@@ -146,11 +154,25 @@ const CharacterStatus = (props: Props) => {
                     </Dialog>
 
                     <Button variant="outline" size="icon" onClick={longRest}>
-                        <PiCampfireDuotone className="h-6 w-6" />
+                        <PiCampfireDuotone className="h-5 w-5" />
+                    </Button>
+
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        className="md:hidden"
+                        onClick={() => setShowSpellSlots((prev) => !prev)}
+                    >
+                        {showSpellSlots ? <LuEyeOff className="h-5 w-5" /> : <LuEye className="h-5 w-5" />}
                     </Button>
                 </div>
 
-                <div className="relative flex h-fit w-full min-w-fit items-start justify-between sm:gap-x-2 md:w-fit md:justify-end lg:gap-x-4">
+                <div
+                    className={cn(
+                        "relative hidden h-fit w-full min-w-fit items-start justify-between sm:gap-x-2 md:flex md:w-fit md:justify-end lg:gap-x-4",
+                        showSpellSlots && "flex",
+                    )}
+                >
                     {spellSlotsAvailable &&
                         Object.keys(spellSlotsAvailable)
                             .sort()
@@ -166,7 +188,7 @@ const CharacterStatus = (props: Props) => {
                                 const slotLevelNumber = slotLevel.replace(/\D/g, "");
 
                                 return (
-                                    <DropdownMenu key={slotLevel} modal={false}>
+                                    <DropdownMenu key={slotLevel} modal={true}>
                                         <DropdownMenuTrigger asChild>
                                             <div className="group relative flex h-full w-9 min-w-9 max-w-9 flex-col items-center justify-start gap-y-1 rounded-md px-1 text-sm font-semibold mouse:cursor-pointer">
                                                 <p className={getClassColorOnHover(characterClass)}>
