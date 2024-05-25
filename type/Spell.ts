@@ -1,6 +1,12 @@
 import { TranslationSchema } from "@/type/Translation";
 import { z } from "zod";
 
+export enum SpellSection {
+    ALL = "all",
+    KNOWN = "known",
+    PREPARED = "prepared",
+}
+
 export enum Sort {
     LEVEL_ASC = "level_asc",
     LEVEL_DESC = "level_desc",

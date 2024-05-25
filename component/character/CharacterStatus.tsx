@@ -1,4 +1,3 @@
-import { SpellSection } from "@/app/[language]/character/[characterId]/page";
 import { getClassIcon } from "@/component/character/CharacterItem";
 import EditCharacterForm from "@/component/character/EditCharacterForm";
 import { Button } from "@/component/ui/button";
@@ -13,6 +12,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import {
     getAbility,
     getClassBackgroundColor,
+    getClassColorOnHover,
     getTotalSpellSlots,
     showKnownSection,
     showPreparedSection,
@@ -21,7 +21,7 @@ import { cn } from "@/lib/util";
 import { useUpdateSpellSlots } from "@/server/use/useUpdateSpellSlots";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
-import { ClassType } from "@/type/Spell";
+import { ClassType, SpellSection } from "@/type/Spell";
 import { SpellSlots } from "@/type/SpellSlots";
 import { User } from "@/type/User";
 import { useState } from "react";
@@ -146,7 +146,7 @@ const CharacterStatus = (props: Props) => {
                     </Button>
                 </div>
 
-                <div className="relative flex h-fit w-full min-w-fit items-start justify-between sm:gap-x-4 md:w-fit md:justify-end lg:gap-x-6">
+                <div className="relative flex h-fit w-full min-w-fit items-start justify-between sm:gap-x-2 md:w-fit md:justify-end lg:gap-x-4">
                     {spellSlotsAvailable &&
                         Object.keys(spellSlotsAvailable)
                             .sort()
@@ -164,8 +164,10 @@ const CharacterStatus = (props: Props) => {
                                 return (
                                     <DropdownMenu key={slotLevel} modal={false}>
                                         <DropdownMenuTrigger asChild>
-                                            <div className="relative flex h-full w-7 min-w-7 max-w-7 flex-col items-center justify-center rounded-md text-sm font-semibold">
-                                                <p>{slotLevelNumber}</p>
+                                            <div className="group relative flex h-full w-9 min-w-9 max-w-9 flex-col items-center justify-start gap-y-1 rounded-md px-1 text-sm font-semibold mouse:cursor-pointer">
+                                                <p className={getClassColorOnHover(characterClass)}>
+                                                    {slotLevelNumber}
+                                                </p>
 
                                                 <div className="flex w-full flex-wrap items-center justify-center gap-1">
                                                     {Array.from({ length: maxSpellSlots }).map((_, index) => (

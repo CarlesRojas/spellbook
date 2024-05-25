@@ -9,17 +9,12 @@ import { useCharacter } from "@/server/use/useCharacter";
 import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
+import { SpellSection } from "@/type/Spell";
 import { ReactNode } from "react";
 import { z } from "zod";
 
 interface Props extends PageProps {
     params: { language: Language; characterId: string };
-}
-
-export enum SpellSection {
-    ALL = "all",
-    KNOWN = "known",
-    PREPARED = "prepared",
 }
 
 const Characters = ({ params: { language, characterId } }: Props) => {
