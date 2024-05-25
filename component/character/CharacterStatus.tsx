@@ -2,15 +2,22 @@ import { getClassIcon } from "@/component/character/CharacterItem";
 import EditCharacterForm from "@/component/character/EditCharacterForm";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuTrigger,
+} from "@/component/ui/dropdown-menu";
 import { useTranslation } from "@/hook/useTranslation";
 import { getAbility, getClassBackgroundColor, getTotalSpellSlots } from "@/lib/character";
 import { cn } from "@/lib/util";
 import { useUpdateSpellSlots } from "@/server/use/useUpdateSpellSlots";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
+import { SpellSlots } from "@/type/SpellSlots";
 import { User } from "@/type/User";
 import { useState } from "react";
-import { LuPencil } from "react-icons/lu";
+import { LuMinus, LuPencil, LuPlus } from "react-icons/lu";
 import { PiCampfireDuotone } from "react-icons/pi";
 
 interface CommonProps {
@@ -55,13 +62,26 @@ const CharacterStatus = (props: Props) => {
         });
     };
 
-    // const spendSpellSlot = (level: number) => {
-    //     updateSpellSlots.mutate({
-    //         characterId: id,
-    //         id: spellSlotsAvailableId,
-    //         ...getTotalSpellSlots(characterClass, level),
-    //     });
-    // };
+    const spendSpellSlot = (spellSlotLevel: keyof SpellSlots) => {
+        updateSpellSlots.mutate({
+            characterId: id,
+            id: spellSlotsAvailableId,
+            ...spellSlotsAvailable,
+            [spellSlotLevel]: Math.max(0, spellSlotsAvailable[spellSlotLevel] - 1),
+        });
+    };
+
+    const addSpellSlot = (spellSlotLevel: keyof SpellSlots) => {
+        updateSpellSlots.mutate({
+            characterId: id,
+            id: spellSlotsAvailableId,
+            ...spellSlotsAvailable,
+            [spellSlotLevel]: Math.min(
+                spellSlotsAvailable[spellSlotLevel] + 1,
+                getTotalSpellSlots(characterClass, level)[spellSlotLevel],
+            ),
+        });
+    };
 
     return (
         <div className="fixed flex w-full max-w-screen-lg flex-col items-center gap-2 bg-stone-100 p-3 dark:bg-stone-950 sm:p-4 md:flex-row md:justify-between md:gap-4 mouse:top-16">
@@ -121,34 +141,77 @@ const CharacterStatus = (props: Props) => {
                         .sort()
                         .map((slotLevel) => {
                             const maxSpellSlots = getTotalSpellSlots(characterClass, level)[
-                                slotLevel as keyof typeof spellSlotsAvailable
+                                slotLevel as keyof SpellSlots
                             ];
-                            const availableSpellSlots =
-                                spellSlotsAvailable[slotLevel as keyof typeof spellSlotsAvailable];
+                            const availableSpellSlots = spellSlotsAvailable[slotLevel as keyof SpellSlots];
 
                             if (maxSpellSlots === 0)
                                 return <div key={slotLevel} className="w-7 min-w-7 max-w-7 md:hidden" />;
 
-                            return (
-                                <div
-                                    key={slotLevel}
-                                    className="relative flex h-full w-7 min-w-7 max-w-7 flex-col items-center justify-center rounded-md text-sm font-semibold"
-                                >
-                                    <p>{slotLevel.replace(/\D/g, "")}</p>
+                            const slotLevelNumber = slotLevel.replace(/\D/g, "");
 
-                                    <div className="flex w-full flex-wrap items-center justify-center gap-1">
-                                        {Array.from({ length: maxSpellSlots }).map((_, index) => (
-                                            <div
-                                                key={index}
-                                                className={cn(
-                                                    "h-3 max-h-3 min-h-3 w-3 min-w-3 max-w-3 rounded-full bg-stone-500/30",
-                                                    index < availableSpellSlots &&
-                                                        getClassBackgroundColor(characterClass),
-                                                )}
-                                            />
-                                        ))}
-                                    </div>
-                                </div>
+                            return (
+                                <DropdownMenu key={slotLevel} modal={false}>
+                                    <DropdownMenuTrigger asChild>
+                                        <div className="relative flex h-full w-7 min-w-7 max-w-7 flex-col items-center justify-center rounded-md text-sm font-semibold">
+                                            <p>{slotLevelNumber}</p>
+
+                                            <div className="flex w-full flex-wrap items-center justify-center gap-1">
+                                                {Array.from({ length: maxSpellSlots }).map((_, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className={cn(
+                                                            "h-3 max-h-3 min-h-3 w-3 min-w-3 max-w-3 rounded-full bg-stone-500/30",
+                                                            index < availableSpellSlots &&
+                                                                getClassBackgroundColor(characterClass),
+                                                        )}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </DropdownMenuTrigger>
+
+                                    <DropdownMenuContent className="mx-2 my-3 flex min-w-fit flex-col gap-2 p-2">
+                                        <DropdownMenuLabel className="w-full p-0 text-center">
+                                            {t.dnd.character.level} {slotLevelNumber}
+                                        </DropdownMenuLabel>
+
+                                        <div className="flex w-full items-center justify-center gap-1">
+                                            {Array.from({ length: maxSpellSlots }).map((_, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={cn(
+                                                        "h-3 max-h-3 min-h-3 w-3 min-w-3 max-w-3 rounded-full bg-stone-500/30",
+                                                        index < availableSpellSlots &&
+                                                            getClassBackgroundColor(characterClass),
+                                                    )}
+                                                />
+                                            ))}
+                                        </div>
+
+                                        <div className="flex w-full gap-4 p-0">
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="p-0"
+                                                disabled={availableSpellSlots === 0}
+                                                onClick={() => spendSpellSlot(slotLevel as keyof SpellSlots)}
+                                            >
+                                                <LuMinus className="h-5 w-5" />
+                                            </Button>
+
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                className="p-0"
+                                                disabled={availableSpellSlots === maxSpellSlots}
+                                                onClick={() => addSpellSlot(slotLevel as keyof SpellSlots)}
+                                            >
+                                                <LuPlus className="h-5 w-5" />
+                                            </Button>
+                                        </div>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             );
                         })}
             </div>

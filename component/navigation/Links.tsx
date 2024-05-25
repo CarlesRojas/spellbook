@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/component/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/component/ui/dropdown-menu";
 import { useRoute } from "@/hook/useRoute";
 import { useTranslation } from "@/hook/useTranslation";
 import { cn } from "@/lib/util";
@@ -10,7 +11,6 @@ import { Route } from "@/type/Route";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { LuMenu, LuX } from "react-icons/lu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 export interface Props {
     language: Language;
