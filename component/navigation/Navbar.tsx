@@ -13,7 +13,7 @@ import { Route } from "@/type/Route";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { GiVisoredHelm } from "react-icons/gi";
-import { LuLoader2 } from "react-icons/lu";
+import { LuSettings } from "react-icons/lu";
 
 export interface Props {
     language: Language;
@@ -24,7 +24,7 @@ const Navbar = ({ language }: Props) => {
     const { user, signIn } = useUser();
     const route = useRoute();
 
-    const header = (children?: ReactNode) => (
+    const navbar = (children?: ReactNode) => (
         <header className="fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-between border-t border-stone-300 bg-stone-100 px-3 py-2 dark:border-stone-700 dark:bg-stone-950 md:hidden md:px-4 mouse:hidden">
             <nav className="relative grid h-full w-full grid-cols-3 place-items-center justify-around">
                 <Link href={`/${language}${Route.SPELLS}`} className="relative h-full w-full">
@@ -64,13 +64,13 @@ const Navbar = ({ language }: Props) => {
     );
 
     if (!user.data && user.isLoading)
-        return header(
+        return navbar(
             <div className="flex h-full w-full">
-                <NavbarItem label={t.settings.title} icon={<LuLoader2 className="h-6 w-6 animate-spin" />} />
+                <NavbarItem label={t.settings.title} disabled icon={<LuSettings className="h-6 w-6" />} />
             </div>,
         );
 
-    return header(<Settings language={language} />);
+    return navbar(<Settings language={language} />);
 };
 
 export default Navbar;

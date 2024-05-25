@@ -5,14 +5,16 @@ interface Props {
     label: string;
     icon: ReactNode;
     selected?: boolean;
+    disabled?: boolean;
 }
 
-const NavbarItem = ({ label, icon, selected = false }: Props) => {
+const NavbarItem = ({ label, icon, selected = false, disabled = false }: Props) => {
     return (
         <div
             className={cn(
                 "flex h-full w-full flex-col items-center justify-center gap-1 opacity-80",
                 selected && "!text-sky-500 opacity-100",
+                disabled && "text-skeleton",
             )}
         >
             {icon}
