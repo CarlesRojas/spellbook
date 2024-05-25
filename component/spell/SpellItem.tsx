@@ -17,7 +17,8 @@ const SpellItem = ({ spell, language, children }: Props) => {
     const { index, icon, color, name } = spell;
 
     return (
-        <div className="anim-enter-view flex flex-col items-center gap-2">
+        // Add anim-enter-view to use scroll animation
+        <div className="flex flex-col items-center gap-2">
             <Link
                 href={`/${language}${Route.SPELL}/${index}`}
                 className="focus-shadow group relative flex w-full flex-col items-center rounded-md  p-2"

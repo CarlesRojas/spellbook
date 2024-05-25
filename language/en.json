@@ -191,16 +191,17 @@
     },
 
     "filter": {
-        "noResults": "No results found",
-        "result": "result",
-        "results": "results",
+        "noResults": "No spells found",
+        "result": "spell",
+        "results": "spells",
         "all": "All",
         "level": "Level",
 
         "title": {
             "query": "Search...",
             "school": "School",
-            "sort": "Sorted by"
+            "sort": "Sorted by",
+            "class": "Class"
         }
     },
 

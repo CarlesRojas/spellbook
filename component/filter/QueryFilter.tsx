@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslation } from "@/hook/useTranslation";
+import { cn } from "@/lib/util";
 import { Language } from "@/type/Language";
 import debounce from "just-debounce-it";
 import { useMemo, useState } from "react";
@@ -13,9 +14,10 @@ interface Props {
     query: string;
     setQuery: (query: string) => void;
     isLoading?: boolean;
+    className?: string;
 }
 
-const QueryFilter = ({ language, query, setQuery, isLoading = false }: Props) => {
+const QueryFilter = ({ language, className, query, setQuery, isLoading = false }: Props) => {
     const { t } = useTranslation(language);
 
     const [internalQuery, setInternalQuery] = useState(query);
@@ -23,7 +25,7 @@ const QueryFilter = ({ language, query, setQuery, isLoading = false }: Props) =>
 
     return (
         <form
-            className="relative flex w-full md:max-w-96 md:place-self-end"
+            className={cn("relative flex w-full md:max-w-96 md:place-self-end", className)}
             onSubmit={(event) => event.preventDefault()}
         >
             <Input

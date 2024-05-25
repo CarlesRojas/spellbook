@@ -86,6 +86,7 @@ export const LanguageObjectSchema = z.object({
             query: z.string(),
             school: z.string(),
             sort: z.string(),
+            class: z.string(),
         }),
     }),
 

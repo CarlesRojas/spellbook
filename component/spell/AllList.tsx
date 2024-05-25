@@ -1,66 +1,49 @@
 "use client";
 
-import ScrollToTop from "@/component/ScrollToTop";
+import ClassFilter from "@/component/filter/ClassFilter";
 import QueryFilter from "@/component/filter/QueryFilter";
-import SortFilter from "@/component/filter/SortFilter";
 import SpellItem from "@/component/spell/SpellItem";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
-import { cn } from "@/lib/util";
-import { GetAllSpellsReturnType, useSpellsPreloaded } from "@/server/use/useSpells";
+import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
-import { Sort } from "@/type/Spell";
+import { ClassType, Spell } from "@/type/Spell";
 import { Fragment } from "react";
 import { z } from "zod";
 
 interface Props {
     language: Language;
-    initialSpellsData: GetAllSpellsReturnType;
-    showSort?: boolean;
+    spells: Spell[];
+    character: CharacterWithSpells;
 }
 
-const SpellList = ({ language, initialSpellsData, showSort }: Props) => {
+const AllList = ({ language, spells, character }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
-    const [sort, setSort] = useUrlState("sort", Sort.LEVEL_ASC, z.nativeEnum(Sort));
+    const [classFilter, setClassFilter] = useUrlState("sort", character.class, z.nativeEnum(ClassType).nullable());
 
-    const spells = useSpellsPreloaded(initialSpellsData);
-    const filteredSpells = spells.data
+    const filteredSpells = spells
         .filter((spell) => {
             if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
+            if (classFilter && !spell.classes.includes(classFilter)) return false;
             return true;
         })
         .sort((a, b) => {
-            switch (sort) {
-                case Sort.LEVEL_ASC:
-                    if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
-                    return a.level - b.level;
-                case Sort.LEVEL_DESC:
-                    if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
-                    return b.level - a.level;
-                case Sort.NAME_ASC:
-                    return a.name[language].localeCompare(b.name[language]);
-                case Sort.NAME_DESC:
-                    return b.name[language].localeCompare(a.name[language]);
-            }
+            if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
+            return a.level - b.level;
         });
 
     let lastLevel = -1;
 
     return (
-        <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col p-4">
-            <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
-                <QueryFilter language={language} query={query} setQuery={setQuery} />
-
-                {showSort && (
-                    <div className="flex flex-row gap-2">
-                        <SortFilter language={language} sort={sort} setSort={setSort} />
-                    </div>
-                )}
+        <div className="relative flex h-fit w-full flex-col p-4">
+            <div className="flex w-full justify-end gap-2 md:flex-row">
+                <QueryFilter language={language} query={query} setQuery={setQuery} className="w-fit grow" />
+                <ClassFilter language={language} classType={classFilter} setClass={setClassFilter} />
             </div>
 
-            <div className={cn("flex justify-end pt-1", spells.isLoading ? "pointer-events-none opacity-0" : "")}>
+            <div className="flex justify-end pt-1">
                 <p className="text-sm font-medium tracking-wide opacity-60">
                     {filteredSpells.length > 0
                         ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`
@@ -75,7 +58,7 @@ const SpellList = ({ language, initialSpellsData, showSort }: Props) => {
 
                     return (
                         <Fragment key={spell.index}>
-                            {[Sort.LEVEL_ASC, Sort.LEVEL_DESC].includes(sort) && isLevelChange && (
+                            {isLevelChange && (
                                 <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
@@ -86,10 +69,8 @@ const SpellList = ({ language, initialSpellsData, showSort }: Props) => {
                     );
                 })}
             </div>
-
-            <ScrollToTop />
-        </section>
+        </div>
     );
 };
 
-export default SpellList;
+export default AllList;

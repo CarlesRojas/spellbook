@@ -93,6 +93,9 @@ const CharacterStatus = (props: Props) => {
             ),
         });
     };
+    const showKnown = showKnownSection(characterClass);
+    const showPrepared = showPreparedSection(characterClass);
+    const numberOfSections = 1 + (showKnown ? 1 : 0) + (showPrepared ? 1 : 0);
 
     return (
         <div className="sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16">
@@ -231,29 +234,32 @@ const CharacterStatus = (props: Props) => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:flex">
+            <div
+                className="grid gap-2 sm:flex sm:justify-end"
+                style={{ gridTemplateColumns: `repeat(${numberOfSections}, minmax(0, 1fr))` }}
+            >
                 <Button
                     variant={props.spellSection === SpellSection.ALL ? "default" : "outline"}
-                    onClick={() => props.setSpellSection(SpellSection.ALL)}
+                    onClick={() => props.setSpellSection(SpellSection.ALL, true)}
                     className="w-full sm:w-fit"
                 >
                     {t.dnd.spells.all}
                 </Button>
 
-                {showKnownSection(characterClass) && (
+                {showKnown && (
                     <Button
                         variant={props.spellSection === SpellSection.KNOWN ? "default" : "outline"}
-                        onClick={() => props.setSpellSection(SpellSection.KNOWN)}
+                        onClick={() => props.setSpellSection(SpellSection.KNOWN, true)}
                         className="w-full sm:w-fit"
                     >
                         {characterClass === ClassType.WIZARD ? t.dnd.spells.spellbook : t.dnd.spells.known}
                     </Button>
                 )}
 
-                {showPreparedSection(characterClass) && (
+                {showPrepared && (
                     <Button
                         variant={props.spellSection === SpellSection.PREPARED ? "default" : "outline"}
-                        onClick={() => props.setSpellSection(SpellSection.PREPARED)}
+                        onClick={() => props.setSpellSection(SpellSection.PREPARED, true)}
                         className="w-full sm:w-fit"
                     >
                         {t.dnd.spells.prepared}

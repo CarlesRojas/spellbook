@@ -1,26 +1,39 @@
+import ScrollToTop from "@/component/ScrollToTop";
+import AllList from "@/component/spell/AllList";
+import KnownList from "@/component/spell/KnownList";
+import PreparedList from "@/component/spell/PreparedList";
 import { useTranslation } from "@/hook/useTranslation";
 import { GetAllSpellsReturnType } from "@/server/use/useSpells";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
+import { SpellSection } from "@/type/Spell";
 import { User } from "@/type/User";
-import SpellList from "../spell/SpellList";
 
 interface Props {
     language: Language;
     character: CharacterWithSpells;
     user: User;
     spells: GetAllSpellsReturnType;
+    spellSection: SpellSection;
 }
 
-const CharacterSpells = ({ language, character, spells, user }: Props) => {
+const CharacterSpells = ({ language, character, spells, user, spellSection }: Props) => {
     const { t } = useTranslation(language);
 
-    const { id, name, class: characterClass, level, ability, spellSlotsAvailableId, spellSlotsAvailable } = character;
-
     return (
-        <div className="flex w-full flex-col gap-4 p-4">
-            <SpellList language={language} initialSpellsData={spells} />
-        </div>
+        <>
+            {spellSection === SpellSection.ALL && <AllList language={language} spells={spells} character={character} />}
+
+            {spellSection === SpellSection.KNOWN && (
+                <KnownList language={language} spells={spells} character={character} />
+            )}
+
+            {spellSection === SpellSection.PREPARED && (
+                <PreparedList language={language} spells={spells} character={character} />
+            )}
+
+            <ScrollToTop />
+        </>
     );
 };
 

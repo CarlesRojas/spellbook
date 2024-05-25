@@ -191,16 +191,17 @@
     },
 
     "filter": {
-        "noResults": "No se encontraron resultados",
-        "result": "resultado",
-        "results": "resultados",
+        "noResults": "No se encontraron hechizos",
+        "result": "hechizo",
+        "results": "hechizos",
         "all": "Todas",
         "level": "Nivel",
 
         "title": {
             "query": "Buscar...",
             "school": "Escuela",
-            "sort": "Ordenado por"
+            "sort": "Ordenado por",
+            "class": "Clase"
         }
     },
 

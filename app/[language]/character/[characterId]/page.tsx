@@ -46,7 +46,13 @@ const Characters = ({ params: { language, characterId } }: Props) => {
             />
 
             {spells.data && (
-                <CharacterSpells character={character.data} language={language} user={user.data} spells={spells.data} />
+                <CharacterSpells
+                    character={character.data}
+                    language={language}
+                    user={user.data}
+                    spells={spells.data}
+                    spellSection={spellSection}
+                />
             )}
         </>,
     );
