@@ -220,7 +220,7 @@
 
             "error": {
                 "nameTooShort": "The name must be at least 2 characters",
-                "nameTooLong": "The name must be no more than 16 characters"
+                "nameTooLong": "The name must be no more than 14 characters"
             }
         }
     },

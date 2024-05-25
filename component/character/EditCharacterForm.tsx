@@ -29,7 +29,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
         name: z
             .string()
             .min(2, { message: t.dnd.character.error.nameTooShort })
-            .max(16, { message: t.dnd.character.error.nameTooLong }),
+            .max(14, { message: t.dnd.character.error.nameTooLong }),
         level: z.number().min(1).max(20),
         ability: z.coerce.number(),
     });
