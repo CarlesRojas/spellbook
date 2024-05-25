@@ -14,7 +14,10 @@ export const useCreateCharacter = (userEmail: string) => {
             const previousData: Character[] | undefined = queryClient.getQueryData(queryKey);
 
             const newData: Character[] | undefined = previousData
-                ? [{ ...newCharacter, class: newCharacter.class as ClassType, id: -1 }, ...previousData]
+                ? [
+                      { ...newCharacter, class: newCharacter.class as ClassType, id: -1, spellSlotsAvailableId: -1 },
+                      ...previousData,
+                  ]
                 : undefined;
             queryClient.setQueryData(queryKey, newData);
 
