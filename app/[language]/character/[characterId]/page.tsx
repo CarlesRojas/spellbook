@@ -6,6 +6,7 @@ import CharacterStatus from "@/component/character/CharacterStatus";
 import NotFound from "@/component/navigation/NotFound";
 import { useUrlState } from "@/hook/useUrlState";
 import { useCharacter } from "@/server/use/useCharacter";
+import { useSpells } from "@/server/use/useSpells";
 import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
@@ -20,6 +21,7 @@ interface Props extends PageProps {
 const Characters = ({ params: { language, characterId } }: Props) => {
     const character = useCharacter(characterId);
     const { user } = useUser();
+    const spells = useSpells();
 
     const [spellSection, setSpellSection] = useUrlState("spells", SpellSection.ALL, z.nativeEnum(SpellSection));
 
@@ -43,7 +45,9 @@ const Characters = ({ params: { language, characterId } }: Props) => {
                 setSpellSection={setSpellSection}
             />
 
-            <CharacterSpells character={character.data} language={language} user={user.data} />
+            {spells.data && (
+                <CharacterSpells character={character.data} language={language} user={user.data} spells={spells.data} />
+            )}
         </>,
     );
 };

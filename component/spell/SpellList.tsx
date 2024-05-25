@@ -6,7 +6,7 @@ import SpellItem from "@/component/spell/SpellItem";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { cn } from "@/lib/util";
-import { GetAllSpellsReturnType, useSpells } from "@/server/use/useSpells";
+import { GetAllSpellsReturnType, useSpellsPreloaded } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { Sort } from "@/type/Spell";
 import { Fragment } from "react";
@@ -15,15 +15,16 @@ import { z } from "zod";
 interface Props {
     language: Language;
     initialSpellsData: GetAllSpellsReturnType;
+    showSort?: boolean;
 }
 
-const SpellList = ({ language, initialSpellsData }: Props) => {
+const SpellList = ({ language, initialSpellsData, showSort }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
     const [sort, setSort] = useUrlState("sort", Sort.LEVEL_ASC, z.nativeEnum(Sort));
 
-    const spells = useSpells(initialSpellsData);
+    const spells = useSpellsPreloaded(initialSpellsData);
     const filteredSpells = spells.data
         .filter((spell) => {
             if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
@@ -51,9 +52,11 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
             <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
 
-                <div className="flex flex-row gap-2">
-                    <SortFilter language={language} sort={sort} setSort={setSort} />
-                </div>
+                {showSort && (
+                    <div className="flex flex-row gap-2">
+                        <SortFilter language={language} sort={sort} setSort={setSort} />
+                    </div>
+                )}
             </div>
 
             <div className={cn("flex justify-end pt-1", spells.isLoading ? "pointer-events-none opacity-0" : "")}>

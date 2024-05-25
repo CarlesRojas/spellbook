@@ -54,6 +54,7 @@ const CharacterStatus = (props: Props) => {
     const updateSpellSlots = useUpdateSpellSlots();
 
     if (isLoading) return <div className="skeleton flex h-[5.5rem] min-h-[5.5rem] w-full rounded border" />;
+
     const {
         id,
         name,
@@ -94,7 +95,7 @@ const CharacterStatus = (props: Props) => {
     };
 
     return (
-        <div className="sticky top-0 flex w-full max-w-screen-lg flex-col gap-4 bg-stone-100 p-4 dark:bg-stone-950 mouse:top-16">
+        <div className="sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16">
             <div className="flex w-full flex-col items-center gap-2 md:flex-row md:justify-between md:gap-4">
                 <div className="relative flex w-full items-center gap-2 md:w-fit">
                     {getClassIcon(characterClass, "h-12 min-h-12 w-12 -my-2")}
