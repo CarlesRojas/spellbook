@@ -8,7 +8,7 @@
     }
 
     .skeleton {
-        @apply animate-pulse !border-stone-300 !bg-stone-200 !text-transparent dark:!border-stone-800 dark:!bg-stone-900;
+        @apply animate-pulse !border-stone-300 !bg-stone-200 !text-transparent dark:!border-stone-700 dark:!bg-stone-900;
     }
 }
 

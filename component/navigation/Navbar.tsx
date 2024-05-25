@@ -24,7 +24,7 @@ const Navbar = ({ language }: Props) => {
     const route = useRoute();
 
     const header = (children?: ReactNode) => (
-        <header className="fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-between border-t border-stone-300 bg-stone-100 px-3 py-2 dark:border-stone-800 dark:bg-stone-950 md:hidden md:px-4 mouse:hidden">
+        <header className="fixed bottom-0 left-0 right-0 z-50 flex h-16 items-center justify-between border-t border-stone-300 bg-stone-100 px-3 py-2 dark:border-stone-700 dark:bg-stone-950 md:hidden md:px-4 mouse:hidden">
             <nav className="relative grid h-full w-full grid-cols-3 place-items-center justify-around">
                 <Link href={`/${language}${Route.SPELLS}`} className="relative h-full w-full">
                     <NavbarItem

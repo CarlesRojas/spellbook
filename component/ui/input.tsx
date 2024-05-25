@@ -7,7 +7,7 @@ const inputVariants = cva(
     {
         variants: {
             variant: {
-                default: "border-stone-300 dark:border-stone-800",
+                default: "border-stone-300 dark:border-stone-700",
                 error: "!border-red-500 dark:!border-red-500",
             },
         },
