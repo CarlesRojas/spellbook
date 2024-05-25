@@ -1,3 +1,4 @@
+import { SpellSection } from "@/app/[language]/character/[characterId]/page";
 import { getClassIcon } from "@/component/character/CharacterItem";
 import EditCharacterForm from "@/component/character/EditCharacterForm";
 import { Button } from "@/component/ui/button";
@@ -9,11 +10,18 @@ import {
     DropdownMenuTrigger,
 } from "@/component/ui/dropdown-menu";
 import { useTranslation } from "@/hook/useTranslation";
-import { getAbility, getClassBackgroundColor, getTotalSpellSlots } from "@/lib/character";
+import {
+    getAbility,
+    getClassBackgroundColor,
+    getTotalSpellSlots,
+    showKnownSection,
+    showPreparedSection,
+} from "@/lib/character";
 import { cn } from "@/lib/util";
 import { useUpdateSpellSlots } from "@/server/use/useUpdateSpellSlots";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
+import { ClassType } from "@/type/Spell";
 import { SpellSlots } from "@/type/SpellSlots";
 import { User } from "@/type/User";
 import { useState } from "react";
@@ -32,6 +40,8 @@ interface DefaultProps {
     isLoading?: false;
     character: CharacterWithSpells;
     user: User;
+    spellSection: SpellSection;
+    setSpellSection: (newState: SpellSection, scroll?: boolean) => void;
 }
 
 type Props = CommonProps & (LoadingProps | DefaultProps);
@@ -84,79 +94,100 @@ const CharacterStatus = (props: Props) => {
     };
 
     return (
-        <div className="fixed flex w-full max-w-screen-lg flex-col items-center gap-2 bg-stone-100 p-3 dark:bg-stone-950 sm:p-4 md:flex-row md:justify-between md:gap-4 mouse:top-16">
-            <div className="relative flex w-full items-center gap-2 md:w-fit">
-                {getClassIcon(characterClass, "h-12 min-h-12 w-12 -my-2")}
+        <div className="sticky top-0 flex w-full max-w-screen-lg flex-col gap-4 bg-stone-100 p-4 dark:bg-stone-950 mouse:top-16">
+            <div className="flex w-full flex-col items-center gap-2 md:flex-row md:justify-between md:gap-4">
+                <div className="relative flex w-full items-center gap-2 md:w-fit">
+                    {getClassIcon(characterClass, "h-12 min-h-12 w-12 -my-2")}
 
-                <div className="flex w-fit grow flex-col md:grow-0">
-                    <h3 className="truncate font-semibold">{name}</h3>
+                    <div className="flex w-fit grow flex-col md:grow-0">
+                        <h3 className="truncate font-semibold">{name}</h3>
 
-                    <div className="flex items-baseline gap-3 sm:gap-4">
-                        <span>
-                            <span className="font-medium opacity-50">{t.dnd.level}</span>{" "}
-                            <strong className="font-semibold">{level}</strong>
-                        </span>
+                        <div className="flex items-baseline gap-3 sm:gap-4">
+                            <span>
+                                <span className="font-medium opacity-50">{t.dnd.level}</span>{" "}
+                                <strong className="font-semibold">{level}</strong>
+                            </span>
 
-                        <span>
-                            <span className="font-medium opacity-50">
-                                {t.enum.abilityShort[getAbility(characterClass)]}
-                            </span>{" "}
-                            <strong className="font-semibold">{ability}</strong>
-                        </span>
+                            <span>
+                                <span className="font-medium opacity-50">
+                                    {t.enum.abilityShort[getAbility(characterClass)]}
+                                </span>{" "}
+                                <strong className="font-semibold">{ability}</strong>
+                            </span>
+                        </div>
                     </div>
+
+                    <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+                        <DialogTrigger asChild>
+                            <Button variant="outline" size="icon" className="sm:ml-4">
+                                <LuPencil className="h-4 w-4" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader className="flex flex-row items-center gap-2">
+                                {getClassIcon(characterClass, "h-8 min-h-8 w-8")}
+
+                                <DialogTitle>
+                                    {t.form.edit} {name}
+                                </DialogTitle>
+                            </DialogHeader>
+
+                            <EditCharacterForm
+                                character={props.character}
+                                user={props.user}
+                                onClose={() => setEditDialogOpen(false)}
+                                language={language}
+                            />
+                        </DialogContent>
+                    </Dialog>
+
+                    <Button variant="outline" size="icon" onClick={longRest}>
+                        <PiCampfireDuotone className="h-6 w-6" />
+                    </Button>
                 </div>
 
-                <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-                    <DialogTrigger asChild>
-                        <Button variant="outline" size="icon" className="sm:ml-4">
-                            <LuPencil className="h-4 w-4" />
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader className="flex flex-row items-center gap-2">
-                            {getClassIcon(characterClass, "h-8 min-h-8 w-8")}
+                <div className="relative flex h-fit w-full min-w-fit items-start justify-between sm:gap-x-4 md:w-fit md:justify-end lg:gap-x-6">
+                    {spellSlotsAvailable &&
+                        Object.keys(spellSlotsAvailable)
+                            .sort()
+                            .map((slotLevel) => {
+                                const maxSpellSlots = getTotalSpellSlots(characterClass, level)[
+                                    slotLevel as keyof SpellSlots
+                                ];
+                                const availableSpellSlots = spellSlotsAvailable[slotLevel as keyof SpellSlots];
 
-                            <DialogTitle>
-                                {t.form.edit} {name}
-                            </DialogTitle>
-                        </DialogHeader>
+                                if (maxSpellSlots === 0)
+                                    return <div key={slotLevel} className="w-7 min-w-7 max-w-7 md:hidden" />;
 
-                        <EditCharacterForm
-                            character={props.character}
-                            user={props.user}
-                            onClose={() => setEditDialogOpen(false)}
-                            language={language}
-                        />
-                    </DialogContent>
-                </Dialog>
+                                const slotLevelNumber = slotLevel.replace(/\D/g, "");
 
-                <Button variant="outline" size="icon" onClick={longRest}>
-                    <PiCampfireDuotone className="h-6 w-6" />
-                </Button>
-            </div>
+                                return (
+                                    <DropdownMenu key={slotLevel} modal={false}>
+                                        <DropdownMenuTrigger asChild>
+                                            <div className="relative flex h-full w-7 min-w-7 max-w-7 flex-col items-center justify-center rounded-md text-sm font-semibold">
+                                                <p>{slotLevelNumber}</p>
 
-            <div className="relative flex h-fit w-full min-w-fit items-start justify-between sm:gap-x-4 md:w-fit md:justify-end lg:gap-x-6">
-                {spellSlotsAvailable &&
-                    Object.keys(spellSlotsAvailable)
-                        .sort()
-                        .map((slotLevel) => {
-                            const maxSpellSlots = getTotalSpellSlots(characterClass, level)[
-                                slotLevel as keyof SpellSlots
-                            ];
-                            const availableSpellSlots = spellSlotsAvailable[slotLevel as keyof SpellSlots];
+                                                <div className="flex w-full flex-wrap items-center justify-center gap-1">
+                                                    {Array.from({ length: maxSpellSlots }).map((_, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className={cn(
+                                                                "h-3 max-h-3 min-h-3 w-3 min-w-3 max-w-3 rounded-full bg-stone-500/30",
+                                                                index < availableSpellSlots &&
+                                                                    getClassBackgroundColor(characterClass),
+                                                            )}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </DropdownMenuTrigger>
 
-                            if (maxSpellSlots === 0)
-                                return <div key={slotLevel} className="w-7 min-w-7 max-w-7 md:hidden" />;
+                                        <DropdownMenuContent className="mx-2 my-3 flex min-w-fit flex-col gap-2 p-2">
+                                            <DropdownMenuLabel className="w-full p-0 text-center">
+                                                {t.dnd.character.level} {slotLevelNumber}
+                                            </DropdownMenuLabel>
 
-                            const slotLevelNumber = slotLevel.replace(/\D/g, "");
-
-                            return (
-                                <DropdownMenu key={slotLevel} modal={false}>
-                                    <DropdownMenuTrigger asChild>
-                                        <div className="relative flex h-full w-7 min-w-7 max-w-7 flex-col items-center justify-center rounded-md text-sm font-semibold">
-                                            <p>{slotLevelNumber}</p>
-
-                                            <div className="flex w-full flex-wrap items-center justify-center gap-1">
+                                            <div className="flex w-full items-center justify-center gap-1">
                                                 {Array.from({ length: maxSpellSlots }).map((_, index) => (
                                                     <div
                                                         key={index}
@@ -168,52 +199,63 @@ const CharacterStatus = (props: Props) => {
                                                     />
                                                 ))}
                                             </div>
-                                        </div>
-                                    </DropdownMenuTrigger>
 
-                                    <DropdownMenuContent className="mx-2 my-3 flex min-w-fit flex-col gap-2 p-2">
-                                        <DropdownMenuLabel className="w-full p-0 text-center">
-                                            {t.dnd.character.level} {slotLevelNumber}
-                                        </DropdownMenuLabel>
+                                            <div className="flex w-full gap-4 p-0">
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="p-0"
+                                                    disabled={availableSpellSlots === 0}
+                                                    onClick={() => spendSpellSlot(slotLevel as keyof SpellSlots)}
+                                                >
+                                                    <LuMinus className="h-5 w-5" />
+                                                </Button>
 
-                                        <div className="flex w-full items-center justify-center gap-1">
-                                            {Array.from({ length: maxSpellSlots }).map((_, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={cn(
-                                                        "h-3 max-h-3 min-h-3 w-3 min-w-3 max-w-3 rounded-full bg-stone-500/30",
-                                                        index < availableSpellSlots &&
-                                                            getClassBackgroundColor(characterClass),
-                                                    )}
-                                                />
-                                            ))}
-                                        </div>
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    className="p-0"
+                                                    disabled={availableSpellSlots === maxSpellSlots}
+                                                    onClick={() => addSpellSlot(slotLevel as keyof SpellSlots)}
+                                                >
+                                                    <LuPlus className="h-5 w-5" />
+                                                </Button>
+                                            </div>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                );
+                            })}
+                </div>
+            </div>
 
-                                        <div className="flex w-full gap-4 p-0">
-                                            <Button
-                                                variant="outline"
-                                                size="icon"
-                                                className="p-0"
-                                                disabled={availableSpellSlots === 0}
-                                                onClick={() => spendSpellSlot(slotLevel as keyof SpellSlots)}
-                                            >
-                                                <LuMinus className="h-5 w-5" />
-                                            </Button>
+            <div className="grid grid-cols-3 gap-2 sm:flex">
+                <Button
+                    variant={props.spellSection === SpellSection.ALL ? "default" : "outline"}
+                    onClick={() => props.setSpellSection(SpellSection.ALL)}
+                    className="w-full sm:w-fit"
+                >
+                    {t.dnd.spells.all}
+                </Button>
 
-                                            <Button
-                                                variant="outline"
-                                                size="icon"
-                                                className="p-0"
-                                                disabled={availableSpellSlots === maxSpellSlots}
-                                                onClick={() => addSpellSlot(slotLevel as keyof SpellSlots)}
-                                            >
-                                                <LuPlus className="h-5 w-5" />
-                                            </Button>
-                                        </div>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            );
-                        })}
+                {showKnownSection(characterClass) && (
+                    <Button
+                        variant={props.spellSection === SpellSection.KNOWN ? "default" : "outline"}
+                        onClick={() => props.setSpellSection(SpellSection.KNOWN)}
+                        className="w-full sm:w-fit"
+                    >
+                        {characterClass === ClassType.WIZARD ? t.dnd.spells.spellbook : t.dnd.spells.known}
+                    </Button>
+                )}
+
+                {showPreparedSection(characterClass) && (
+                    <Button
+                        variant={props.spellSection === SpellSection.PREPARED ? "default" : "outline"}
+                        onClick={() => props.setSpellSection(SpellSection.PREPARED)}
+                        className="w-full sm:w-fit"
+                    >
+                        {t.dnd.spells.prepared}
+                    </Button>
+                )}
             </div>
         </div>
     );

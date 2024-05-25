@@ -108,6 +108,13 @@ export const LanguageObjectSchema = z.object({
                 nameTooLong: z.string(),
             }),
         }),
+
+        spells: z.object({
+            all: z.string(),
+            known: z.string(),
+            prepared: z.string(),
+            spellbook: z.string(),
+        }),
     }),
 
     form: z.object({

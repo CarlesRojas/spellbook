@@ -222,6 +222,13 @@
                 "nameTooShort": "El nombre debe tener al menos 2 caracteres",
                 "nameTooLong": "El nombre debe tener no más de 14 caracteres"
             }
+        },
+
+        "spells": {
+            "all": "Todos",
+            "known": "Conocidos",
+            "prepared": "Preparados",
+            "spellbook": "Spellbook"
         }
     },
 

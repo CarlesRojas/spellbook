@@ -40,6 +40,21 @@ export const getKnowSpells = (classType: ClassType, level: number) => {
     return knownSpellsPerLevel ? knownSpellsPerLevel[level - 1] : null;
 };
 
+export const showKnownSection = (classType: ClassType) => {
+    const map: Record<ClassType, boolean> = {
+        [ClassType.WIZARD]: true,
+        [ClassType.SORCERER]: true,
+        [ClassType.CLERIC]: false,
+        [ClassType.PALADIN]: false,
+        [ClassType.RANGER]: true,
+        [ClassType.BARD]: true,
+        [ClassType.DRUID]: false,
+        [ClassType.WARLOCK]: true,
+    };
+
+    return map[classType];
+};
+
 export const getPreparedSpellsAmount = (classType: ClassType, ability: number, level: number) => {
     const map: Record<ClassType, number> = {
         [ClassType.WIZARD]: Math.max(1, ability + level),
@@ -53,6 +68,11 @@ export const getPreparedSpellsAmount = (classType: ClassType, ability: number, l
     };
 
     return map[classType];
+};
+
+export const showPreparedSection = (classType: ClassType) => {
+    const amount = getPreparedSpellsAmount(classType, 0, 0);
+    return amount > 0;
 };
 
 export const getTotalSpellSlots = (classType: ClassType, level: number) => {
