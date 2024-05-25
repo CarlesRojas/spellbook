@@ -38,7 +38,7 @@ export async function generateMetadata({ params: { language } }: PageProps): Pro
 export const viewport: Viewport = {
     themeColor: [
         { media: "(prefers-color-scheme: light)", color: "#f5f5f4" },
-        { media: "(prefers-color-scheme: dark)", color: "#1c1917" },
+        { media: "(prefers-color-scheme: dark)", color: "#0c0a09" },
     ],
 };
 
