@@ -3,12 +3,13 @@
 import { Button } from "@/component/ui/button";
 import { useRoute } from "@/hook/useRoute";
 import { useTranslation } from "@/hook/useTranslation";
+import { cn } from "@/lib/util";
 import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { LuLoader2, LuMenu, LuX } from "react-icons/lu";
+import { LuMenu, LuX } from "react-icons/lu";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 export interface Props {
@@ -21,9 +22,13 @@ const Links = ({ language }: Props) => {
     const { user, signIn } = useUser();
 
     const signInButton = (children: ReactNode, route: string) => (
-        <Button disabled={user.isLoading} variant="link" onClick={() => signIn(route)}>
+        <Button
+            disabled={user.isLoading}
+            className={cn(user.isLoading && "text-skeleton")}
+            variant="link"
+            onClick={() => signIn(route)}
+        >
             {children}
-            {user.isLoading && <LuLoader2 className="ml-2 h-4 w-4 animate-spin stroke-[3]" />}
         </Button>
     );
 

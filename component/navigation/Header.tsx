@@ -12,7 +12,7 @@ import { Philosopher } from "next/font/google";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { LuLoader2, LuLogIn } from "react-icons/lu";
+import { LuLogIn, LuSettings } from "react-icons/lu";
 
 const philosopher = Philosopher({
     subsets: ["latin"],
@@ -54,7 +54,7 @@ const Header = ({ language }: Props) => {
     if (!user.data && user.isLoading)
         return header(
             <div className="relative flex h-12 w-12 items-center justify-center rounded-full p-2">
-                <LuLoader2 className="h-4 w-4 animate-spin stroke-[3]" />
+                <LuSettings className="text-skeleton h-6 w-6" />
             </div>,
         );
 
