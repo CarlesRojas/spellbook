@@ -24,7 +24,7 @@ const ScrollToTop = () => {
         <Button
             variant="outline"
             className={cn(
-                "fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full p-3 transition-all mouse:bottom-4",
+                "fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full p-3 transition-all mouse:bottom-8 mouse:right-8",
                 onTop && "pointer-events-none select-none opacity-0 disabled:opacity-0",
             )}
             // disabled={onTop}

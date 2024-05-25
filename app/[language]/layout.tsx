@@ -57,7 +57,7 @@ const RootLayout = ({ children, modal, params: { language } }: Props) => {
                         <ThemeProvider>
                             <Header language={language} />
 
-                            <div className="relative w-full pb-16 md:pt-16 mouse:pt-16">{children}</div>
+                            <div className="relative w-full pb-16 mouse:pt-16">{children}</div>
 
                             <Navbar language={language} />
 

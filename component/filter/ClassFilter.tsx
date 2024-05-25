@@ -30,7 +30,7 @@ const ClassFilter = ({ language, classType, setClass, isLoading }: Props) => {
                     </Button>
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="start">
                     <DropdownMenuItem
                         onClick={() => setClass(null)}
                         className={`font-semibold ${classType === null ? "!text-sky-500" : ""}`}

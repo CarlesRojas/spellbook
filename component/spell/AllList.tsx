@@ -39,8 +39,8 @@ const AllList = ({ language, spells, character }: Props) => {
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
             <div className="flex w-full justify-end gap-2 md:flex-row">
-                <QueryFilter language={language} query={query} setQuery={setQuery} className="w-fit grow" />
                 <ClassFilter language={language} classType={classFilter} setClass={setClassFilter} />
+                <QueryFilter language={language} query={query} setQuery={setQuery} className="w-fit grow" />
             </div>
 
             <div className="flex justify-end pt-1">

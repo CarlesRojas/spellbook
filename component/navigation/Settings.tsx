@@ -40,7 +40,7 @@ const Settings = ({ language }: Props) => {
     return (
         <DropdownMenu modal={true}>
             <DropdownMenuTrigger className="focus-shadow rounded-full">
-                <div className="group hidden rounded-full md:flex mouse:flex">
+                <div className="group flex rounded-full">
                     {user.data ? (
                         <Button
                             asChild
@@ -64,24 +64,31 @@ const Settings = ({ language }: Props) => {
                             </Avatar>
                         </Button>
                     ) : (
-                        <Button
-                            asChild
-                            variant="link"
-                            aria-label="Open Settings"
-                            className="flex h-12 w-12 items-center justify-center rounded-full p-3"
-                        >
-                            <LuSettings className="mouse:group-hover:text-sky-500" />
-                        </Button>
-                    )}
-                </div>
+                        <>
+                            <Button
+                                asChild
+                                variant="link"
+                                aria-label="Open Settings"
+                                className="hidden h-12 w-12 items-center justify-center rounded-full p-3 mouse:flex"
+                            >
+                                <LuSettings className="mouse:group-hover:text-sky-500" />
+                            </Button>
 
-                <div className="group flex h-12 max-h-12 w-full md:hidden mouse:hidden">
-                    <Button asChild variant="link" aria-label="Open Settings" className="relative h-full w-full p-0">
-                        <NavbarItem
-                            label={t.settings.title}
-                            icon={<LuSettings className="h-6 w-6 mouse:group-hover:text-sky-500" />}
-                        />
-                    </Button>
+                            <div className="group flex h-12 max-h-12 w-full mouse:hidden">
+                                <Button
+                                    asChild
+                                    variant="link"
+                                    aria-label="Open Settings"
+                                    className="relative h-full w-full p-0"
+                                >
+                                    <NavbarItem
+                                        label={t.settings.title}
+                                        icon={<LuSettings className="h-6 w-6 mouse:group-hover:text-sky-500" />}
+                                    />
+                                </Button>
+                            </div>
+                        </>
+                    )}
                 </div>
             </DropdownMenuTrigger>
 
