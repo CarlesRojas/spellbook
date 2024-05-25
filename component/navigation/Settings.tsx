@@ -22,6 +22,7 @@ import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LuLanguages, LuLoader2, LuLogIn, LuLogOut, LuMoon, LuSettings, LuSun, LuUser } from "react-icons/lu";
 
 export interface Props {
@@ -34,6 +35,7 @@ const Settings = ({ language }: Props) => {
     const { t } = useTranslation(language);
     const { user, signOut, signIn } = useUser();
     const pathnameWithoutLanguage = usePathnameWithoutLanguage();
+    const pathname = usePathname();
 
     return (
         <DropdownMenu modal={true}>
@@ -137,7 +139,7 @@ const Settings = ({ language }: Props) => {
                         <p className=" font-medium">{t.auth.signOut}</p>
                     </DropdownMenuItem>
                 ) : (
-                    <DropdownMenuItem onClick={() => signIn()}>
+                    <DropdownMenuItem onClick={() => signIn(pathname)}>
                         <LuLogIn className="mr-3 h-4 w-4" />
                         <p className=" font-medium">{t.auth.signIn}</p>
                     </DropdownMenuItem>

@@ -26,7 +26,7 @@ export const useUser = () => {
         queryFn: () => getClientSide(),
     });
 
-    const signIn = async (callbackUrl: Route = Route.SPELLS) => {
+    const signIn = async (callbackUrl: string = Route.SPELLS) => {
         signInWithGoogle("google", { callbackUrl });
     };
 

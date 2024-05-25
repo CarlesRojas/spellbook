@@ -10,6 +10,7 @@ import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import { Philosopher } from "next/font/google";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { LuLoader2, LuLogIn } from "react-icons/lu";
 
@@ -23,6 +24,7 @@ export interface Props {
 }
 
 const Header = ({ language }: Props) => {
+    const pathname = usePathname();
     const { t } = useTranslation(language);
     const { user, signIn } = useUser();
 
@@ -59,7 +61,7 @@ const Header = ({ language }: Props) => {
     return header(
         <div className="flex items-center gap-4">
             {!user.data && (
-                <Button onClick={() => signIn()} className="hidden md:flex">
+                <Button onClick={() => signIn(pathname)} className="hidden md:flex">
                     <LuLogIn className="mr-3 h-4 w-4" />
                     {t.auth.signIn}
                 </Button>

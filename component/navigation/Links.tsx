@@ -20,14 +20,14 @@ const Links = ({ language }: Props) => {
     const route = useRoute();
     const { user, signIn } = useUser();
 
-    const signInButton = (children: ReactNode) => (
-        <Button variant="link" onClick={() => signIn()}>
+    const signInButton = (children: ReactNode, route: string) => (
+        <Button variant="link" onClick={() => signIn(route)}>
             {children}
         </Button>
     );
 
-    const signInDropdownButton = (children: ReactNode) => (
-        <DropdownMenuItem className="font-semibold" onClick={() => signIn()}>
+    const signInDropdownButton = (children: ReactNode, route: string) => (
+        <DropdownMenuItem className="font-semibold" onClick={() => signIn(route)}>
             {children}
         </DropdownMenuItem>
     );
@@ -46,7 +46,7 @@ const Links = ({ language }: Props) => {
                         </Link>
                     </Button>
                 ) : (
-                    signInButton(t.enum.route[Route.CHARACTERS])
+                    signInButton(t.enum.route[Route.CHARACTERS], `/${language}${Route.CHARACTERS}`)
                 )}
             </div>
 
@@ -90,7 +90,7 @@ const Links = ({ language }: Props) => {
                                 </DropdownMenuItem>
                             </Link>
                         ) : (
-                            signInDropdownButton(t.enum.route[Route.CHARACTERS])
+                            signInDropdownButton(t.enum.route[Route.CHARACTERS], `/${language}${Route.CHARACTERS}`)
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>
