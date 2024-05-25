@@ -56,7 +56,13 @@ const CharacterList = ({ language, user }: Props) => {
 
                 {characters.data &&
                     characters.data.map((character) => (
-                        <CharacterItem key={character.id} character={character} user={user} language={language} />
+                        <CharacterItem
+                            disabled={character.id === -1}
+                            key={character.id}
+                            character={character}
+                            user={user}
+                            language={language}
+                        />
                     ))}
             </div>
         </section>

@@ -21,6 +21,7 @@ import { ReactElement } from "react";
 interface CommonProps {
     language: Language;
     user: User;
+    disabled?: boolean;
 }
 
 interface LoadingProps {
@@ -35,7 +36,7 @@ interface DefaultProps {
 type Props = CommonProps & (LoadingProps | DefaultProps);
 
 const CharacterItem = (props: Props) => {
-    const { isLoading, language, user } = props;
+    const { isLoading, language, user, disabled } = props;
 
     const { t } = useTranslation(language);
 
@@ -44,7 +45,12 @@ const CharacterItem = (props: Props) => {
     const { id, name, class: characterClass, level, ability } = props.character;
 
     return (
-        <div className="flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-black">
+        <div
+            className={cn(
+                "flex w-full items-center justify-between rounded border border-stone-300 bg-stone-50 dark:border-stone-700 dark:bg-black",
+                disabled && "pointer-events-none animate-pulse select-none",
+            )}
+        >
             <Link
                 href={`/${language}/${Route.CHARACTER}/${id}`}
                 className="focus-shadow group flex grow items-center gap-2 rounded p-3"
