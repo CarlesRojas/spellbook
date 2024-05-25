@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useTranslation } from "@/hook/useTranslation";
 import { getAbility, getClassBackgroundColor, getTotalSpellSlots } from "@/lib/character";
 import { cn } from "@/lib/util";
+import { useUpdateSpellSlots } from "@/server/use/useUpdateSpellSlots";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
@@ -33,9 +34,34 @@ const CharacterStatus = (props: Props) => {
     const { t } = useTranslation(language);
 
     const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const updateSpellSlots = useUpdateSpellSlots();
 
     if (isLoading) return <div className="skeleton flex h-[5.5rem] min-h-[5.5rem] w-full rounded border" />;
-    const { id, name, class: characterClass, level, ability, spellSlotsAvailable } = props.character;
+    const {
+        id,
+        name,
+        class: characterClass,
+        level,
+        ability,
+        spellSlotsAvailableId,
+        spellSlotsAvailable,
+    } = props.character;
+
+    const longRest = () => {
+        updateSpellSlots.mutate({
+            characterId: id,
+            id: spellSlotsAvailableId,
+            ...getTotalSpellSlots(characterClass, level),
+        });
+    };
+
+    // const spendSpellSlot = (level: number) => {
+    //     updateSpellSlots.mutate({
+    //         characterId: id,
+    //         id: spellSlotsAvailableId,
+    //         ...getTotalSpellSlots(characterClass, level),
+    //     });
+    // };
 
     return (
         <div className="fixed flex w-full max-w-screen-lg flex-col items-center gap-2 bg-stone-100 p-3 dark:bg-stone-950 sm:p-4 md:flex-row md:justify-between md:gap-4 mouse:top-16">
@@ -84,7 +110,7 @@ const CharacterStatus = (props: Props) => {
                     </DialogContent>
                 </Dialog>
 
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" onClick={longRest}>
                     <PiCampfireDuotone className="h-6 w-6" />
                 </Button>
             </div>

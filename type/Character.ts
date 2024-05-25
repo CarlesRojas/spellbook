@@ -10,6 +10,8 @@ export const CharacterSchema = z.object({
     level: z.number().min(1).max(20),
     class: z.nativeEnum(ClassType),
     ability: z.number(),
+
+    spellSlotsAvailableId: z.number(),
 });
 export type Character = z.infer<typeof CharacterSchema>;
 
