@@ -142,6 +142,17 @@ export const LanguageObjectSchema = z.object({
             unprepareFromOath: z.string(),
             cannotPrepare: z.string(),
             cannotPrepareDescription: z.string(),
+
+            toast: z.object({
+                learn: z.string(),
+                forget: z.string(),
+                addToSpellbook: z.string(),
+                removeFromSpellbook: z.string(),
+                prepare: z.string(),
+                unprepare: z.string(),
+                addCantrip: z.string(),
+                removeCantrip: z.string(),
+            }),
         }),
     }),
 

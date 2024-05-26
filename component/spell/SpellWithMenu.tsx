@@ -1,6 +1,7 @@
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/component/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
+import { SpellToast } from "@/component/ui/sonner";
 import { useTranslation } from "@/hook/useTranslation";
 import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount } from "@/lib/character";
 import { getSpellColor } from "@/lib/spell";
@@ -28,6 +29,7 @@ import {
     LuView,
     LuX,
 } from "react-icons/lu";
+import { toast } from "sonner";
 
 interface Props {
     spell: Spell;
@@ -68,16 +70,48 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
     const unprepareSpell = useUnprepareSpell();
     const forgetCantrip = useForgetCantrip();
 
+    const smallIcon = (
+        <div
+            className="inline-block h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 bg-cover brightness-90 dark:brightness-100"
+            style={{
+                backgroundImage: `url(/spell/${icon})`,
+                maskImage: `url(/spell/${icon})`,
+                maskMode: "alpha",
+                maskSize: "cover",
+                backgroundBlendMode: "luminosity",
+                backgroundColor: getSpellColor(color),
+            }}
+        />
+    );
+
     const [learnDialogOpen, setLearnDialogOpen] = useState(false);
     const onLearnSpell = (bypassMax: boolean) => {
         setPopoverOpen(false);
         if (!bypassMax && maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
 
         learnSpell.mutate({ characterId: character.id, spellIndex: index });
+        toast(
+            <SpellToast
+                icon={smallIcon}
+                message={(character.class === ClassType.WIZARD
+                    ? t.dnd.spell.toast.addToSpellbook
+                    : t.dnd.spell.toast.learn
+                ).replace("{{PARAM}}", spell.name[language])}
+            />,
+        );
     };
     const onForgetSpell = () => {
         setPopoverOpen(false);
         forgetSpell.mutate({ characterId: character.id, spellIndex: index });
+        toast(
+            <SpellToast
+                icon={smallIcon}
+                message={(character.class === ClassType.WIZARD
+                    ? t.dnd.spell.toast.removeFromSpellbook
+                    : t.dnd.spell.toast.forget
+                ).replace("{{PARAM}}", spell.name[language])}
+            />,
+        );
     };
 
     const [prepareDialogOpen, setPrepareDialogOpen] = useState(false);
@@ -86,10 +120,22 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
         if (!bypassMax && !isOathOrDomain && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
 
         prepareSpell.mutate({ characterId: character.id, spellIndex: index, counts: !isOathOrDomain });
+        toast(
+            <SpellToast
+                icon={smallIcon}
+                message={t.dnd.spell.toast.prepare.replace("{{PARAM}}", spell.name[language])}
+            />,
+        );
     };
     const onUnprepareSpell = () => {
         setPopoverOpen(false);
         unprepareSpell.mutate({ characterId: character.id, spellIndex: index });
+        toast(
+            <SpellToast
+                icon={smallIcon}
+                message={t.dnd.spell.toast.unprepare.replace("{{PARAM}}", spell.name[language])}
+            />,
+        );
     };
 
     const [cantripDialogOpen, setCantripDialogOpen] = useState(false);
@@ -98,10 +144,22 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
         if (!bypassMax && knownCantrips >= maxKnownCantrips) return setCantripDialogOpen(true);
 
         learnCantrip.mutate({ characterId: character.id, spellIndex: index });
+        toast(
+            <SpellToast
+                icon={smallIcon}
+                message={t.dnd.spell.toast.addCantrip.replace("{{PARAM}}", spell.name[language])}
+            />,
+        );
     };
     const onForgetCantrip = () => {
         setPopoverOpen(false);
         forgetCantrip.mutate({ characterId: character.id, spellIndex: index });
+        toast(
+            <SpellToast
+                icon={smallIcon}
+                message={t.dnd.spell.toast.removeCantrip.replace("{{PARAM}}", spell.name[language])}
+            />,
+        );
     };
 
     const addSpellText: Record<ClassType, string> = {
@@ -179,17 +237,7 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
 
     const spellMini = (className?: string) => (
         <div className={cn("flex w-fit items-center gap-2", className)}>
-            <div
-                className="inline-block h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 bg-cover brightness-90 dark:brightness-100"
-                style={{
-                    backgroundImage: `url(/spell/${icon})`,
-                    maskImage: `url(/spell/${icon})`,
-                    maskMode: "alpha",
-                    maskSize: "cover",
-                    backgroundBlendMode: "luminosity",
-                    backgroundColor: getSpellColor(color),
-                }}
-            />
+            {smallIcon}
 
             <p className="w-full truncate font-medium tracking-wide mouse:group-hover:opacity-0">{name[language]}</p>
         </div>
@@ -316,18 +364,13 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                         <DialogTitle>{t.dnd.spell.cannotLearn}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">
-                        {spellMini()}
-
-                        <p className="opacity-60">
-                            {t.dnd.spell.cannotLearnDescription.replace(
-                                "{{PARAM}}",
-                                maxKnownSpells ? maxKnownSpells.toString() : "0",
-                            )}
-                        </p>
-                    </div>
+                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+
                         <Button
                             variant="outline"
                             type="button"
@@ -339,10 +382,6 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                             <LuLightbulb className="mr-2 h-5 w-5" />
                             {t.dnd.spell.learnAnyway}
                         </Button>
-
-                        <DialogClose asChild>
-                            <Button variant="default">{t.form.cancel}</Button>
-                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -353,15 +392,13 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                         <DialogTitle>{t.dnd.spell.cannotPrepare}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">
-                        {spellMini()}
-
-                        <p className="opacity-60">
-                            {t.dnd.spell.cannotPrepareDescription.replace("{{PARAM}}", maxPreparedSpells.toString())}
-                        </p>
-                    </div>
+                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+
                         <Button
                             variant="outline"
                             type="button"
@@ -373,10 +410,6 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                             <LuSparkle className="mr-2 h-5 w-5" />
                             {t.dnd.spell.prepareAnyway}
                         </Button>
-
-                        <DialogClose asChild>
-                            <Button variant="default">{t.form.cancel}</Button>
-                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
@@ -387,15 +420,13 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                         <DialogTitle>{t.dnd.spell.cannotAddCantrip}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">
-                        {spellMini()}
-
-                        <p className="opacity-60">
-                            {t.dnd.spell.cannotAddCantripDescription.replace("{{PARAM}}", maxKnownCantrips.toString())}
-                        </p>
-                    </div>
+                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+
                         <Button
                             variant="outline"
                             type="button"
@@ -407,10 +438,6 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                             <LuSparkle className="mr-2 h-5 w-5" />
                             {t.dnd.spell.addCantripAnyway}
                         </Button>
-
-                        <DialogClose asChild>
-                            <Button variant="default">{t.form.cancel}</Button>
-                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

@@ -242,10 +242,10 @@
             "cannotLearn": "No puedes aprender más hechizos",
             "cannotLearnDescription": "Ya conoces todos los hechizos que puedes aprender ({{PARAM}}).",
 
-            "addCantrip": "Añadir Truco",
-            "removeCantrip": "Quitar Truco",
-            "addCantripAnyway": "Añadir igualmente",
-            "cannotAddCantrip": "No puedes conocer más Trucos",
+            "addCantrip": "Aprender Truco",
+            "removeCantrip": "Olvidar Truco",
+            "addCantripAnyway": "Aprender igualmente",
+            "cannotAddCantrip": "No puedes aprender más Trucos",
             "cannotAddCantripDescription": "Ya conoces todos los Trucos que puedes aprender ({{PARAM}}).",
 
             "prepare": "Preparar",
@@ -256,7 +256,18 @@
             "prepareAsOath": "Adquirir como Juramento",
             "unprepareFromOath": "Quitar de Juramento",
             "cannotPrepare": "No puedes preparar más hechizos",
-            "cannotPrepareDescription": "Ya has preparado todos los hechizos que puedes preparar ({{PARAM}})."
+            "cannotPrepareDescription": "Ya has preparado todos los hechizos que puedes preparar ({{PARAM}}).",
+
+            "toast": {
+                "learn": "¡Hechizo {{PARAM}} aprendido!",
+                "forget": "¡Hechizo {{PARAM}} olvidado!",
+                "addToSpellbook": "¡Hechizo {{PARAM}} añadido al libro de hechizos!",
+                "removeFromSpellbook": "¡Hechizo {{PARAM}} quitado del libro de hechizos!",
+                "prepare": "¡Hechizo {{PARAM}} preparado!",
+                "unprepare": "¡Hechizo {{PARAM}} despreparado!",
+                "addCantrip": "¡Truco {{PARAM}} añadido!",
+                "removeCantrip": "¡Truco {{PARAM}} quitado!"
+            }
         }
     },
 
