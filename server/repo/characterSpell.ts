@@ -2,6 +2,7 @@
 
 import { db } from "@/server/database";
 import { knownCantrips, knownSpells, preparedSpells } from "@/server/database/schema";
+import { Spell, SpellWithCounts } from "@/type/Spell";
 import { and, eq } from "drizzle-orm";
 
 interface CharacterSpell {
@@ -10,7 +11,15 @@ interface CharacterSpell {
     counts?: boolean;
 }
 
-export const learnSpell = async ({ characterId, spellIndex }: CharacterSpell) => {
+interface CharacterSpellComplete extends CharacterSpell {
+    spell: Spell;
+}
+
+interface CharacterSpellCompleteWithCounts extends CharacterSpell {
+    spell: SpellWithCounts;
+}
+
+export const learnSpell = async ({ characterId, spellIndex }: CharacterSpellComplete) => {
     await db.insert(knownSpells).values({ characterId, spellIndex });
 };
 
@@ -25,7 +34,7 @@ export const forgetSpell = async ({ characterId, spellIndex }: CharacterSpell) =
     ]);
 };
 
-export const prepareSpell = async ({ characterId, spellIndex, counts = true }: CharacterSpell) => {
+export const prepareSpell = async ({ characterId, spellIndex, counts = true }: CharacterSpellCompleteWithCounts) => {
     await db.insert(preparedSpells).values({ characterId, spellIndex, counts });
 };
 
@@ -35,7 +44,7 @@ export const unprepareSpell = async ({ characterId, spellIndex }: CharacterSpell
         .where(and(eq(preparedSpells.characterId, characterId), eq(preparedSpells.spellIndex, spellIndex)));
 };
 
-export const learnCantrip = async ({ characterId, spellIndex }: CharacterSpell) => {
+export const learnCantrip = async ({ characterId, spellIndex }: CharacterSpellComplete) => {
     await db.insert(knownCantrips).values({ characterId, spellIndex });
 };
 

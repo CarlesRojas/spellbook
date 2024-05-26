@@ -74,7 +74,12 @@ const BookSpell = ({ spell, language, character }: Props) => {
 
         if (!bypassMax && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
 
-        prepareSpell.mutate({ characterId: character.id, spellIndex: index, counts: true });
+        prepareSpell.mutate({
+            characterId: character.id,
+            spellIndex: index,
+            counts: true,
+            spell: { ...spell, counts: true },
+        });
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)}>
                 <SpellToast

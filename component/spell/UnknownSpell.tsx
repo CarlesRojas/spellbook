@@ -91,7 +91,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
         setPopoverOpen(false);
         if (!bypassMax && maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
 
-        learnSpell.mutate({ characterId: character.id, spellIndex: index });
+        learnSpell.mutate({ characterId: character.id, spellIndex: index, spell });
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)}>
                 <SpellToast
@@ -125,7 +125,12 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
         setPopoverOpen(false);
         if (!bypassMax && !isOathOrDomain && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
 
-        prepareSpell.mutate({ characterId: character.id, spellIndex: index, counts: !isOathOrDomain });
+        prepareSpell.mutate({
+            characterId: character.id,
+            spellIndex: index,
+            counts: !isOathOrDomain,
+            spell: { ...spell, counts: !isOathOrDomain },
+        });
 
         const toastMessage = isOathOrDomain
             ? character.class === ClassType.CLERIC
@@ -161,7 +166,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
         setPopoverOpen(false);
         if (!bypassMax && knownCantrips >= maxKnownCantrips) return setCantripDialogOpen(true);
 
-        learnCantrip.mutate({ characterId: character.id, spellIndex: index });
+        learnCantrip.mutate({ characterId: character.id, spellIndex: index, spell });
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)}>
                 <SpellToast
