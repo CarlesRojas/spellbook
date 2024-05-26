@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="D20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <polygon stroke="currentColor"
+    points="441.24 362.95 441.24 149.05 256 42.1 70.76 149.05 70.76 362.95 256 469.9 441.24 362.95"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="256" y1="42.1" x2="256" y2="126.03"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="70.76" y1="362.95" x2="143.43" y2="320.99"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="368.57" y1="320.99" x2="441.24" y2="362.95"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="256" y1="126.03" x2="368.57" y2="320.99"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="143.43" y1="320.99" x2="256" y2="126.03"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="143.43" y1="320.99" x2="368.57" y2="320.99"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="70.76" y1="149.05" x2="256" y2="126.03"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="143.43" y1="320.99" x2="70.76" y2="149.05"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="368.57" y1="320.99" x2="441.24" y2="149.05"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="256" y1="126.03" x2="441.24" y2="149.05"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="143.43" y1="320.99" x2="256" y2="469.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+  <line stroke="currentColor" x1="368.57" y1="320.99" x2="256" y2="469.9"
+    style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 18px;" />
+</svg>

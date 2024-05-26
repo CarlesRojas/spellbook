@@ -104,37 +104,37 @@ export const getSpellColorBorderOnHover = (spellColor: SpellColor) => {
 export const getSpellColorBackgroundOnHover = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
         [SpellColor.DARK]:
-            "mouse:hover:bg-[#005180]/10 mouse:group-hover:bg-[#005180]/10 mouse:hover:dark:bg-[#005180]/20 mouse:group-hover:dark:bg-[#005180]/20",
+            "mouse:hover:bg-[#005180]/10 mouse:group-hover:bg-[#005180]/10 mouse:hover:dark:bg-[#005180]/10 mouse:group-hover:dark:bg-[#005180]/10",
         [SpellColor.LIGHTNING]:
-            "mouse:hover:bg-[#334bff]/10 mouse:group-hover:bg-[#334bff]/10 mouse:hover:dark:bg-[#334bff]/20 mouse:group-hover:dark:bg-[#334bff]/20",
+            "mouse:hover:bg-[#334bff]/10 mouse:group-hover:bg-[#334bff]/10 mouse:hover:dark:bg-[#334bff]/10 mouse:group-hover:dark:bg-[#334bff]/10",
         [SpellColor.ICE]:
-            "mouse:hover:bg-[#00b3ff]/10 mouse:group-hover:bg-[#00b3ff]/10 mouse:hover:dark:bg-[#00b3ff]/20 mouse:group-hover:dark:bg-[#00b3ff]/20",
+            "mouse:hover:bg-[#00b3ff]/10 mouse:group-hover:bg-[#00b3ff]/10 mouse:hover:dark:bg-[#00b3ff]/10 mouse:group-hover:dark:bg-[#00b3ff]/10",
         [SpellColor.MOVE]:
-            "mouse:hover:bg-[#b6e5ff]/10 mouse:group-hover:bg-[#b6e5ff]/10 mouse:hover:dark:bg-[#b6e5ff]/20 mouse:group-hover:dark:bg-[#b6e5ff]/20",
+            "mouse:hover:bg-[#b6e5ff]/10 mouse:group-hover:bg-[#b6e5ff]/10 mouse:hover:dark:bg-[#b6e5ff]/10 mouse:group-hover:dark:bg-[#b6e5ff]/10",
         [SpellColor.HEAL]:
-            "mouse:hover:bg-[#19fff0]/10 mouse:group-hover:bg-[#19fff0]/10 mouse:hover:dark:bg-[#19fff0]/20 mouse:group-hover:dark:bg-[#19fff0]/20",
+            "mouse:hover:bg-[#19fff0]/10 mouse:group-hover:bg-[#19fff0]/10 mouse:hover:dark:bg-[#19fff0]/10 mouse:group-hover:dark:bg-[#19fff0]/10",
         [SpellColor.SPECTRAL]:
-            "mouse:hover:bg-[#03fcca]/10 mouse:group-hover:bg-[#03fcca]/10 mouse:hover:dark:bg-[#03fcca]/20 mouse:group-hover:dark:bg-[#03fcca]/20",
+            "mouse:hover:bg-[#03fcca]/10 mouse:group-hover:bg-[#03fcca]/10 mouse:hover:dark:bg-[#03fcca]/10 mouse:group-hover:dark:bg-[#03fcca]/10",
         [SpellColor.POISON]:
-            "mouse:hover:bg-[#03fc52]/10 mouse:group-hover:bg-[#03fc52]/10 mouse:hover:dark:bg-[#03fc52]/20 mouse:group-hover:dark:bg-[#03fc52]/20",
+            "mouse:hover:bg-[#03fc52]/10 mouse:group-hover:bg-[#03fc52]/10 mouse:hover:dark:bg-[#03fc52]/10 mouse:group-hover:dark:bg-[#03fc52]/10",
         [SpellColor.ACID]:
-            "mouse:hover:bg-[#bbff00]/10 mouse:group-hover:bg-[#bbff00]/10 mouse:hover:dark:bg-[#bbff00]/20 mouse:group-hover:dark:bg-[#bbff00]/20",
+            "mouse:hover:bg-[#bbff00]/10 mouse:group-hover:bg-[#bbff00]/10 mouse:hover:dark:bg-[#bbff00]/10 mouse:group-hover:dark:bg-[#bbff00]/10",
         [SpellColor.WARM]:
-            "mouse:hover:bg-[#ffce7a]/10 mouse:group-hover:bg-[#ffce7a]/10 mouse:hover:dark:bg-[#ffce7a]/20 mouse:group-hover:dark:bg-[#ffce7a]/20",
+            "mouse:hover:bg-[#ffce7a]/10 mouse:group-hover:bg-[#ffce7a]/10 mouse:hover:dark:bg-[#ffce7a]/10 mouse:group-hover:dark:bg-[#ffce7a]/10",
         [SpellColor.HOLY]:
-            "mouse:hover:bg-[#ffdd00]/10 mouse:group-hover:bg-[#ffdd00]/10 mouse:hover:dark:bg-[#ffdd00]/20 mouse:group-hover:dark:bg-[#ffdd00]/20",
+            "mouse:hover:bg-[#ffdd00]/10 mouse:group-hover:bg-[#ffdd00]/10 mouse:hover:dark:bg-[#ffdd00]/10 mouse:group-hover:dark:bg-[#ffdd00]/10",
         [SpellColor.FIRE]:
-            "mouse:hover:bg-[#ff8400]/10 mouse:group-hover:bg-[#ff8400]/10 mouse:hover:dark:bg-[#ff8400]/20 mouse:group-hover:dark:bg-[#ff8400]/20",
+            "mouse:hover:bg-[#ff8400]/10 mouse:group-hover:bg-[#ff8400]/10 mouse:hover:dark:bg-[#ff8400]/10 mouse:group-hover:dark:bg-[#ff8400]/10",
         [SpellColor.SPIKE]:
-            "mouse:hover:bg-[#ff500a]/10 mouse:group-hover:bg-[#ff500a]/10 mouse:hover:dark:bg-[#ff500a]/20 mouse:group-hover:dark:bg-[#ff500a]/20",
+            "mouse:hover:bg-[#ff500a]/10 mouse:group-hover:bg-[#ff500a]/10 mouse:hover:dark:bg-[#ff500a]/10 mouse:group-hover:dark:bg-[#ff500a]/10",
         [SpellColor.MISSILE]:
-            "mouse:hover:bg-[#ff0019]/10 mouse:group-hover:bg-[#ff0019]/10 mouse:hover:dark:bg-[#ff0019]/20 mouse:group-hover:dark:bg-[#ff0019]/20",
+            "mouse:hover:bg-[#ff0019]/10 mouse:group-hover:bg-[#ff0019]/10 mouse:hover:dark:bg-[#ff0019]/10 mouse:group-hover:dark:bg-[#ff0019]/10",
         [SpellColor.COUNTER]:
-            "mouse:hover:bg-[#ff7daf]/10 mouse:group-hover:bg-[#ff7daf]/10 mouse:hover:dark:bg-[#ff7daf]/20 mouse:group-hover:dark:bg-[#ff7daf]/20",
+            "mouse:hover:bg-[#ff7daf]/10 mouse:group-hover:bg-[#ff7daf]/10 mouse:hover:dark:bg-[#ff7daf]/10 mouse:group-hover:dark:bg-[#ff7daf]/10",
         [SpellColor.FAERIE]:
-            "mouse:hover:bg-[#d154ff]/10 mouse:group-hover:bg-[#d154ff]/10 mouse:hover:dark:bg-[#d154ff]/20 mouse:group-hover:dark:bg-[#d154ff]/20",
+            "mouse:hover:bg-[#d154ff]/10 mouse:group-hover:bg-[#d154ff]/10 mouse:hover:dark:bg-[#d154ff]/10 mouse:group-hover:dark:bg-[#d154ff]/10",
         [SpellColor.SHOCK]:
-            "mouse:hover:bg-[#b47aff]/10 mouse:group-hover:bg-[#b47aff]/10 mouse:hover:dark:bg-[#b47aff]/20 mouse:group-hover:dark:bg-[#b47aff]/20",
+            "mouse:hover:bg-[#b47aff]/10 mouse:group-hover:bg-[#b47aff]/10 mouse:hover:dark:bg-[#b47aff]/10 mouse:group-hover:dark:bg-[#b47aff]/10",
     };
 
     return map[spellColor];

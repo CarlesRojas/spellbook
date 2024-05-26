@@ -1,6 +1,7 @@
 "use client";
 
 import { PageProps } from "@/app/[language]/layout";
+import LoadingLogo from "@/component/LoadingLogo";
 import CharacterSpells from "@/component/character/CharacterSpells";
 import CharacterStatus from "@/component/character/CharacterStatus";
 import NotFound from "@/component/navigation/NotFound";
@@ -11,7 +12,6 @@ import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
 import { SpellSection } from "@/type/Spell";
-import { ReactNode } from "react";
 import { z } from "zod";
 
 interface Props extends PageProps {
@@ -25,36 +25,37 @@ const Characters = ({ params: { language, characterId } }: Props) => {
 
     const [spellSection, setSpellSection] = useUrlState("spells", SpellSection.ALL, z.nativeEnum(SpellSection));
 
-    const wrapper = (children: ReactNode) => (
-        <main className="relative flex h-full w-full flex-col items-center">
-            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col">{children}</div>
-        </main>
-    );
-
-    if (character.isLoading || user.isLoading) return wrapper(<CharacterStatus isLoading language={language} />);
+    if (character.isLoading || user.isLoading)
+        return (
+            <main className="relative flex h-[calc(100vh-4rem)] w-full flex-col items-center justify-center">
+                <LoadingLogo />
+            </main>
+        );
     if (!character.data) return <NotFound type={NotFoundType.CHARACTER} language={language} />;
     if (!user.data) return <NotFound type={NotFoundType.USER} language={language} />;
 
-    return wrapper(
-        <>
-            <CharacterStatus
-                character={character.data}
-                language={language}
-                user={user.data}
-                spellSection={spellSection}
-                setSpellSection={setSpellSection}
-            />
-
-            {spells.data && (
-                <CharacterSpells
+    return (
+        <main className="relative flex h-full w-full flex-col items-center">
+            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col">
+                <CharacterStatus
                     character={character.data}
                     language={language}
                     user={user.data}
-                    spells={spells.data}
                     spellSection={spellSection}
+                    setSpellSection={setSpellSection}
                 />
-            )}
-        </>,
+
+                {spells.data && (
+                    <CharacterSpells
+                        character={character.data}
+                        language={language}
+                        user={user.data}
+                        spells={spells.data}
+                        spellSection={spellSection}
+                    />
+                )}
+            </div>
+        </main>
     );
 };
 
