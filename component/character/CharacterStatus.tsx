@@ -2,12 +2,7 @@ import { getClassIcon } from "@/component/character/CharacterItem";
 import EditCharacterForm from "@/component/character/EditCharacterForm";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuLabel,
-    DropdownMenuTrigger,
-} from "@/component/ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { useTranslation } from "@/hook/useTranslation";
 import {
     getAbility,
@@ -187,10 +182,9 @@ const CharacterStatus = (props: Props) => {
 
                                 const slotLevelNumber = slotLevel.replace(/\D/g, "");
 
-                                // TODO Use Popover instead of DropdownMenu
                                 return (
-                                    <DropdownMenu key={slotLevel} modal={true}>
-                                        <DropdownMenuTrigger asChild>
+                                    <Popover key={slotLevel} modal={true}>
+                                        <PopoverTrigger asChild>
                                             <div className="group relative flex h-full w-9 min-w-9 max-w-9 flex-col items-center justify-start gap-y-1 rounded-md px-1 text-sm font-semibold mouse:cursor-pointer">
                                                 <p className={getClassColorOnHover(characterClass)}>
                                                     {slotLevelNumber}
@@ -209,12 +203,12 @@ const CharacterStatus = (props: Props) => {
                                                     ))}
                                                 </div>
                                             </div>
-                                        </DropdownMenuTrigger>
+                                        </PopoverTrigger>
 
-                                        <DropdownMenuContent className="mx-2 my-3 flex min-w-fit flex-col gap-2 p-2">
-                                            <DropdownMenuLabel className="w-full p-0 text-center">
+                                        <PopoverContent className="mx-2 my-3 flex min-w-fit flex-col gap-2 p-2">
+                                            <p className="w-full p-0 text-center text-sm font-semibold">
                                                 {t.dnd.character.level} {slotLevelNumber}
-                                            </DropdownMenuLabel>
+                                            </p>
 
                                             <div className="flex w-full items-center justify-center gap-1">
                                                 {Array.from({ length: maxSpellSlots }).map((_, index) => (
@@ -250,8 +244,8 @@ const CharacterStatus = (props: Props) => {
                                                     <LuPlus className="h-5 w-5" />
                                                 </Button>
                                             </div>
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
+                                        </PopoverContent>
+                                    </Popover>
                                 );
                             })}
                 </div>
