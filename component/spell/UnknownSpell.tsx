@@ -39,7 +39,7 @@ interface Props {
     character: CharacterWithSpells;
 }
 
-const SpellWithMenu = ({ spell, language, character }: Props) => {
+const UnknownSpell = ({ spell, language, character }: Props) => {
     const { t } = useTranslation(language);
 
     const { index, icon, color, name, level } = spell;
@@ -465,4 +465,4 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
     );
 };
 
-export default SpellWithMenu;
+export default UnknownSpell;

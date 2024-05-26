@@ -1,13 +1,12 @@
 "use client";
 
-import ClassFilter from "@/component/filter/ClassFilter";
 import QueryFilter from "@/component/filter/QueryFilter";
-import UnknownSpell from "@/component/spell/UnknownSpell";
+import BookSpell from "@/component/spell/BookSpell";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
-import { ClassType, Spell } from "@/type/Spell";
+import { Spell } from "@/type/Spell";
 import { Fragment } from "react";
 import { z } from "zod";
 
@@ -17,16 +16,14 @@ interface Props {
     character: CharacterWithSpells;
 }
 
-const AllList = ({ language, spells, character }: Props) => {
+const SpellBookList = ({ language, spells, character }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
-    const [classFilter, setClassFilter] = useUrlState("sort", character.class, z.nativeEnum(ClassType).nullable());
 
     const filteredSpells = spells
         .filter((spell) => {
             if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
-            if (classFilter && !spell.classes.includes(classFilter)) return false;
             return true;
         })
         .sort((a, b) => {
@@ -39,7 +36,6 @@ const AllList = ({ language, spells, character }: Props) => {
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
             <div className="flex w-full justify-end gap-2 md:flex-row">
-                <ClassFilter language={language} classType={classFilter} setClass={setClassFilter} />
                 <QueryFilter language={language} query={query} setQuery={setQuery} className="w-fit grow" />
             </div>
 
@@ -64,7 +60,7 @@ const AllList = ({ language, spells, character }: Props) => {
                                 </h2>
                             )}
 
-                            <UnknownSpell language={language} spell={spell} character={character} />
+                            <BookSpell language={language} spell={spell} character={character} />
                         </Fragment>
                     );
                 })}
@@ -73,4 +69,4 @@ const AllList = ({ language, spells, character }: Props) => {
     );
 };
 
-export default AllList;
+export default SpellBookList;
