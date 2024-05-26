@@ -38,7 +38,7 @@ const KnownList = ({ language, spells, character }: Props) => {
             </div>
             {/* TODO show how many you can have prepared (Cantrips too) */}
 
-            <div className="grid w-full gap-2 md:grid-cols-2">
+            <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                 {filteredSpells.map((spell) => {
                     const isLevelChange = spell.level !== lastLevel;
                     lastLevel = spell.level;
@@ -46,7 +46,7 @@ const KnownList = ({ language, spells, character }: Props) => {
                     return (
                         <Fragment key={spell.index}>
                             {isLevelChange && (
-                                <h2 className="sticky top-0 z-20 col-span-1 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 md:col-span-2 mouse:top-16">
+                                <h2 className="sticky top-0 z-20 col-span-1 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 md:col-span-2 lg:col-span-3 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
                             )}

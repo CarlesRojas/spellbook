@@ -68,6 +68,25 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                 <div className="h-fit max-h-[75vh] space-y-6 overflow-auto px-1 pb-1">
                     <FormField
                         control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem className="space-y-1">
+                                <FormLabel>{t.dnd.character.name}</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        disabled={createCharacter.isPending || createCharacter.isSuccess}
+                                        {...field}
+                                        className="w-full font-semibold tracking-wide sm:max-w-96"
+                                    />
+                                </FormControl>
+
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
                         name="class"
                         render={({ field }) => (
                             <FormItem className="space-y-1">
@@ -117,25 +136,6 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                                         ))}
                                     </RadioGroup>
                                 </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem className="space-y-1">
-                                <FormLabel>{t.dnd.character.name}</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        disabled={createCharacter.isPending || createCharacter.isSuccess}
-                                        {...field}
-                                        className="w-full font-semibold tracking-wide sm:max-w-96"
-                                    />
-                                </FormControl>
-
                                 <FormMessage />
                             </FormItem>
                         )}

@@ -148,7 +148,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
             <Popover modal={true} open={popoverOpen} onOpenChange={setPopoverOpen}>
                 <PopoverTrigger className="focus-shadow group relative flex w-full items-center gap-2 rounded-md p-2">
                     <div
-                        className="inline-block h-14 min-h-14 w-14 min-w-14 bg-cover brightness-90 dark:brightness-100 sm:h-16 sm:min-h-16 sm:w-16 sm:min-w-16 mouse:transition-transform mouse:group-hover:scale-110"
+                        className="inline-block h-14 min-h-14 w-14 min-w-14 bg-cover brightness-90 dark:brightness-100 mouse:transition-transform mouse:group-hover:scale-110"
                         style={{
                             backgroundImage: `url(/spell/${icon})`,
                             maskImage: `url(/spell/${icon})`,
@@ -161,7 +161,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
 
                     <h3
                         className={cn(
-                            "w-full overflow-hidden text-ellipsis text-left text-sm font-semibold sm:text-base",
+                            "w-full overflow-hidden text-ellipsis text-left text-sm font-semibold",
                             getSpellColorOnHover(spell.color),
                         )}
                     >
