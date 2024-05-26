@@ -117,13 +117,25 @@ export const LanguageObjectSchema = z.object({
             spellbook: z.string(),
 
             view: z.string(),
+            cast: z.string(),
+
             learn: z.string(),
+            learnAnyway: z.string(),
             addToSpellbook: z.string(),
+            cannotLearn: z.string(),
+            cannotLearnDescription: z.string(),
+
             addCantrip: z.string(),
+            addCantripAnyway: z.string(),
+            cannotAddCantrip: z.string(),
+            cannotAddCantripDescription: z.string(),
+
             prepare: z.string(),
+            prepareAnyway: z.string(),
             prepareAsDomain: z.string(),
             prepareAsOath: z.string(),
-            cast: z.string(),
+            cannotPrepare: z.string(),
+            cannotPrepareDescription: z.string(),
         }),
     }),
 
@@ -134,6 +146,7 @@ export const LanguageObjectSchema = z.object({
         delete: z.string(),
         cancel: z.string(),
         edit: z.string(),
+        close: z.string(),
         confirm: z.string(),
     }),
 });

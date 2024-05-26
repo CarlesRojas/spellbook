@@ -232,13 +232,25 @@
             "spellbook": "Libro",
 
             "view": "Ver información",
+            "cast": "Castear",
+
             "learn": "Aprender",
+            "learnAnyway": "Aprender igualmente",
             "addToSpellbook": "Añadir al libro de hechizos",
+            "cannotLearn": "No puedes aprender más hechizos",
+            "cannotLearnDescription": "Ya conoces todos los hechizos que puedes aprender ({{PARAM}}).",
+
             "addCantrip": "Añadir truco",
+            "addCantripAnyway": "Añadir igualmente",
+            "cannotAddCantrip": "No puedes conocer más trucos",
+            "cannotAddCantripDescription": "Ya conoces todos los trucos que puedes aprender ({{PARAM}}).",
+
             "prepare": "Preparar",
+            "prepareAnyway": "Preparar igualmente",
             "prepareAsDomain": "Adquirir como dominio",
             "prepareAsOath": "Adquirir como Juramento",
-            "cast": "Castear"
+            "cannotPrepare": "No puedes preparar más hechizos",
+            "cannotPrepareDescription": "Ya has preparado todos los hechizos que puedes preparar ({{PARAM}})."
         }
     },
 
@@ -249,6 +261,7 @@
         "delete": "Borrar",
         "cancel": "Cancelar",
         "edit": "Editar",
-        "confirm": "Confirmar"
+        "confirm": "Confirmar",
+        "close": "Cerrar"
     }
 }

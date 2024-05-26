@@ -232,13 +232,25 @@
             "spellbook": "Spellbook",
 
             "view": "View information",
+            "cast": "Cast",
+
             "learn": "Learn",
+            "learnAnyway": "Learn anyway",
             "addToSpellbook": "Add to spellbook",
+            "cannotLearn": "You can't learn more spells",
+            "cannotLearnDescription": "You can learn up to {{PARAM}} spells.",
+
             "addCantrip": "Add cantrip",
+            "addCantripAnyway": "Add anyway",
+            "cannotAddCantrip": "You can't know more cantrips",
+            "cannotAddCantripDescription": "You can know up to {{PARAM}} cantrips.",
+
             "prepare": "Prepare",
+            "prepareAnyway": "Prepare anyway",
             "prepareAsDomain": "Gain as Domain",
             "prepareAsOath": "Gain as Oath",
-            "cast": "Cast"
+            "cannotPrepare": "You can't prepare more spells",
+            "cannotPrepareDescription": "You can prepare up to {{PARAM}} spells."
         }
     },
 
@@ -249,6 +261,7 @@
         "delete": "Delete",
         "cancel": "Cancel",
         "edit": "Edit",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "close": "Close"
     }
 }

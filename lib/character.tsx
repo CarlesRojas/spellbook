@@ -18,8 +18,7 @@ export const getAbility = (classType: ClassType) => {
     return map[classType];
 };
 
-// TODO Known spells
-export const getKnowSpells = (classType: ClassType, level: number) => {
+export const getKnowSpellsAmount = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
         [ClassType.WIZARD]: null, // ALL - SPELLBOOK - PREPARED
         [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15], // ALL - KNOWN
@@ -50,7 +49,6 @@ export const showKnownSection = (classType: ClassType) => {
     return map[classType];
 };
 
-// TODO Prepared spells
 export const getPreparedSpellsAmount = (classType: ClassType, ability: number, level: number) => {
     const map: Record<ClassType, number> = {
         [ClassType.WIZARD]: Math.max(1, ability + level),
@@ -86,7 +84,6 @@ export const getTotalSpellSlots = (classType: ClassType, level: number) => {
     return map[classType][level - 1];
 };
 
-// TODO Cantrips
 export const getCantripsAmount = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number>> = {
         [ClassType.WIZARD]: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
