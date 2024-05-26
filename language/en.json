@@ -235,20 +235,26 @@
             "cast": "Cast",
 
             "learn": "Learn",
+            "forget": "Forget",
             "learnAnyway": "Learn anyway",
             "addToSpellbook": "Add to spellbook",
+            "removeFromSpellbook": "Remove from Spellbook",
             "cannotLearn": "You can't learn more spells",
             "cannotLearnDescription": "You can learn up to {{PARAM}} spells.",
 
-            "addCantrip": "Add cantrip",
+            "addCantrip": "Add Cantrip",
+            "removeCantrip": "Remove Cantrip",
             "addCantripAnyway": "Add anyway",
-            "cannotAddCantrip": "You can't know more cantrips",
-            "cannotAddCantripDescription": "You can know up to {{PARAM}} cantrips.",
+            "cannotAddCantrip": "You can't know more Cantrips",
+            "cannotAddCantripDescription": "You can know up to {{PARAM}} Cantrips.",
 
             "prepare": "Prepare",
+            "unprepare": "Unprepare",
             "prepareAnyway": "Prepare anyway",
             "prepareAsDomain": "Gain as Domain",
+            "unprepareFromDomain": "Remove from Domain",
             "prepareAsOath": "Gain as Oath",
+            "unprepareFromOath": "Remove from Oath",
             "cannotPrepare": "You can't prepare more spells",
             "cannotPrepareDescription": "You can prepare up to {{PARAM}} spells."
         }
