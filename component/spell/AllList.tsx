@@ -21,7 +21,7 @@ const AllList = ({ language, spells, character }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
-    const [classFilter, setClassFilter] = useUrlState("sort", character.class, z.nativeEnum(ClassType).nullable());
+    const [classFilter, setClassFilter] = useUrlState("class", character.class, z.nativeEnum(ClassType).nullable());
 
     const filteredSpells = spells
         .filter((spell) => {
