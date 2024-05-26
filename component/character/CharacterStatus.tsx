@@ -7,6 +7,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import {
     getAbility,
     getClassBackgroundColor,
+    getClassBackgroundColorOnHover,
     getClassColorOnHover,
     getTotalSpellSlots,
     showKnownSection,
@@ -93,6 +94,21 @@ const CharacterStatus = (props: Props) => {
     const showKnown = showKnownSection(characterClass);
     const showPrepared = showPreparedSection(characterClass);
     const numberOfSections = 1 + (showKnown ? 1 : 0) + (showPrepared ? 1 : 0);
+
+    const getOathDomainText = () => {
+        const map: Record<ClassType, string> = {
+            [ClassType.WIZARD]: "",
+            [ClassType.SORCERER]: "",
+            [ClassType.CLERIC]: ` + ${t.dnd.character.domain}`,
+            [ClassType.PALADIN]: ` + ${t.dnd.character.oath}`,
+            [ClassType.RANGER]: "",
+            [ClassType.BARD]: "",
+            [ClassType.DRUID]: "",
+            [ClassType.WARLOCK]: "",
+        };
+
+        return map[characterClass];
+    };
 
     return (
         <div
@@ -256,18 +272,26 @@ const CharacterStatus = (props: Props) => {
                 style={{ gridTemplateColumns: `repeat(${numberOfSections}, minmax(0, 1fr))` }}
             >
                 <Button
-                    variant={props.spellSection === SpellSection.ALL ? "default" : "outline"}
+                    variant="outline"
                     onClick={() => props.setSpellSection(SpellSection.ALL, true)}
-                    className="w-full sm:w-fit"
+                    className={cn(
+                        "w-full tracking-wide sm:w-fit",
+                        props.spellSection === SpellSection.ALL &&
+                            `!border-transparent !text-white ${getClassBackgroundColor(characterClass)} ${getClassBackgroundColorOnHover(characterClass)}`,
+                    )}
                 >
                     {t.dnd.spell.all}
                 </Button>
 
                 {showKnown && (
                     <Button
-                        variant={props.spellSection === SpellSection.KNOWN ? "default" : "outline"}
+                        variant="outline"
                         onClick={() => props.setSpellSection(SpellSection.KNOWN, true)}
-                        className="w-full sm:w-fit"
+                        className={cn(
+                            "w-full tracking-wide sm:w-fit",
+                            props.spellSection === SpellSection.KNOWN &&
+                                `!border-transparent !text-white ${getClassBackgroundColor(characterClass)} ${getClassBackgroundColorOnHover(characterClass)}`,
+                        )}
                     >
                         {characterClass === ClassType.WIZARD ? t.dnd.spell.spellbook : t.dnd.spell.known}
                     </Button>
@@ -275,12 +299,15 @@ const CharacterStatus = (props: Props) => {
 
                 {showPrepared && (
                     <Button
-                        variant={props.spellSection === SpellSection.PREPARED ? "default" : "outline"}
+                        variant="outline"
                         onClick={() => props.setSpellSection(SpellSection.PREPARED, true)}
-                        className="w-full sm:w-fit"
+                        className={cn(
+                            "w-full tracking-wide sm:w-fit",
+                            props.spellSection === SpellSection.PREPARED &&
+                                `!border-transparent !text-white ${getClassBackgroundColor(characterClass)} ${getClassBackgroundColorOnHover(characterClass)}`,
+                        )}
                     >
-                        {/* TODO add + Oath or Domain */}
-                        {t.dnd.spell.prepared}
+                        {`${t.dnd.spell.prepared}${getOathDomainText()}`}
                     </Button>
                 )}
             </div>

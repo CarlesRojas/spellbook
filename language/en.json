@@ -218,6 +218,8 @@
             "level": "Level",
             "ability": "Ability",
             "deleteDisclaimer": "Delete character and all its data. This action cannot be undone.",
+            "oath": "Oath",
+            "domain": "Domain",
 
             "error": {
                 "nameTooShort": "The name must be at least 2 characters",

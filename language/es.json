@@ -218,6 +218,8 @@
             "level": "Nivel",
             "ability": "Habilidad",
             "deleteDisclaimer": "Eliminar el personaje y todos sus datos. Esta acción no se puede deshacer.",
+            "oath": "Juramento",
+            "domain": "Dominio",
 
             "error": {
                 "nameTooShort": "El nombre debe tener al menos 2 caracteres",
