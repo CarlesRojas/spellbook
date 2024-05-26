@@ -48,7 +48,7 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
             </Popover>
 
             <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-                <DialogContent>
+                <DialogContent position="top">
                     <DialogHeader className="flex flex-row items-center gap-2">
                         {getClassIcon(character.class, "h-8 min-h-8 w-8")}
 

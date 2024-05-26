@@ -99,7 +99,6 @@ export const getCantripsAmount = (classType: ClassType, level: number) => {
     return map[classType][level - 1];
 };
 
-// TODO Delete or use Proficiency Bonus
 export const getProficiencyBonus = (level: number) => {
     const proficiencyBonus: ArrayWith20Positions<number> = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
     return proficiencyBonus[level - 1];

@@ -34,7 +34,7 @@ const CharacterList = ({ language, user }: Props) => {
                         </Button>
                     </DialogTrigger>
 
-                    <DialogContent>
+                    <DialogContent position="top">
                         <DialogHeader>
                             <DialogTitle>{t.dnd.character.createCharacter}</DialogTitle>
                         </DialogHeader>

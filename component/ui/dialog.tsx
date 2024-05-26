@@ -29,30 +29,34 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-const DialogContent = React.forwardRef<
-    React.ElementRef<typeof DialogPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-    <DialogPortal>
-        <DialogOverlay />
-        <DialogPrimitive.Content
-            ref={ref}
-            className={cn(
-                "fixed left-[50%] top-[2.5vw] z-50 flex h-fit max-h-[95vh] w-[95vw] max-w-screen-md translate-x-[-50%] flex-col gap-4 rounded-xl border border-stone-300 bg-stone-100 p-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] dark:border-stone-700 dark:bg-stone-950 mouse:top-[50%] mouse:translate-y-[-50%]",
-                className,
-            )}
-            {...props}
-        >
-            {children}
-            <DialogPrimitive.Close asChild>
-                <Button size="icon" variant="ghost" className="absolute right-2 top-2">
-                    <LuX className="h-8 w-8 p-1" />
-                    <span className="sr-only">Close</span>
-                </Button>
-            </DialogPrimitive.Close>
-        </DialogPrimitive.Content>
-    </DialogPortal>
-));
+interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+    position?: "top" | "middle";
+}
+
+const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
+    ({ className, children, position, ...props }, ref) => (
+        <DialogPortal>
+            <DialogOverlay />
+            <DialogPrimitive.Content
+                ref={ref}
+                className={cn(
+                    "fixed left-[50%] top-[50%] z-50 flex h-fit max-h-[95vh] w-[95vw] max-w-screen-md translate-x-[-50%] translate-y-[-50%] flex-col gap-4 rounded-xl border border-stone-300 bg-stone-100 p-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] dark:border-stone-700 dark:bg-stone-950 md:w-fit",
+                    position === "top" && "top-[2.5vw] translate-y-0 mouse:top-[50%] mouse:translate-y-[-50%]",
+                    className,
+                )}
+                {...props}
+            >
+                {children}
+                <DialogPrimitive.Close asChild>
+                    <Button size="icon" variant="ghost" className="absolute right-2 top-2">
+                        <LuX className="h-8 w-8 p-1" />
+                        <span className="sr-only">Close</span>
+                    </Button>
+                </DialogPrimitive.Close>
+            </DialogPrimitive.Content>
+        </DialogPortal>
+    ),
+);
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

@@ -32,7 +32,7 @@ interface Props {
 
 const CastableSpell = ({ spell, language, character }: Props) => {
     const { t } = useTranslation(language);
-    const { index, icon, color, name, level } = spell;
+    const { index, icon, color, name, level, ritual: isRitual } = spell;
 
     const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -103,7 +103,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const cast = (castedSpellLevel: number) => {
-        spendSpellSlot(castedSpellLevel);
+        if (castedSpellLevel > 0) spendSpellSlot(castedSpellLevel);
 
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)} className={cn(getSpellBackgroundColor(color))}>
@@ -171,6 +171,8 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const isCastable = level === 0 || character.spellSlotsAvailable[getSpellSlotKey(level)] > 0;
+
+    const hasHigherLeveCast = false;
 
     return (
         <div className="flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
@@ -243,6 +245,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
             </Popover>
 
             {/* TODO Cast spell for a higher level */}
+            {/* TODO Use higher level if non are available on the current one */}
             <div className="flex h-fit w-fit min-w-fit gap-2 p-2">
                 <Button
                     variant={"outline"}

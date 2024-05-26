@@ -54,7 +54,7 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="flex h-fit max-h-[75vh] flex-wrap gap-x-8 gap-y-4 overflow-auto px-1 pb-1 sm:gap-x-10">
+                <div className="flex h-fit max-h-[75vh] flex-wrap gap-x-8 gap-y-4 overflow-auto px-1 pb-1 sm:gap-x-10 md:flex-nowrap">
                     {editName && (
                         <FormField
                             control={form.control}
@@ -76,89 +76,94 @@ const EditCharacterForm = ({ character, editName, language, user, onClose }: Pro
                         />
                     )}
 
-                    <FormField
-                        control={form.control}
-                        name="level"
-                        render={({ field }) => (
-                            <FormItem className="space-y-1">
-                                <FormLabel>{t.dnd.character.level}</FormLabel>
-                                <FormControl>
-                                    <div className="flex items-center gap-4">
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            type="button"
-                                            disabled={
-                                                field.value <= 1 || editCharacter.isPending || editCharacter.isSuccess
-                                            }
-                                            onClick={() => field.onChange(field.value - 1)}
-                                        >
-                                            <LuMinus className="h-4 w-4 stroke-[3]" />
-                                        </Button>
+                    <div className="flex gap-x-8 gap-y-4 sm:gap-x-10">
+                        <FormField
+                            control={form.control}
+                            name="level"
+                            render={({ field }) => (
+                                <FormItem className="space-y-1">
+                                    <FormLabel>{t.dnd.character.level}</FormLabel>
+                                    <FormControl>
+                                        <div className="flex items-center gap-4">
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={
+                                                    field.value <= 1 ||
+                                                    editCharacter.isPending ||
+                                                    editCharacter.isSuccess
+                                                }
+                                                onClick={() => field.onChange(field.value - 1)}
+                                            >
+                                                <LuMinus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
 
-                                        <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
-                                            {field.value}
-                                        </p>
+                                            <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
+                                                {field.value}
+                                            </p>
 
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            type="button"
-                                            disabled={
-                                                field.value >= 20 || editCharacter.isPending || editCharacter.isSuccess
-                                            }
-                                            onClick={() => field.onChange(field.value + 1)}
-                                        >
-                                            <LuPlus className="h-4 w-4 stroke-[3]" />
-                                        </Button>
-                                    </div>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={
+                                                    field.value >= 20 ||
+                                                    editCharacter.isPending ||
+                                                    editCharacter.isSuccess
+                                                }
+                                                onClick={() => field.onChange(field.value + 1)}
+                                            >
+                                                <LuPlus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+                                        </div>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                    <FormField
-                        control={form.control}
-                        name="ability"
-                        render={({ field }) => (
-                            <FormItem className="space-y-1">
-                                <FormLabel>{t.enum.ability[getAbility(character.class)]}</FormLabel>
+                        <FormField
+                            control={form.control}
+                            name="ability"
+                            render={({ field }) => (
+                                <FormItem className="space-y-1">
+                                    <FormLabel>{t.enum.ability[getAbility(character.class)]}</FormLabel>
 
-                                <FormControl>
-                                    <div className="flex items-center gap-4">
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            type="button"
-                                            disabled={editCharacter.isPending || editCharacter.isSuccess}
-                                            onClick={() => field.onChange(field.value - 1)}
-                                        >
-                                            <LuMinus className="h-4 w-4 stroke-[3]" />
-                                        </Button>
+                                    <FormControl>
+                                        <div className="flex items-center gap-4">
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={editCharacter.isPending || editCharacter.isSuccess}
+                                                onClick={() => field.onChange(field.value - 1)}
+                                            >
+                                                <LuMinus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
 
-                                        <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
-                                            {field.value}
-                                        </p>
+                                            <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
+                                                {field.value}
+                                            </p>
 
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            type="button"
-                                            disabled={editCharacter.isPending || editCharacter.isSuccess}
-                                            onClick={() => field.onChange(field.value + 1)}
-                                        >
-                                            <LuPlus className="h-4 w-4 stroke-[3]" />
-                                        </Button>
-                                    </div>
-                                </FormControl>
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={editCharacter.isPending || editCharacter.isSuccess}
+                                                onClick={() => field.onChange(field.value + 1)}
+                                            >
+                                                <LuPlus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+                                        </div>
+                                    </FormControl>
 
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
                 </div>
-
                 <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
                     <DialogClose asChild>
                         <Button disabled={editCharacter.isPending || editCharacter.isSuccess} variant="outline">

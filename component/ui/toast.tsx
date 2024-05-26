@@ -74,9 +74,6 @@ type ToasterProps = React.ComponentProps<typeof Sonner>;
 const Toaster = ({ ...props }: ToasterProps) => {
     const { theme = "system" } = useTheme();
 
-    // const isMouse = window !== undefined && window.matchMedia("(hover: hover)").matches;
-    // console.log(isMouse);
-
     const [isMouse, setIsMouse] = useState(false);
 
     useEffect(() => {
@@ -87,7 +84,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         <Sonner
             theme={theme as ToasterProps["theme"]}
             className="toaster group"
-            position={isMouse ? "bottom-right" : "top-center"}
+            position={isMouse ? "bottom-right" : "bottom-center"}
             toastOptions={{
                 classNames: {
                     toast: "rounded-lg group w-full toast group-[.toaster]:bg-stone-50 group-[.toaster]:text-stone-950 group-[.toaster]:border-stone-300 group-[.toaster]:shadow-lg dark:group-[.toaster]:bg-black dark:group-[.toaster]:text-stone-50 dark:group-[.toaster]:border-stone-700",

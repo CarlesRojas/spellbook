@@ -164,10 +164,6 @@ const CharacterStatus = (props: Props) => {
                         </DialogContent>
                     </Dialog>
 
-                    <Button variant="outline" size="icon" onClick={longRest}>
-                        <PiCampfireDuotone className="h-5 w-5" />
-                    </Button>
-
                     <Button
                         variant="outline"
                         size="icon"
@@ -175,6 +171,10 @@ const CharacterStatus = (props: Props) => {
                         onClick={() => setShowSpellSlots((prev) => !prev)}
                     >
                         {showSpellSlots ? <LuEyeOff className="h-5 w-5" /> : <LuEye className="h-5 w-5" />}
+                    </Button>
+
+                    <Button variant="outline" size="icon" onClick={longRest}>
+                        <PiCampfireDuotone className="h-5 w-5" />
                     </Button>
                 </div>
 

@@ -96,22 +96,22 @@ const CreateCharacterForm = ({ user, language, onClose }: Props) => {
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
                                         disabled={createCharacter.isPending || createCharacter.isSuccess}
-                                        className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8"
+                                        className="grid min-w-fit grid-cols-[repeat(4,_minmax(min-content,_1fr))] gap-2 sm:grid-cols-[repeat(6,_minmax(min-content,_1fr))] md:grid-cols-[repeat(8,_minmax(min-content,_1fr))]"
                                     >
                                         {Object.values(ClassType).map((classType) => (
-                                            <FormItem key={classType} className="group flex items-center">
+                                            <FormItem key={classType} className="group flex min-w-fit items-center">
                                                 <FormControl>
                                                     <RadioGroupItem
                                                         value={classType}
                                                         disabled={
                                                             createCharacter.isPending || createCharacter.isSuccess
                                                         }
-                                                        className="flex h-fit w-full flex-col items-center gap-1 rounded-md p-2 mouse:cursor-pointer mouse:disabled:cursor-not-allowed"
+                                                        className="flex h-fit w-full min-w-fit flex-col items-center gap-1 rounded-md p-2 mouse:cursor-pointer mouse:disabled:cursor-not-allowed"
                                                     >
                                                         {getClassIcon(
                                                             classType,
                                                             cn(
-                                                                "h-14 min-h-14 w-14 text-stone-600 dark:text-stone-400 mouse:transition-colors",
+                                                                "h-14 min-h-14 w-14 min-w-14 text-stone-600 dark:text-stone-400 mouse:transition-colors",
                                                                 !createCharacter.isPending ||
                                                                     (createCharacter.isSuccess &&
                                                                         getClassColorOnHover(classType)),
