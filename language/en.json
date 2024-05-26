@@ -265,6 +265,10 @@
                 "removeFromSpellbook": "{{PARAM}} spell removed from Spellbook!",
                 "prepare": "{{PARAM}} spell prepared!",
                 "unprepare": "{{PARAM}} spell unprepared!",
+                "prepareAsOath": "{{PARAM}} spell gained from Oath!",
+                "unprepareFromOath": "{{PARAM}} spell removed from Oath!",
+                "prepareAsDomain": "{{PARAM}} spell gained from Domain!",
+                "unprepareFromDomain": "{{PARAM}} spell removed from Domain!",
                 "addCantrip": "{{PARAM}} Cantrip learned!",
                 "removeCantrip": "{{PARAM}} Cantrip forgotten!"
             }

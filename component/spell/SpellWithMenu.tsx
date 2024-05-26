@@ -1,7 +1,7 @@
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/component/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
-import { SpellToast } from "@/component/ui/sonner";
+import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
 import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount } from "@/lib/character";
 import { getSpellColor } from "@/lib/spell";
@@ -28,6 +28,8 @@ import {
     LuSwords,
     LuView,
     LuX,
+    LuZap,
+    LuZapOff,
 } from "react-icons/lu";
 import { toast } from "sonner";
 
@@ -90,28 +92,32 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
         if (!bypassMax && maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
 
         learnSpell.mutate({ characterId: character.id, spellIndex: index });
-        toast(
-            <SpellToast
-                icon={smallIcon}
-                message={(character.class === ClassType.WIZARD
-                    ? t.dnd.spell.toast.addToSpellbook
-                    : t.dnd.spell.toast.learn
-                ).replace("{{PARAM}}", spell.name[language])}
-            />,
-        );
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)}>
+                <SpellToast
+                    icon={smallIcon}
+                    message={(character.class === ClassType.WIZARD
+                        ? t.dnd.spell.toast.addToSpellbook
+                        : t.dnd.spell.toast.learn
+                    ).replace("{{PARAM}}", spell.name[language])}
+                />
+            </ToastWrapper>
+        ));
     };
     const onForgetSpell = () => {
         setPopoverOpen(false);
         forgetSpell.mutate({ characterId: character.id, spellIndex: index });
-        toast(
-            <SpellToast
-                icon={smallIcon}
-                message={(character.class === ClassType.WIZARD
-                    ? t.dnd.spell.toast.removeFromSpellbook
-                    : t.dnd.spell.toast.forget
-                ).replace("{{PARAM}}", spell.name[language])}
-            />,
-        );
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)}>
+                <SpellToast
+                    icon={smallIcon}
+                    message={(character.class === ClassType.WIZARD
+                        ? t.dnd.spell.toast.removeFromSpellbook
+                        : t.dnd.spell.toast.forget
+                    ).replace("{{PARAM}}", spell.name[language])}
+                />
+            </ToastWrapper>
+        ));
     };
 
     const [prepareDialogOpen, setPrepareDialogOpen] = useState(false);
@@ -120,22 +126,34 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
         if (!bypassMax && !isOathOrDomain && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
 
         prepareSpell.mutate({ characterId: character.id, spellIndex: index, counts: !isOathOrDomain });
-        toast(
-            <SpellToast
-                icon={smallIcon}
-                message={t.dnd.spell.toast.prepare.replace("{{PARAM}}", spell.name[language])}
-            />,
-        );
+
+        const toastMessage = isOathOrDomain
+            ? character.class === ClassType.CLERIC
+                ? t.dnd.spell.toast.prepareAsDomain
+                : t.dnd.spell.toast.prepareAsOath
+            : t.dnd.spell.toast.prepare;
+
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)}>
+                <SpellToast icon={smallIcon} message={toastMessage.replace("{{PARAM}}", spell.name[language])} />
+            </ToastWrapper>
+        ));
     };
     const onUnprepareSpell = () => {
         setPopoverOpen(false);
         unprepareSpell.mutate({ characterId: character.id, spellIndex: index });
-        toast(
-            <SpellToast
-                icon={smallIcon}
-                message={t.dnd.spell.toast.unprepare.replace("{{PARAM}}", spell.name[language])}
-            />,
-        );
+
+        const toastMessage = isOathOrDomain
+            ? character.class === ClassType.CLERIC
+                ? t.dnd.spell.toast.unprepareFromDomain
+                : t.dnd.spell.toast.unprepareFromOath
+            : t.dnd.spell.toast.unprepare;
+
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)}>
+                <SpellToast icon={smallIcon} message={toastMessage.replace("{{PARAM}}", spell.name[language])} />
+            </ToastWrapper>
+        ));
     };
 
     const [cantripDialogOpen, setCantripDialogOpen] = useState(false);
@@ -144,22 +162,26 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
         if (!bypassMax && knownCantrips >= maxKnownCantrips) return setCantripDialogOpen(true);
 
         learnCantrip.mutate({ characterId: character.id, spellIndex: index });
-        toast(
-            <SpellToast
-                icon={smallIcon}
-                message={t.dnd.spell.toast.addCantrip.replace("{{PARAM}}", spell.name[language])}
-            />,
-        );
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)}>
+                <SpellToast
+                    icon={smallIcon}
+                    message={t.dnd.spell.toast.addCantrip.replace("{{PARAM}}", spell.name[language])}
+                />
+            </ToastWrapper>
+        ));
     };
     const onForgetCantrip = () => {
         setPopoverOpen(false);
         forgetCantrip.mutate({ characterId: character.id, spellIndex: index });
-        toast(
-            <SpellToast
-                icon={smallIcon}
-                message={t.dnd.spell.toast.removeCantrip.replace("{{PARAM}}", spell.name[language])}
-            />,
-        );
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)}>
+                <SpellToast
+                    icon={smallIcon}
+                    message={t.dnd.spell.toast.removeCantrip.replace("{{PARAM}}", spell.name[language])}
+                />
+            </ToastWrapper>
+        ));
     };
 
     const addSpellText: Record<ClassType, string> = {
@@ -285,7 +307,11 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                                 size="menu"
                                 onClick={() => (isKnownCantrip ? onForgetCantrip() : onAddCantrip(false))}
                             >
-                                <LuSparkle className="mr-2 h-5 w-5" />
+                                {isKnownCantrip ? (
+                                    <LuZapOff className="mr-2 h-5 w-5" />
+                                ) : (
+                                    <LuZap className="mr-2 h-5 w-5" />
+                                )}
                                 <p className="font-medium tracking-wide">
                                     {isKnownCantrip
                                         ? t.dnd.spell.removeCantrip
@@ -435,7 +461,7 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                                 onAddCantrip(true);
                             }}
                         >
-                            <LuSparkle className="mr-2 h-5 w-5" />
+                            <LuZap className="mr-2 h-5 w-5" />
                             {t.dnd.spell.addCantripAnyway}
                         </Button>
                     </DialogFooter>

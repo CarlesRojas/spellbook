@@ -3,7 +3,7 @@ import Navbar from "@/component/navigation/Navbar";
 import { QueryProvider } from "@/component/provider/QueryProvider";
 import AuthProvider from "@/component/provider/SessionProvider";
 import ThemeProvider from "@/component/provider/ThemeProvider";
-import { Toaster } from "@/component/ui/sonner";
+import { Toaster } from "@/component/ui/toast";
 import { getTranslation } from "@/hook/useTranslation";
 import { Language, LANGUAGES } from "@/type/Language";
 import { type Metadata, type Viewport } from "next";
