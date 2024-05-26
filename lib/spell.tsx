@@ -23,6 +23,29 @@ export const getSpellColor = (spellColor: SpellColor) => {
     return map[spellColor];
 };
 
+export const getSpellBackgroundColor = (spellColor: SpellColor) => {
+    const map: Record<SpellColor, string> = {
+        [SpellColor.DARK]: "bg-[#005180]/10 dark:bg-[#005180]/20",
+        [SpellColor.LIGHTNING]: "bg-[#334bff]/10 dark:bg-[#334bff]/20",
+        [SpellColor.ICE]: "bg-[#00b3ff]/10 dark:bg-[#00b3ff]/20",
+        [SpellColor.MOVE]: "bg-[#b6e5ff]/10 dark:bg-[#b6e5ff]/20",
+        [SpellColor.HEAL]: "bg-[#19fff0]/10 dark:bg-[#19fff0]/20",
+        [SpellColor.SPECTRAL]: "bg-[#03fcca]/10 dark:bg-[#03fcca]/20",
+        [SpellColor.POISON]: "bg-[#03fc52]/10 dark:bg-[#03fc52]/20",
+        [SpellColor.ACID]: "bg-[#bbff00]/10 dark:bg-[#bbff00]/20",
+        [SpellColor.WARM]: "bg-[#ffce7a]/10 dark:bg-[#ffce7a]/20",
+        [SpellColor.HOLY]: "bg-[#ffdd00]/10 dark:bg-[#ffdd00]/20",
+        [SpellColor.FIRE]: "bg-[#ff8400]/10 dark:bg-[#ff8400]/20",
+        [SpellColor.SPIKE]: "bg-[#ff500a]/10 dark:bg-[#ff500a]/20",
+        [SpellColor.MISSILE]: "bg-[#ff0019]/10 dark:bg-[#ff0019]/20",
+        [SpellColor.COUNTER]: "bg-[#ff7daf]/10 dark:bg-[#ff7daf]/20",
+        [SpellColor.FAERIE]: "bg-[#d154ff]/10 dark:bg-[#d154ff]/20",
+        [SpellColor.SHOCK]: "bg-[#b47aff]/10 dark:bg-[#b47aff]/20",
+    };
+
+    return map[spellColor];
+};
+
 export const getSpellColorOnHover = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
         [SpellColor.DARK]:

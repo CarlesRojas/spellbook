@@ -267,12 +267,13 @@
                 "removeFromSpellbook": "¡Hechizo {{PARAM}} quitado del libro de hechizos!",
                 "prepare": "¡Hechizo {{PARAM}} preparado!",
                 "unprepare": "¡Hechizo {{PARAM}} despreparado!",
-                "prepareAsOath": "¡¡Hechizo {{PARAM}} adquirido del Juramento!",
-                "unprepareFromOath": "¡¡Hechizo {{PARAM}} quitado del Juramento!",
-                "prepareAsDomain": "¡¡Hechizo {{PARAM}} adquirido del Dominio!",
-                "unprepareFromDomain": "¡¡Hechizo {{PARAM}} quitado del Dominio!",
+                "prepareAsOath": "¡Hechizo {{PARAM}} adquirido del Juramento!",
+                "unprepareFromOath": "¡Hechizo {{PARAM}} quitado del Juramento!",
+                "prepareAsDomain": "¡Hechizo {{PARAM}} adquirido del Dominio!",
+                "unprepareFromDomain": "¡Hechizo {{PARAM}} quitado del Dominio!",
                 "addCantrip": "¡Truco {{PARAM}} aprendido!",
-                "removeCantrip": "¡Truco {{PARAM}} olvidado!"
+                "removeCantrip": "¡Truco {{PARAM}} olvidado!",
+                "cast": "¡Hechizo {{PARAM}} casteado!"
             }
         }
     },

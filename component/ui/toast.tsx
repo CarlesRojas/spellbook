@@ -34,9 +34,22 @@ const Toast = React.forwardRef<HTMLParagraphElement, ToastProps>(
 );
 Toast.displayName = "Toast";
 
-const ToastWrapper = ({ onClose, children }: { onClose: () => void; children: ReactNode }) => {
+const ToastWrapper = ({
+    onClose,
+    children,
+    className,
+}: {
+    onClose: () => void;
+    children: ReactNode;
+    className?: string;
+}) => {
     return (
-        <div className="flex w-full grow gap-4 rounded-lg border border-stone-300 bg-stone-50 p-2 shadow-lg dark:border-stone-700 dark:bg-black">
+        <div
+            className={cn(
+                "flex w-full grow gap-4 rounded-lg border border-stone-300 bg-stone-50 p-2 shadow-lg dark:border-stone-700 dark:bg-black",
+                className,
+            )}
+        >
             {children}
 
             <Button size="icon" variant="ghost" onClick={onClose}>

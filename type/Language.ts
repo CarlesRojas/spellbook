@@ -158,6 +158,7 @@ export const LanguageObjectSchema = z.object({
                 unprepareFromDomain: z.string(),
                 addCantrip: z.string(),
                 removeCantrip: z.string(),
+                cast: z.string(),
             }),
         }),
     }),

@@ -2,6 +2,7 @@ import { Button } from "@/component/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { useTranslation } from "@/hook/useTranslation";
 import {
+    getSpellBackgroundColor,
     getSpellColor,
     getSpellColorBackgroundOnHover,
     getSpellColorBorderOnHover,
@@ -11,10 +12,12 @@ import { cn } from "@/lib/util";
 import { useForgetCantrip } from "@/server/use/useForgetCantrip";
 import { useForgetSpell } from "@/server/use/useForgetSpell";
 import { useUnprepareSpell } from "@/server/use/useUnprepareSpell";
+import { useUpdateSpellSlots } from "@/server/use/useUpdateSpellSlots";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import { ClassType, Spell } from "@/type/Spell";
+import { getSpellSlotKey } from "@/type/SpellSlots";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 import { LuLightbulbOff, LuLoader, LuSparkle, LuView, LuX, LuZapOff } from "react-icons/lu";
@@ -44,6 +47,17 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     const forgetSpell = useForgetSpell();
     const unprepareSpell = useUnprepareSpell();
     const forgetCantrip = useForgetCantrip();
+    const updateSpellSlots = useUpdateSpellSlots();
+
+    const spendSpellSlot = (castedSpellLevel: number) => {
+        const spellSlotKey = getSpellSlotKey(castedSpellLevel);
+        updateSpellSlots.mutate({
+            characterId: character.id,
+            id: character.spellSlotsAvailableId,
+            ...character.spellSlotsAvailable,
+            [spellSlotKey]: Math.max(0, character.spellSlotsAvailable[spellSlotKey] - 1),
+        });
+    };
 
     const onForgetSpell = () => {
         setPopoverOpen(false);
@@ -83,6 +97,19 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                 <SpellToast
                     icon={smallIcon}
                     message={t.dnd.spell.toast.removeCantrip.replace("{{PARAM}}", spell.name[language])}
+                />
+            </ToastWrapper>
+        ));
+    };
+
+    const cast = (castedSpellLevel: number) => {
+        spendSpellSlot(castedSpellLevel);
+
+        toast.custom((currToast) => (
+            <ToastWrapper onClose={() => toast.dismiss(currToast)} className={cn(getSpellBackgroundColor(color))}>
+                <SpellToast
+                    icon={smallIcon}
+                    message={t.dnd.spell.toast.cast.replace("{{PARAM}}", spell.name[language])}
                 />
             </ToastWrapper>
         ));
@@ -142,6 +169,8 @@ const CastableSpell = ({ spell, language, character }: Props) => {
         [ClassType.DRUID]: onUnprepareSpell,
         [ClassType.WARLOCK]: onForgetSpell,
     };
+
+    const isCastable = level === 0 || character.spellSlotsAvailable[getSpellSlotKey(level)] > 0;
 
     return (
         <div className="flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
@@ -213,17 +242,25 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                 </PopoverContent>
             </Popover>
 
-            {/* TODO Cast spell */}
+            {/* TODO Cast spell for a higher level */}
             <div className="flex h-fit w-fit min-w-fit gap-2 p-2">
                 <Button
-                    variant="outline"
+                    variant={"outline"}
+                    disabled={!isCastable}
                     className={cn(
                         getSpellColorOnHover(color),
                         getSpellColorBorderOnHover(color),
                         getSpellColorBackgroundOnHover(color),
+                        !isCastable && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
                     )}
+                    onClick={() => cast(level)}
                 >
-                    <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
+                    {isCastable ? (
+                        <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
+                    ) : (
+                        <LuX className="mr-3 h-4 w-4 stroke-[3]" />
+                    )}
+
                     {t.dnd.spell.cast}
                 </Button>
             </div>
