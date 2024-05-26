@@ -17,7 +17,7 @@ import { Route } from "@/type/Route";
 import { ClassType, Spell } from "@/type/Spell";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { LuBookMinus, LuLightbulbOff, LuLoader, LuView, LuX, LuZapOff } from "react-icons/lu";
+import { LuLightbulbOff, LuLoader, LuSparkle, LuView, LuX, LuZapOff } from "react-icons/lu";
 import { toast } from "sonner";
 import { SpellToast, ToastWrapper } from "../ui/toast";
 
@@ -52,10 +52,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
             <ToastWrapper onClose={() => toast.dismiss(currToast)}>
                 <SpellToast
                     icon={smallIcon}
-                    message={(character.class === ClassType.WIZARD
-                        ? t.dnd.spell.toast.removeFromSpellbook
-                        : t.dnd.spell.toast.forget
-                    ).replace("{{PARAM}}", spell.name[language])}
+                    message={t.dnd.spell.toast.forget.replace("{{PARAM}}", spell.name[language])}
                 />
             </ToastWrapper>
         ));
@@ -114,7 +111,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     );
 
     const removeSpellText: Record<ClassType, string> = {
-        [ClassType.WIZARD]: t.dnd.spell.removeFromSpellbook,
+        [ClassType.WIZARD]: t.dnd.spell.unprepare,
         [ClassType.SORCERER]: t.dnd.spell.forget,
         [ClassType.CLERIC]: t.dnd.spell.unprepare,
         [ClassType.PALADIN]: t.dnd.spell.unprepare,
@@ -125,18 +122,18 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const removeSpellIcon: Record<ClassType, ReactNode> = {
-        [ClassType.WIZARD]: <LuBookMinus className="mr-2 h-5 w-5" />,
+        [ClassType.WIZARD]: <LuSparkle className="mr-2 h-5 w-5 rotate-45" />,
         [ClassType.SORCERER]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
-        [ClassType.CLERIC]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
-        [ClassType.PALADIN]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
+        [ClassType.CLERIC]: <LuSparkle className="mr-2 h-5 w-5 rotate-45" />,
+        [ClassType.PALADIN]: <LuSparkle className="mr-2 h-5 w-5 rotate-45" />,
         [ClassType.RANGER]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
         [ClassType.BARD]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
-        [ClassType.DRUID]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
+        [ClassType.DRUID]: <LuSparkle className="mr-2 h-5 w-5 rotate-45" />,
         [ClassType.WARLOCK]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
     };
 
     const removeSpellAction: Record<ClassType, () => void> = {
-        [ClassType.WIZARD]: onForgetSpell,
+        [ClassType.WIZARD]: onUnprepareSpell,
         [ClassType.SORCERER]: onForgetSpell,
         [ClassType.CLERIC]: onUnprepareSpell,
         [ClassType.PALADIN]: onUnprepareSpell,
