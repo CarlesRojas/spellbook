@@ -4,6 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover"
 import { useTranslation } from "@/hook/useTranslation";
 import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount } from "@/lib/character";
 import { getSpellColor } from "@/lib/spell";
+import { cn } from "@/lib/util";
 import { useLearnCantrip } from "@/server/use/useLearnCantrip";
 import { useLearnSpell } from "@/server/use/useLearnSpell";
 import { usePrepareSpell } from "@/server/use/usePrepareSpell";
@@ -46,25 +47,25 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
     const learnCantrip = useLearnCantrip();
 
     const [learnDialogOpen, setLearnDialogOpen] = useState(false);
-    const onLearnSpell = () => {
+    const onLearnSpell = (bypassMax: boolean) => {
         setPopoverOpen(false);
-        if (maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
+        if (!bypassMax && maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
 
         learnSpell.mutate({ characterId: character.id, spellIndex: index });
     };
 
     const [prepareDialogOpen, setPrepareDialogOpen] = useState(false);
-    const onPrepareSpell = (isOathOrDomain = false) => {
+    const onPrepareSpell = (bypassMax: boolean, isOathOrDomain: boolean) => {
         setPopoverOpen(false);
-        if (!isOathOrDomain && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
+        if (!bypassMax && !isOathOrDomain && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
 
         prepareSpell.mutate({ characterId: character.id, spellIndex: index, counts: !isOathOrDomain });
     };
 
     const [cantripDialogOpen, setCantripDialogOpen] = useState(false);
-    const onAddCantrip = () => {
+    const onAddCantrip = (bypassMax: boolean) => {
         setPopoverOpen(false);
-        if (knownCantrips >= maxKnownCantrips) return setCantripDialogOpen(true);
+        if (!bypassMax && knownCantrips >= maxKnownCantrips) return setCantripDialogOpen(true);
 
         learnCantrip.mutate({ characterId: character.id, spellIndex: index });
     };
@@ -92,15 +93,33 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
     };
 
     const addSpellAction: Record<ClassType, () => void> = {
-        [ClassType.WIZARD]: onLearnSpell,
-        [ClassType.SORCERER]: onLearnSpell,
-        [ClassType.CLERIC]: onPrepareSpell,
-        [ClassType.PALADIN]: onPrepareSpell,
-        [ClassType.RANGER]: onLearnSpell,
-        [ClassType.BARD]: onLearnSpell,
-        [ClassType.DRUID]: onPrepareSpell,
-        [ClassType.WARLOCK]: onLearnSpell,
+        [ClassType.WIZARD]: () => onLearnSpell(false),
+        [ClassType.SORCERER]: () => onLearnSpell(false),
+        [ClassType.CLERIC]: () => onPrepareSpell(false, false),
+        [ClassType.PALADIN]: () => onPrepareSpell(false, false),
+        [ClassType.RANGER]: () => onLearnSpell(false),
+        [ClassType.BARD]: () => onLearnSpell(false),
+        [ClassType.DRUID]: () => onPrepareSpell(false, false),
+        [ClassType.WARLOCK]: () => onLearnSpell(false),
     };
+
+    const spellMini = (className?: string) => (
+        <div className={cn("flex w-fit items-center gap-2", className)}>
+            <div
+                className="inline-block h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 bg-cover brightness-90 dark:brightness-100"
+                style={{
+                    backgroundImage: `url(/spell/${icon})`,
+                    maskImage: `url(/spell/${icon})`,
+                    maskMode: "alpha",
+                    maskSize: "cover",
+                    backgroundBlendMode: "luminosity",
+                    backgroundColor: getSpellColor(color),
+                }}
+            />
+
+            <p className="w-full truncate font-medium tracking-wide mouse:group-hover:opacity-0">{name[language]}</p>
+        </div>
+    );
 
     return (
         <>
@@ -136,26 +155,10 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                     </PopoverTrigger>
 
                     <PopoverContent className="mx-2 my-3">
-                        <div className="mb-2 flex w-full items-center gap-2 border-b border-stone-300 px-4 py-2 dark:border-stone-700">
-                            <div
-                                className="inline-block h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 bg-cover brightness-90 dark:brightness-100"
-                                style={{
-                                    backgroundImage: `url(/spell/${icon})`,
-                                    maskImage: `url(/spell/${icon})`,
-                                    maskMode: "alpha",
-                                    maskSize: "cover",
-                                    backgroundBlendMode: "luminosity",
-                                    backgroundColor: getSpellColor(color),
-                                }}
-                            />
-
-                            <p className="w-full truncate font-medium tracking-wide mouse:group-hover:opacity-0">
-                                {name[language]}
-                            </p>
-                        </div>
+                        {spellMini("mb-2 w-full border-b border-stone-300 px-2 pb-2 dark:border-stone-700")}
 
                         {isCantrip && (
-                            <Button variant="menu" size="menu" onClick={onAddCantrip}>
+                            <Button variant="menu" size="menu" onClick={() => onAddCantrip(false)}>
                                 <LuSparkle className="mr-2 h-5 w-5" />
                                 <p className="font-medium tracking-wide">
                                     {t.dnd.spell.addCantrip} {`(${knownCantrips}/${maxKnownCantrips})`}
@@ -171,14 +174,14 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                                 </Button>
 
                                 {character.class === ClassType.CLERIC && (
-                                    <Button variant="menu" size="menu" onClick={() => onPrepareSpell(true)}>
+                                    <Button variant="menu" size="menu" onClick={() => onPrepareSpell(false, true)}>
                                         <LuLoader className="mr-2 h-5 w-5" />
                                         <p className="font-medium tracking-wide">{`${t.dnd.spell.prepareAsDomain} (${oathOrDomainSpells})`}</p>
                                     </Button>
                                 )}
 
                                 {character.class === ClassType.PALADIN && (
-                                    <Button variant="menu" size="menu" onClick={() => onPrepareSpell(true)}>
+                                    <Button variant="menu" size="menu" onClick={() => onPrepareSpell(false, true)}>
                                         <LuSwords className="mr-2 h-5 w-5" />
                                         <p className="font-medium tracking-wide">{`${t.dnd.spell.prepareAsOath} (${oathOrDomainSpells})`}</p>
                                     </Button>
@@ -203,23 +206,7 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                     </DialogHeader>
 
                     <div className="ml-1 flex flex-col gap-2">
-                        <div className="flex w-fit items-center gap-2 rounded-md">
-                            <div
-                                className="inline-block h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 bg-cover brightness-90 dark:brightness-100"
-                                style={{
-                                    backgroundImage: `url(/spell/${icon})`,
-                                    maskImage: `url(/spell/${icon})`,
-                                    maskMode: "alpha",
-                                    maskSize: "cover",
-                                    backgroundBlendMode: "luminosity",
-                                    backgroundColor: getSpellColor(color),
-                                }}
-                            />
-
-                            <p className="w-full truncate text-pretty font-medium tracking-wide mouse:group-hover:opacity-0">
-                                {name[language]}
-                            </p>
-                        </div>
+                        {spellMini()}
 
                         <p className="opacity-60">
                             {t.dnd.spell.cannotLearnDescription.replace(
@@ -235,11 +222,79 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                             type="button"
                             onClick={() => {
                                 setLearnDialogOpen(false);
-                                learnSpell.mutate({ characterId: character.id, spellIndex: index });
+                                onLearnSpell(true);
                             }}
                         >
                             <LuLightbulb className="mr-2 h-5 w-5" />
                             {t.dnd.spell.learnAnyway}
+                        </Button>
+
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={prepareDialogOpen} onOpenChange={setPrepareDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{t.dnd.spell.cannotPrepare}</DialogTitle>
+                    </DialogHeader>
+
+                    <div className="ml-1 flex flex-col gap-2">
+                        {spellMini()}
+
+                        <p className="opacity-60">
+                            {t.dnd.spell.cannotPrepareDescription.replace("{{PARAM}}", maxPreparedSpells.toString())}
+                        </p>
+                    </div>
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => {
+                                setPrepareDialogOpen(false);
+                                onPrepareSpell(true, false);
+                            }}
+                        >
+                            <LuSparkle className="mr-2 h-5 w-5" />
+                            {t.dnd.spell.prepareAnyway}
+                        </Button>
+
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={cantripDialogOpen} onOpenChange={setCantripDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{t.dnd.spell.cannotAddCantrip}</DialogTitle>
+                    </DialogHeader>
+
+                    <div className="ml-1 flex flex-col gap-2">
+                        {spellMini()}
+
+                        <p className="opacity-60">
+                            {t.dnd.spell.cannotAddCantripDescription.replace("{{PARAM}}", maxKnownCantrips.toString())}
+                        </p>
+                    </div>
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => {
+                                setCantripDialogOpen(false);
+                                onAddCantrip(true);
+                            }}
+                        >
+                            <LuSparkle className="mr-2 h-5 w-5" />
+                            {t.dnd.spell.addCantripAnyway}
                         </Button>
 
                         <DialogClose asChild>
