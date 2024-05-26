@@ -20,14 +20,14 @@ export const getAbility = (classType: ClassType) => {
 
 export const getKnowSpellsAmount = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
-        [ClassType.WIZARD]: null, // SPELLBOOK - PREPARED
-        [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15], // KNOWN
-        [ClassType.CLERIC]: ZERO, // PREPARED (DOMAIN)
-        [ClassType.PALADIN]: ZERO, // PREPARED (OATH)
-        [ClassType.RANGER]: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11], // KNOWN
-        [ClassType.BARD]: [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22], // KNOWN
-        [ClassType.DRUID]: ZERO, // PREPARED
-        [ClassType.WARLOCK]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15], // KNOWN
+        [ClassType.WIZARD]: null,
+        [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15],
+        [ClassType.CLERIC]: ZERO,
+        [ClassType.PALADIN]: ZERO,
+        [ClassType.RANGER]: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11],
+        [ClassType.BARD]: [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22],
+        [ClassType.DRUID]: ZERO,
+        [ClassType.WARLOCK]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15],
     };
 
     const knownSpellsPerLevel = map[classType];
@@ -53,8 +53,8 @@ export const getPreparedSpellsAmount = (classType: ClassType, ability: number, l
     const map: Record<ClassType, number> = {
         [ClassType.WIZARD]: Math.max(1, ability + level),
         [ClassType.SORCERER]: 0,
-        [ClassType.CLERIC]: Math.max(1, ability + level), // + DOMAIN (That do not count)
-        [ClassType.PALADIN]: Math.max(1, ability + Math.floor(level / 2)), // + OATH (That do not count)
+        [ClassType.CLERIC]: Math.max(1, ability + level),
+        [ClassType.PALADIN]: Math.max(1, ability + Math.floor(level / 2)),
         [ClassType.RANGER]: 0,
         [ClassType.BARD]: 0,
         [ClassType.DRUID]: Math.max(1, ability + level),
@@ -78,7 +78,7 @@ export const getTotalSpellSlots = (classType: ClassType, level: number) => {
         [ClassType.RANGER]: PALADIN_SPELL_SLOTS,
         [ClassType.BARD]: WIZARD_SPELL_SLOTS,
         [ClassType.DRUID]: WIZARD_SPELL_SLOTS,
-        [ClassType.WARLOCK]: WARLOCK_SPELL_SLOTS, // Can regain all spent spell slots using Eldritch Master
+        [ClassType.WARLOCK]: WARLOCK_SPELL_SLOTS,
     };
 
     return map[classType][level - 1];
@@ -99,6 +99,7 @@ export const getCantripsAmount = (classType: ClassType, level: number) => {
     return map[classType][level - 1];
 };
 
+// TODO Delete or use Proficiency Bonus
 export const getProficiencyBonus = (level: number) => {
     const proficiencyBonus: ArrayWith20Positions<number> = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
     return proficiencyBonus[level - 1];

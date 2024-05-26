@@ -7,6 +7,7 @@ export const useUnprepareSpell = (onSuccess?: () => void) => {
     return useMutation({
         mutationFn: unprepareSpell,
         onMutate: async (data) => ({ ...data }),
+        // TODO Make optimistic
         onSuccess: (returnedData, error, { characterId }) => {
             queryClient.invalidateQueries({ queryKey: ["character", characterId] });
             onSuccess?.();

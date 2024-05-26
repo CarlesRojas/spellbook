@@ -187,6 +187,7 @@ const CharacterStatus = (props: Props) => {
 
                                 const slotLevelNumber = slotLevel.replace(/\D/g, "");
 
+                                // TODO Use Popover instead of DropdownMenu
                                 return (
                                     <DropdownMenu key={slotLevel} modal={true}>
                                         <DropdownMenuTrigger asChild>
@@ -284,6 +285,7 @@ const CharacterStatus = (props: Props) => {
                         onClick={() => props.setSpellSection(SpellSection.PREPARED, true)}
                         className="w-full sm:w-fit"
                     >
+                        {/* TODO add + Oath or Domain */}
                         {t.dnd.spell.prepared}
                     </Button>
                 )}

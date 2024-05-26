@@ -213,6 +213,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                 </PopoverContent>
             </Popover>
 
+            {/* TODO Cast spell */}
             <div className="flex h-fit w-fit min-w-fit gap-2 p-2">
                 <Button
                     variant="outline"

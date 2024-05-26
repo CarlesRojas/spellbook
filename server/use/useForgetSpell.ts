@@ -7,6 +7,7 @@ export const useForgetSpell = (onSuccess?: () => void) => {
     return useMutation({
         mutationFn: forgetSpell,
         onMutate: async (data) => ({ ...data }),
+        // TODO Make optimistic
         onSuccess: (returnedData, error, { characterId }) => {
             queryClient.invalidateQueries({ queryKey: ["character", characterId] });
             onSuccess?.();

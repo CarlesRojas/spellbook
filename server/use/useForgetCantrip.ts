@@ -7,6 +7,7 @@ export const useForgetCantrip = (onSuccess?: () => void) => {
     return useMutation({
         mutationFn: forgetCantrip,
         onMutate: async (data) => ({ ...data }),
+        // TODO Make optimistic
         onSuccess: (returnedData, error, { characterId }) => {
             queryClient.invalidateQueries({ queryKey: ["character", characterId] });
             onSuccess?.();

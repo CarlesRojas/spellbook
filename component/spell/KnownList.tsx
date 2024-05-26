@@ -47,6 +47,8 @@ const KnownList = ({ language, spells, character }: Props) => {
                 </p>
             </div>
 
+            {/* TODO show how many you can know (Cantrips too) */}
+
             <div className="grid w-full gap-2 md:grid-cols-2">
                 {filteredSpells.map((spell) => {
                     const isLevelChange = spell.level !== lastLevel;

@@ -36,6 +36,7 @@ const KnownList = ({ language, spells, character }: Props) => {
                         : `${t.filter.noResults}`}
                 </p>
             </div>
+            {/* TODO show how many you can have prepared (Cantrips too) */}
 
             <div className="grid w-full gap-2 md:grid-cols-2">
                 {filteredSpells.map((spell) => {

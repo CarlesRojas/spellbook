@@ -23,6 +23,7 @@ const Characters = ({ params: { language, characterId } }: Props) => {
     const { user } = useUser();
     const spells = useSpells();
 
+    // TODO clear query when this changes
     const [spellSection, setSpellSection] = useUrlState("spells", SpellSection.ALL, z.nativeEnum(SpellSection));
 
     if (character.isLoading || user.isLoading)
