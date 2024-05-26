@@ -1,7 +1,7 @@
 "use client";
 
 import QueryFilter from "@/component/filter/QueryFilter";
-import SpellItem from "@/component/spell/SpellItem";
+import CastableSpell from "@/component/spell/CastableSpell";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { CharacterWithSpells } from "@/type/Character";
@@ -47,7 +47,7 @@ const KnownList = ({ language, spells, character }: Props) => {
                 </p>
             </div>
 
-            <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+            <div className="grid w-full gap-2 md:grid-cols-2">
                 {filteredSpells.map((spell) => {
                     const isLevelChange = spell.level !== lastLevel;
                     lastLevel = spell.level;
@@ -55,12 +55,12 @@ const KnownList = ({ language, spells, character }: Props) => {
                     return (
                         <Fragment key={spell.index}>
                             {isLevelChange && (
-                                <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
+                                <h2 className="sticky top-0 z-20 col-span-1 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 md:col-span-2 mouse:top-16">
                                     {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
                                 </h2>
                             )}
 
-                            <SpellItem language={language} spell={spell} />
+                            <CastableSpell language={language} spell={spell} character={character} />
                         </Fragment>
                     );
                 })}

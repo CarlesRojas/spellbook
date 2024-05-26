@@ -20,14 +20,14 @@ export const getAbility = (classType: ClassType) => {
 
 export const getKnowSpellsAmount = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
-        [ClassType.WIZARD]: null, // ALL - SPELLBOOK - PREPARED
-        [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15], // ALL - KNOWN
-        [ClassType.CLERIC]: ZERO, // ALL - PREPARED (DOMAIN)
-        [ClassType.PALADIN]: ZERO, // ALL - PREPARED (OATH)
-        [ClassType.RANGER]: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11], // ALL - KNOWN
-        [ClassType.BARD]: [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22], // ALL - KNOWN
-        [ClassType.DRUID]: ZERO, // ALL - PREPARED
-        [ClassType.WARLOCK]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15], // ALL - KNOWN
+        [ClassType.WIZARD]: null, // SPELLBOOK - PREPARED
+        [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15], // KNOWN
+        [ClassType.CLERIC]: ZERO, // PREPARED (DOMAIN)
+        [ClassType.PALADIN]: ZERO, // PREPARED (OATH)
+        [ClassType.RANGER]: [0, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11], // KNOWN
+        [ClassType.BARD]: [4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 15, 16, 18, 19, 19, 20, 22, 22, 22], // KNOWN
+        [ClassType.DRUID]: ZERO, // PREPARED
+        [ClassType.WARLOCK]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15], // KNOWN
     };
 
     const knownSpellsPerLevel = map[classType];

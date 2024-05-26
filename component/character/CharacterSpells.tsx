@@ -25,11 +25,19 @@ const CharacterSpells = ({ language, character, spells, user, spellSection }: Pr
             {spellSection === SpellSection.ALL && <AllList language={language} spells={spells} character={character} />}
 
             {spellSection === SpellSection.KNOWN && (
-                <KnownList language={language} spells={spells} character={character} />
+                <KnownList
+                    language={language}
+                    spells={[...character.knownSpells, ...character.knownCantrips]}
+                    character={character}
+                />
             )}
 
             {spellSection === SpellSection.PREPARED && (
-                <PreparedList language={language} spells={spells} character={character} />
+                <PreparedList
+                    language={language}
+                    spells={[...character.preparedSpells, ...character.knownCantrips]}
+                    character={character}
+                />
             )}
 
             <ScrollToTop />
