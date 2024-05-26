@@ -2,7 +2,7 @@
 
 import ClassFilter from "@/component/filter/ClassFilter";
 import QueryFilter from "@/component/filter/QueryFilter";
-import SpellItem from "@/component/spell/SpellItem";
+import SpellWithMenu from "@/component/spell/SpellWithMenu";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { CharacterWithSpells } from "@/type/Character";
@@ -64,7 +64,7 @@ const AllList = ({ language, spells, character }: Props) => {
                                 </h2>
                             )}
 
-                            <SpellItem language={language} spell={spell} />
+                            <SpellWithMenu language={language} spell={spell} character={character} />
                         </Fragment>
                     );
                 })}

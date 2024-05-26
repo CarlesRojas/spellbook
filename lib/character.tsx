@@ -3,12 +3,6 @@ import { Ability, ClassType } from "@/type/Spell";
 import { PALADIN_SPELL_SLOTS, SpellSlots, WARLOCK_SPELL_SLOTS, WIZARD_SPELL_SLOTS } from "@/type/SpellSlots";
 import { ArrayWith20Positions } from "@/type/utils";
 
-// TODO Sorcerer swap spell slots and sorcery points
-// export const SORCERER = {
-//     spellSlotCostInSorceryPoints: [2, 3, 5, 6, 7],
-//     sorceryPoints: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-// };
-
 export const getAbility = (classType: ClassType) => {
     const map: Record<ClassType, Ability> = {
         [ClassType.WIZARD]: Ability.INT,
@@ -24,6 +18,7 @@ export const getAbility = (classType: ClassType) => {
     return map[classType];
 };
 
+// TODO Known spells
 export const getKnowSpells = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
         [ClassType.WIZARD]: null, // ALL - SPELLBOOK - PREPARED
@@ -55,6 +50,7 @@ export const showKnownSection = (classType: ClassType) => {
     return map[classType];
 };
 
+// TODO Prepared spells
 export const getPreparedSpellsAmount = (classType: ClassType, ability: number, level: number) => {
     const map: Record<ClassType, number> = {
         [ClassType.WIZARD]: Math.max(1, ability + level),
@@ -90,6 +86,7 @@ export const getTotalSpellSlots = (classType: ClassType, level: number) => {
     return map[classType][level - 1];
 };
 
+// TODO Cantrips
 export const getCantripsAmount = (classType: ClassType, level: number) => {
     const map: Record<ClassType, ArrayWith20Positions<number>> = {
         [ClassType.WIZARD]: [3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
@@ -110,6 +107,7 @@ export const getProficiencyBonus = (level: number) => {
     return proficiencyBonus[level - 1];
 };
 
+// TODO Rituals
 export const canCastRituals = (classType: ClassType) => {
     const map: Record<ClassType, boolean> = {
         [ClassType.WIZARD]: true, // SPELLBOOK

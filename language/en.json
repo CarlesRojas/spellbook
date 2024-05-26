@@ -225,11 +225,20 @@
             }
         },
 
-        "spells": {
+        "spell": {
             "all": "All",
             "known": "Known",
             "prepared": "Prepared",
-            "spellbook": "Spellbook"
+            "spellbook": "Spellbook",
+
+            "view": "View information",
+            "learn": "Learn",
+            "addToSpellbook": "Add to spellbook",
+            "addCantrip": "Add cantrip",
+            "prepare": "Prepare",
+            "prepareAsDomain": "Gain as Domain",
+            "prepareAsOath": "Gain as Oath",
+            "cast": "Cast"
         }
     },
 

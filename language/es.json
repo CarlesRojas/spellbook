@@ -225,11 +225,20 @@
             }
         },
 
-        "spells": {
+        "spell": {
             "all": "Todos",
             "known": "Conocidos",
             "prepared": "Preparados",
-            "spellbook": "Spellbook"
+            "spellbook": "Libro",
+
+            "view": "Ver información",
+            "learn": "Aprender",
+            "addToSpellbook": "Añadir al libro de hechizos",
+            "addCantrip": "Añadir truco",
+            "prepare": "Preparar",
+            "prepareAsDomain": "Adquirir como dominio",
+            "prepareAsOath": "Adquirir como Juramento",
+            "cast": "Castear"
         }
     },
 

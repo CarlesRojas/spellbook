@@ -1,4 +1,4 @@
-import { ClassType, SpellSchema } from "@/type/Spell";
+import { ClassType, SpellSchema, SpellWithCountsSchema } from "@/type/Spell";
 import { SpellSlotsSchema } from "@/type/SpellSlots";
 import { ArrayWith20Positions } from "@/type/utils";
 import { z } from "zod";
@@ -17,7 +17,7 @@ export type Character = z.infer<typeof CharacterSchema>;
 
 export const CharacterWithSpellsSchema = CharacterSchema.extend({
     knownSpells: z.array(SpellSchema),
-    preparedSpells: z.array(SpellSchema),
+    preparedSpells: z.array(SpellWithCountsSchema),
     knownCantrips: z.array(SpellSchema),
     spellSlotsAvailable: SpellSlotsSchema,
 });

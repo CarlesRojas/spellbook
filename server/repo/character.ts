@@ -20,7 +20,7 @@ type SelectedCharacterWithSpells = InferResultType<
             with: { spell: { with: { name: true; description: true; highLevelDescription: true; material: true } } };
         };
         preparedSpells: {
-            columns: {};
+            columns: { counts: true };
             with: { spell: { with: { name: true; description: true; highLevelDescription: true; material: true } } };
         };
         knownCantrips: {
@@ -73,7 +73,7 @@ export const getCharacter = async (id: number) => {
                 },
             },
             preparedSpells: {
-                columns: {},
+                columns: { counts: true },
                 with: {
                     spell: { with: { name: true, description: true, highLevelDescription: true, material: true } },
                 },
@@ -134,9 +134,9 @@ const toCharacter = (character: SelectedCharacter) => {
 };
 
 const toCharacterWithSpells = (character: SelectedCharacterWithSpells) => {
-    const knownSpells = character.knownSpells.map((elem) => elem.spell);
-    const preparedSpells = character.preparedSpells.map((elem) => elem.spell);
-    const knownCantrips = character.knownCantrips.map((elem) => elem.spell);
+    const knownSpells = character.knownSpells.map(({ spell }) => ({ ...spell }));
+    const preparedSpells = character.preparedSpells.map(({ spell, counts }) => ({ ...spell, counts }));
+    const knownCantrips = character.knownCantrips.map(({ spell }) => ({ ...spell }));
 
     return CharacterWithSpellsSchema.parse({
         ...character,

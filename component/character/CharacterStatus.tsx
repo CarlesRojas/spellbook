@@ -265,7 +265,7 @@ const CharacterStatus = (props: Props) => {
                     onClick={() => props.setSpellSection(SpellSection.ALL, true)}
                     className="w-full sm:w-fit"
                 >
-                    {t.dnd.spells.all}
+                    {t.dnd.spell.all}
                 </Button>
 
                 {showKnown && (
@@ -274,7 +274,7 @@ const CharacterStatus = (props: Props) => {
                         onClick={() => props.setSpellSection(SpellSection.KNOWN, true)}
                         className="w-full sm:w-fit"
                     >
-                        {characterClass === ClassType.WIZARD ? t.dnd.spells.spellbook : t.dnd.spells.known}
+                        {characterClass === ClassType.WIZARD ? t.dnd.spell.spellbook : t.dnd.spell.known}
                     </Button>
                 )}
 
@@ -284,7 +284,7 @@ const CharacterStatus = (props: Props) => {
                         onClick={() => props.setSpellSection(SpellSection.PREPARED, true)}
                         className="w-full sm:w-fit"
                     >
-                        {t.dnd.spells.prepared}
+                        {t.dnd.spell.prepared}
                     </Button>
                 )}
             </div>

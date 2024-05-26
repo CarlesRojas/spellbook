@@ -17,11 +17,13 @@ const buttonVariants = cva(
                 secondary:
                     "bg-stone-200 text-stone-900 mouse:hover:bg-stone-300 dark:bg-stone-900 dark:text-stone-50 dark:mouse:hover:bg-stone-800",
                 ghost: "mouse:hover:opacity-50",
+                menu: "mouse:hover:bg-stone-100 mouse:hover:dark:bg-stone-950",
                 link: "font-semibold text-stone-900 underline-offset-4 mouse:hover:underline dark:text-stone-50",
             },
 
             size: {
                 default: "h-10 px-4 py-2 w-fit",
+                menu: "h-12 px-4 py-2 w-full justify-start",
                 sm: "h-9 rounded-md px-3 w-fit",
                 lg: "h-11 rounded-md px-8 w-fit",
                 icon: "h-10 w-10 min-w-10 min-h-10",

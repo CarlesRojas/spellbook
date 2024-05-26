@@ -252,3 +252,8 @@ export const SpellSchema = z.object({
     color: z.nativeEnum(SpellColor),
 });
 export type Spell = z.infer<typeof SpellSchema>;
+
+export const SpellWithCountsSchema = SpellSchema.extend({
+    counts: z.boolean(),
+});
+export type SpellWithCounts = z.infer<typeof SpellWithCountsSchema>;

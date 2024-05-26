@@ -2,6 +2,8 @@ import { knownSpells } from "@/server/database/schema/relations/knownSpells";
 import { spellSlots } from "@/server/database/schema/spellSlots";
 import { relations } from "drizzle-orm";
 import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
+import { knownCantrips } from "./relations/knownCantrips";
+import { preparedSpells } from "./relations/preparedSpells";
 
 export const character = pgTable("character", {
     id: serial("id").primaryKey().notNull(),
@@ -16,8 +18,8 @@ export const character = pgTable("character", {
 
 export const characterRelations = relations(character, ({ many, one }) => ({
     knownSpells: many(knownSpells),
-    preparedSpells: many(knownSpells),
-    knownCantrips: many(knownSpells),
+    preparedSpells: many(preparedSpells),
+    knownCantrips: many(knownCantrips),
 
     spellSlotsAvailable: one(spellSlots, {
         fields: [character.spellSlotsAvailableId],

@@ -54,7 +54,6 @@ const CharacterItem = (props: Props) => {
             <Link
                 href={`/${language}/${Route.CHARACTER}/${id}`}
                 className="focus-shadow group flex grow items-center gap-2 rounded p-3"
-                scroll={false}
             >
                 {getClassIcon(characterClass, "mouse:transition-transform mouse:group-hover:scale-110")}
 

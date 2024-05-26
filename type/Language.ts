@@ -110,11 +110,20 @@ export const LanguageObjectSchema = z.object({
             }),
         }),
 
-        spells: z.object({
+        spell: z.object({
             all: z.string(),
             known: z.string(),
             prepared: z.string(),
             spellbook: z.string(),
+
+            view: z.string(),
+            learn: z.string(),
+            addToSpellbook: z.string(),
+            addCantrip: z.string(),
+            prepare: z.string(),
+            prepareAsDomain: z.string(),
+            prepareAsOath: z.string(),
+            cast: z.string(),
         }),
     }),
 
