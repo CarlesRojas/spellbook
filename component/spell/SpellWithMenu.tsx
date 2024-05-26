@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover"
 import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
 import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount } from "@/lib/character";
-import { getSpellColor } from "@/lib/spell";
+import { getSpellColor, getSpellColorOnHover } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useForgetCantrip } from "@/server/use/useForgetCantrip";
 import { useForgetSpell } from "@/server/use/useForgetSpell";
@@ -282,20 +282,14 @@ const SpellWithMenu = ({ spell, language, character }: Props) => {
                             }}
                         />
 
-                        <div className="relative flex w-full">
-                            <h3 className="w-full overflow-hidden text-ellipsis text-center text-sm font-semibold opacity-75 mouse:group-hover:opacity-0">
-                                {name[language]}
-                            </h3>
-
-                            <h3
-                                className="pointer-events-none absolute z-10 hidden w-full select-none overflow-hidden text-ellipsis text-center text-sm font-semibold opacity-0 brightness-[0.8] dark:brightness-100 mouse:block mouse:group-hover:opacity-100"
-                                style={{
-                                    color: getSpellColor(color),
-                                }}
-                            >
-                                {name[language]}
-                            </h3>
-                        </div>
+                        <h3
+                            className={cn(
+                                "w-full overflow-hidden text-ellipsis text-center text-sm font-semibold",
+                                getSpellColorOnHover(spell.color),
+                            )}
+                        >
+                            {name[language]}
+                        </h3>
                     </PopoverTrigger>
 
                     <PopoverContent className="mx-2 my-3">

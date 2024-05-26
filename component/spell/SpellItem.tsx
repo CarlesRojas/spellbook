@@ -1,5 +1,6 @@
 import { useTranslation } from "@/hook/useTranslation";
-import { getSpellColor } from "@/lib/spell";
+import { getSpellColor, getSpellColorOnHover } from "@/lib/spell";
+import { cn } from "@/lib/util";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import { Spell } from "@/type/Spell";
@@ -35,20 +36,14 @@ const SpellItem = ({ spell, language, children }: Props) => {
                     }}
                 />
 
-                <div className="relative flex w-full">
-                    <h3 className="w-full overflow-hidden text-ellipsis text-center text-sm font-semibold opacity-75 mouse:group-hover:opacity-0">
-                        {name[language]}
-                    </h3>
-
-                    <h3
-                        className="pointer-events-none absolute z-10 hidden w-full select-none overflow-hidden text-ellipsis text-center text-sm font-semibold opacity-0 brightness-[0.8] dark:brightness-100 mouse:block mouse:group-hover:opacity-100"
-                        style={{
-                            color: getSpellColor(color),
-                        }}
-                    >
-                        {name[language]}
-                    </h3>
-                </div>
+                <h3
+                    className={cn(
+                        "w-full overflow-hidden text-ellipsis text-center text-sm font-semibold",
+                        getSpellColorOnHover(spell.color),
+                    )}
+                >
+                    {name[language]}
+                </h3>
             </Link>
 
             {children}
