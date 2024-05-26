@@ -40,7 +40,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
             </div>
 
-            <div className={cn("flex justify-end pt-1", spells.isLoading ? "pointer-events-none opacity-0" : "")}>
+            <div className={cn("flex justify-end", spells.isLoading ? "pointer-events-none opacity-0" : "")}>
                 <p className="text-sm font-medium tracking-wide opacity-60">
                     {filteredSpells.length > 0
                         ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`

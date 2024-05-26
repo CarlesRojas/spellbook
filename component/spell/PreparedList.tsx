@@ -29,14 +29,13 @@ const KnownList = ({ language, spells, character }: Props) => {
 
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
-            <div className="flex justify-end pt-1">
+            <div className="flex justify-end">
                 <p className="text-sm font-medium tracking-wide opacity-60">
                     {filteredSpells.length > 0
                         ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`
                         : `${t.filter.noResults}`}
                 </p>
             </div>
-            {/* TODO show how many you can have prepared (Cantrips too) */}
 
             <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                 {filteredSpells.map((spell) => {
