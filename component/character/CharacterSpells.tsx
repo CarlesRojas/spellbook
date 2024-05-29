@@ -3,23 +3,25 @@ import AllList from "@/component/spell/AllList";
 import KnownList from "@/component/spell/KnownList";
 import PreparedList from "@/component/spell/PreparedList";
 import SpellBookList from "@/component/spell/SpellBookList";
-import { useTranslation } from "@/hook/useTranslation";
 import { GetAllSpellsReturnType } from "@/server/use/useSpells";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { ClassType, SpellSection } from "@/type/Spell";
-import { User } from "@/type/User";
 
 interface Props {
     language: Language;
     character: CharacterWithSpells;
-    user: User;
     spells: GetAllSpellsReturnType;
     spellSection: SpellSection;
 }
 
-const CharacterSpells = ({ language, character, spells, user, spellSection }: Props) => {
-    const { t } = useTranslation(language);
+const CharacterSpells = ({ language, character, spells, spellSection }: Props) => {
+    const spellBookRituals = character.knownSpells
+        .filter(({ index, ritual }) => {
+            if (character.preparedSpells.some(({ index: spellIndex }) => spellIndex === index)) return false;
+            return ritual;
+        })
+        .map((spell) => ({ ...spell, onlyRitual: true }));
 
     return (
         <>
@@ -40,7 +42,11 @@ const CharacterSpells = ({ language, character, spells, user, spellSection }: Pr
             {spellSection === SpellSection.PREPARED && (
                 <PreparedList
                     language={language}
-                    spells={[...character.preparedSpells, ...character.knownCantrips]}
+                    spells={[
+                        ...character.preparedSpells,
+                        ...character.knownCantrips,
+                        ...(character.class === ClassType.WIZARD ? spellBookRituals : []),
+                    ]}
                     character={character}
                 />
             )}

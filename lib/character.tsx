@@ -104,22 +104,6 @@ export const getProficiencyBonus = (level: number) => {
     return proficiencyBonus[level - 1];
 };
 
-// TODO Rituals
-export const canCastRituals = (classType: ClassType) => {
-    const map: Record<ClassType, boolean> = {
-        [ClassType.WIZARD]: true, // SPELLBOOK
-        [ClassType.SORCERER]: false,
-        [ClassType.CLERIC]: true, // PREPARED
-        [ClassType.PALADIN]: false,
-        [ClassType.RANGER]: false,
-        [ClassType.BARD]: true, // KNOWN
-        [ClassType.DRUID]: true, // PREPARED
-        [ClassType.WARLOCK]: false, // Book of Ancient Secrets lets you cast rituals
-    };
-
-    return map[classType];
-};
-
 export const getClassColor = (classType: ClassType) => {
     const map: Record<ClassType, string> = {
         [ClassType.WIZARD]: "text-sky-500/90 dark:text-sky-500/90",

@@ -273,7 +273,9 @@
                 "unprepareFromDomain": "¡Hechizo {{PARAM}} quitado del Dominio!",
                 "addCantrip": "¡Truco {{PARAM}} aprendido!",
                 "removeCantrip": "¡Truco {{PARAM}} olvidado!",
-                "cast": "¡Hechizo {{PARAM}} casteado!"
+                "cast": "¡Hechizo {{PARAM}} casteado!",
+                "castAsRitual": "¡Hechizo {{PARAM}} casteado como ritual!",
+                "castAsCantrip": "¡{{PARAM}} Truco casteado!"
             }
         },
 

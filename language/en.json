@@ -273,7 +273,9 @@
                 "unprepareFromDomain": "{{PARAM}} spell removed from Domain!",
                 "addCantrip": "{{PARAM}} Cantrip learned!",
                 "removeCantrip": "{{PARAM}} Cantrip forgotten!",
-                "cast": "{{PARAM}} spell cast!"
+                "cast": "{{PARAM}} spell cast!",
+                "castAsRitual": "{{PARAM}} spell cast as ritual!",
+                "castAsCantrip": "{{PARAM}} Cantrip cast!"
             }
         },
 

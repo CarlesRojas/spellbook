@@ -23,6 +23,7 @@ import { getSpellSlotKey } from "@/type/SpellSlots";
 import Link from "next/link";
 import { ReactNode, useMemo, useState } from "react";
 import { LuLightbulbOff, LuLoader, LuSparkle, LuView, LuX, LuZapOff } from "react-icons/lu";
+import { PiPentagram } from "react-icons/pi";
 import { toast } from "sonner";
 
 interface Props {
@@ -33,7 +34,7 @@ interface Props {
 
 const CastableSpell = ({ spell, language, character }: Props) => {
     const { t } = useTranslation(language);
-    const { index, icon, color, name, level, ritual: isRitual, highLevelDescription } = spell;
+    const { index, icon, color, name, level, ritual: isRitual, highLevelDescription, onlyRitual } = spell;
 
     const [spellPopoverOpen, setSpellPopoverOpen] = useState(false);
     const [castWithHigherLevelSlotDialogOpen, setCastWithHigherLevelSlotDialogOpen] = useState(false);
@@ -112,7 +113,12 @@ const CastableSpell = ({ spell, language, character }: Props) => {
             <ToastWrapper onClose={() => toast.dismiss(currToast)} className={cn(getSpellBackground(color))}>
                 <SpellToast
                     icon={smallIcon}
-                    message={t.dnd.spell.toast.cast.replace("{{PARAM}}", spell.name[language])}
+                    message={(castedSpellLevel === -1
+                        ? t.dnd.spell.toast.castAsRitual
+                        : castedSpellLevel === 0
+                          ? t.dnd.spell.toast.castAsCantrip
+                          : t.dnd.spell.toast.cast
+                    ).replace("{{PARAM}}", spell.name[language])}
                 />
             </ToastWrapper>
         ));
@@ -174,19 +180,16 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const isCastable = useMemo(() => {
-        if (level === 0) return true;
-        if (isRitual) return true;
+        if (level === 0 || isRitual) return true;
         for (let i = level; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return true;
         return false;
     }, [character.spellSlotsAvailable, isRitual, level]);
 
     const minLevelToCast = useMemo(() => {
-        if (level === 0 || isRitual) return 0;
-
+        if (level === 0) return 0;
         for (let i = level; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return i;
-
         return false;
-    }, [character.spellSlotsAvailable, isRitual, level]);
+    }, [character.spellSlotsAvailable, level]);
 
     const higherSpellSlotsAvailable = useMemo(() => {
         for (let i = level + 1; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return true;
@@ -194,6 +197,11 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     }, [character.spellSlotsAvailable, level]);
 
     const canCastHigher = higherSpellSlotsAvailable && highLevelDescription;
+
+    if (index === "silence") console.log(minLevelToCast !== level);
+    const canOnlyCastRitual = onlyRitual || (isRitual && minLevelToCast !== level && !canCastHigher);
+
+    // TODO toggle to show uncastable spells
 
     return (
         <div className="flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
@@ -266,29 +274,46 @@ const CastableSpell = ({ spell, language, character }: Props) => {
             </Popover>
 
             <div className="flex h-fit w-fit min-w-fit gap-2 p-2">
-                <Button
-                    variant={"outline"}
-                    disabled={!isCastable}
-                    className={cn(
-                        getSpellColorOnHover(color),
-                        getSpellBorderOnHover(color),
-                        getSpellBackgroundOnHover(color),
-                        !isCastable && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
-                    )}
-                    onClick={() => {
-                        isRitual || canCastHigher || minLevelToCast !== level
-                            ? setCastWithHigherLevelSlotDialogOpen(true)
-                            : cast(level);
-                    }}
-                >
-                    {!!isCastable ? (
-                        <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
-                    ) : (
-                        <LuX className="mr-3 h-4 w-4 stroke-[3]" />
-                    )}
+                {!canOnlyCastRitual && (
+                    <Button
+                        variant={"outline"}
+                        disabled={!isCastable}
+                        className={cn(
+                            getSpellColorOnHover(color),
+                            getSpellBorderOnHover(color),
+                            getSpellBackgroundOnHover(color),
+                            !isCastable && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
+                        )}
+                        onClick={() => {
+                            isRitual || canCastHigher || minLevelToCast !== level
+                                ? setCastWithHigherLevelSlotDialogOpen(true)
+                                : cast(level);
+                        }}
+                    >
+                        {!!isCastable ? (
+                            <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
+                        ) : (
+                            <LuX className="mr-3 h-4 w-4 stroke-[3]" />
+                        )}
 
-                    {t.dnd.spell.cast}
-                </Button>
+                        {t.dnd.spell.cast}
+                    </Button>
+                )}
+
+                {canOnlyCastRitual && (
+                    <Button
+                        variant={"outline"}
+                        className={cn(
+                            getSpellColorOnHover(color),
+                            getSpellBorderOnHover(color),
+                            getSpellBackgroundOnHover(color),
+                        )}
+                        onClick={() => cast(-1)}
+                    >
+                        <PiPentagram className="mr-3 h-4 w-4 stroke-[3]" />
+                        {t.dnd.cast.ritual}
+                    </Button>
+                )}
             </div>
 
             {castWithHigherLevelSlotDialogOpen && (

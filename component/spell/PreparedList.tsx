@@ -13,7 +13,7 @@ interface Props {
     character: CharacterWithSpells;
 }
 
-const KnownList = ({ language, spells, character }: Props) => {
+const PreparedList = ({ language, spells, character }: Props) => {
     const { t } = useTranslation(language);
 
     const filteredSpells = spells
@@ -59,4 +59,4 @@ const KnownList = ({ language, spells, character }: Props) => {
     );
 };
 
-export default KnownList;
+export default PreparedList;

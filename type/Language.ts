@@ -159,6 +159,8 @@ export const LanguageObjectSchema = z.object({
                 addCantrip: z.string(),
                 removeCantrip: z.string(),
                 cast: z.string(),
+                castAsRitual: z.string(),
+                castAsCantrip: z.string(),
             }),
         }),
 

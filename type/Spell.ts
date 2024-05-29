@@ -250,6 +250,7 @@ export const SpellSchema = z.object({
     level: z.number(),
     icon: z.string(),
     color: z.nativeEnum(SpellColor),
+    onlyRitual: z.boolean().optional().nullable(),
 });
 export type Spell = z.infer<typeof SpellSchema>;
 
