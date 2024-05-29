@@ -111,6 +111,7 @@ const BookSpell = ({ spell, language, character }: Props) => {
         </div>
     );
 
+    // TODO Show Prepared Spells
     return (
         <>
             <div className="flex flex-col items-center gap-2">

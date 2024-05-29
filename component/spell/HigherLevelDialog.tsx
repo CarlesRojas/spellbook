@@ -86,7 +86,11 @@ const HigherLevelDialog = ({ spell, spellMini, language, open, onOpenChange, cas
                     </p>
                 )}
 
-                {highLevelDescription && <p>{parseParagraphsWithDice(highLevelDescription[language])}</p>}
+                {highLevelDescription && (
+                    <div className="prose prose-stone w-full max-w-screen-lg leading-normal dark:prose-invert">
+                        {parseParagraphsWithDice(highLevelDescription[language])}
+                    </div>
+                )}
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)}>
