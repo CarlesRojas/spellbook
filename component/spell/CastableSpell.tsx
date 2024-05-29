@@ -1,13 +1,14 @@
+import HigherLevelDialog from "@/component/spell/HigherLevelDialog";
 import { Button } from "@/component/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/component/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
+import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
 import {
-    getSpellBackgroundColor,
-    getSpellColor,
-    getSpellColorBackgroundOnHover,
-    getSpellColorBorderOnHover,
+    getSpellBackground,
+    getSpellBackgroundOnHover,
+    getSpellBorderOnHover,
     getSpellColorOnHover,
+    getSpellRawColor,
 } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useForgetCantrip } from "@/server/use/useForgetCantrip";
@@ -23,7 +24,6 @@ import Link from "next/link";
 import { ReactNode, useMemo, useState } from "react";
 import { LuLightbulbOff, LuLoader, LuSparkle, LuView, LuX, LuZapOff } from "react-icons/lu";
 import { toast } from "sonner";
-import { SpellToast, ToastWrapper } from "../ui/toast";
 
 interface Props {
     spell: Spell;
@@ -33,9 +33,9 @@ interface Props {
 
 const CastableSpell = ({ spell, language, character }: Props) => {
     const { t } = useTranslation(language);
-    const { index, icon, color, name, level, ritual: isRitual } = spell;
+    const { index, icon, color, name, level, ritual: isRitual, highLevelDescription } = spell;
 
-    const [popoverOpen, setPopoverOpen] = useState(false);
+    const [spellPopoverOpen, setSpellPopoverOpen] = useState(false);
     const [castWithHigherLevelSlotDialogOpen, setCastWithHigherLevelSlotDialogOpen] = useState(false);
 
     const isCantrip = level === 0;
@@ -62,7 +62,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const onForgetSpell = () => {
-        setPopoverOpen(false);
+        setSpellPopoverOpen(false);
         forgetSpell.mutate({ characterId: character.id, spellIndex: index });
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)}>
@@ -75,7 +75,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const onUnprepareSpell = () => {
-        setPopoverOpen(false);
+        setSpellPopoverOpen(false);
         unprepareSpell.mutate({ characterId: character.id, spellIndex: index });
 
         const toastMessage = isOathOrDomain
@@ -92,7 +92,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const onForgetCantrip = () => {
-        setPopoverOpen(false);
+        setSpellPopoverOpen(false);
         forgetCantrip.mutate({ characterId: character.id, spellIndex: index });
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)}>
@@ -105,10 +105,11 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     };
 
     const cast = (castedSpellLevel: number) => {
+        setCastWithHigherLevelSlotDialogOpen(false);
         if (castedSpellLevel > 0) spendSpellSlot(castedSpellLevel);
 
         toast.custom((currToast) => (
-            <ToastWrapper onClose={() => toast.dismiss(currToast)} className={cn(getSpellBackgroundColor(color))}>
+            <ToastWrapper onClose={() => toast.dismiss(currToast)} className={cn(getSpellBackground(color))}>
                 <SpellToast
                     icon={smallIcon}
                     message={t.dnd.spell.toast.cast.replace("{{PARAM}}", spell.name[language])}
@@ -126,7 +127,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                 maskMode: "alpha",
                 maskSize: "cover",
                 backgroundBlendMode: "luminosity",
-                backgroundColor: getSpellColor(color),
+                backgroundColor: getSpellRawColor(color),
             }}
         />
     );
@@ -172,19 +173,31 @@ const CastableSpell = ({ spell, language, character }: Props) => {
         [ClassType.WARLOCK]: onForgetSpell,
     };
 
-    const castableWithLevel = useMemo(() => {
+    const isCastable = useMemo(() => {
         if (level === 0) return true;
+        if (isRitual) return true;
+        for (let i = level; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return true;
+        return false;
+    }, [character.spellSlotsAvailable, isRitual, level]);
+
+    const minLevelToCast = useMemo(() => {
+        if (level === 0 || isRitual) return 0;
 
         for (let i = level; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return i;
 
         return false;
+    }, [character.spellSlotsAvailable, isRitual, level]);
+
+    const higherSpellSlotsAvailable = useMemo(() => {
+        for (let i = level + 1; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return true;
+        return false;
     }, [character.spellSlotsAvailable, level]);
 
-    const hasHigherLeveCast = false;
+    const canCastHigher = higherSpellSlotsAvailable && highLevelDescription;
 
     return (
         <div className="flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
-            <Popover modal={true} open={popoverOpen} onOpenChange={setPopoverOpen}>
+            <Popover modal={true} open={spellPopoverOpen} onOpenChange={setSpellPopoverOpen}>
                 <PopoverTrigger className="focus-shadow group relative flex w-full items-center gap-2 rounded-md p-2">
                     <div
                         className="inline-block h-14 min-h-14 w-14 min-w-14 bg-cover brightness-90 dark:brightness-100 mouse:transition-transform mouse:group-hover:scale-110"
@@ -194,7 +207,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                             maskMode: "alpha",
                             maskSize: "cover",
                             backgroundBlendMode: "luminosity",
-                            backgroundColor: getSpellColor(color),
+                            backgroundColor: getSpellRawColor(color),
                         }}
                     />
 
@@ -252,24 +265,23 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                 </PopoverContent>
             </Popover>
 
-            {/* TODO Cast spell for a higher level */}
             <div className="flex h-fit w-fit min-w-fit gap-2 p-2">
                 <Button
                     variant={"outline"}
-                    disabled={!castableWithLevel}
+                    disabled={!isCastable}
                     className={cn(
                         getSpellColorOnHover(color),
-                        getSpellColorBorderOnHover(color),
-                        getSpellColorBackgroundOnHover(color),
-                        !castableWithLevel && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
+                        getSpellBorderOnHover(color),
+                        getSpellBackgroundOnHover(color),
+                        !isCastable && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
                     )}
-                    onClick={() =>
-                        castableWithLevel === true || castableWithLevel === level
-                            ? cast(level)
-                            : setCastWithHigherLevelSlotDialogOpen(true)
-                    }
+                    onClick={() => {
+                        isRitual || canCastHigher || minLevelToCast !== level
+                            ? setCastWithHigherLevelSlotDialogOpen(true)
+                            : cast(level);
+                    }}
                 >
-                    {!!castableWithLevel ? (
+                    {!!isCastable ? (
                         <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
                     ) : (
                         <LuX className="mr-3 h-4 w-4 stroke-[3]" />
@@ -279,34 +291,17 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                 </Button>
             </div>
 
-            <Dialog open={castWithHigherLevelSlotDialogOpen} onOpenChange={setCastWithHigherLevelSlotDialogOpen}>
-                <DialogContent>
-                    <DialogHeader className="flex flex-row items-center gap-2">
-                        <DialogTitle>
-                            {t.dnd.cast.castWithHigherLevelSlot.replace("{{PARAM}}", castableWithLevel.toString())}
-                        </DialogTitle>
-                    </DialogHeader>
-
-                    {spellMini()}
-
-                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
-                        <DialogClose asChild>
-                            <Button variant="outline">{t.form.cancel}</Button>
-                        </DialogClose>
-
-                        <Button
-                            onClick={() => {
-                                typeof castableWithLevel === "number" && cast(castableWithLevel);
-                                setCastWithHigherLevelSlotDialogOpen(false);
-                            }}
-                            className={cn(getSpellBackgroundColor(color), getSpellColorBackgroundOnHover(color))}
-                        >
-                            <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
-                            {t.dnd.spell.cast}
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            {castWithHigherLevelSlotDialogOpen && (
+                <HigherLevelDialog
+                    spell={spell}
+                    language={Language.ES}
+                    spellMini={spellMini}
+                    open={castWithHigherLevelSlotDialogOpen}
+                    onOpenChange={setCastWithHigherLevelSlotDialogOpen}
+                    cast={cast}
+                    availableSpellSlots={character.spellSlotsAvailable}
+                />
+            )}
         </div>
     );
 };

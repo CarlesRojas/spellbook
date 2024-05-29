@@ -1,5 +1,5 @@
 import { useTranslation } from "@/hook/useTranslation";
-import { getSpellColor, getSpellColorOnHover } from "@/lib/spell";
+import { getSpellColorOnHover, getSpellRawColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
@@ -32,7 +32,7 @@ const SpellItem = ({ spell, language, children }: Props) => {
                         maskMode: "alpha",
                         maskSize: "cover",
                         backgroundBlendMode: "luminosity",
-                        backgroundColor: getSpellColor(color),
+                        backgroundColor: getSpellRawColor(color),
                     }}
                 />
 

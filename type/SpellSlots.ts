@@ -27,6 +27,7 @@ export const ZERO_SPELL_SLOTS: SpellSlots = SpellSlotsSchema.parse({
 });
 
 export const getSpellSlotKey = (level: number) => `level${level}` as keyof SpellSlots;
+export const getLevelKey = (slot: keyof SpellSlots) => parseInt(slot.replace(/\D/g, ""));
 
 export const WIZARD_SPELL_SLOTS: ArrayWith20Positions<SpellSlots> = [
     { level1: 2, level2: 0, level3: 0, level4: 0, level5: 0, level6: 0, level7: 0, level8: 0, level9: 0 },

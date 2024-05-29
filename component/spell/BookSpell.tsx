@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover"
 import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
 import { getPreparedSpellsAmount } from "@/lib/character";
-import { getSpellColor, getSpellColorOnHover } from "@/lib/spell";
+import { getSpellColorOnHover, getSpellRawColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useForgetSpell } from "@/server/use/useForgetSpell";
 import { usePrepareSpell } from "@/server/use/usePrepareSpell";
@@ -50,7 +50,7 @@ const BookSpell = ({ spell, language, character }: Props) => {
                 maskMode: "alpha",
                 maskSize: "cover",
                 backgroundBlendMode: "luminosity",
-                backgroundColor: getSpellColor(color),
+                backgroundColor: getSpellRawColor(color),
             }}
         />
     );
@@ -124,7 +124,7 @@ const BookSpell = ({ spell, language, character }: Props) => {
                                 maskMode: "alpha",
                                 maskSize: "cover",
                                 backgroundBlendMode: "luminosity",
-                                backgroundColor: getSpellColor(color),
+                                backgroundColor: getSpellRawColor(color),
                             }}
                         />
 

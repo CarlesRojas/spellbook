@@ -278,7 +278,10 @@
         },
 
         "cast": {
-            "castWithHigherLevelSlot": "¿Quieres castear este hechizo con una ranura de nivel {{PARAM}}?"
+            "outOfSpellSlots": "No tienes suficientes ranuras de nivel {{PARAM}}.",
+            "castWithHigherLevelSlot": "¿Con qué nivel quieres castear este hechizo?",
+            "castWithLevel": "Castear a nivel {{PARAM}}",
+            "ritual": "Ritual"
         }
     },
 

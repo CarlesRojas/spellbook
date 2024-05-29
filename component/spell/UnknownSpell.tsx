@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover"
 import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
 import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount } from "@/lib/character";
-import { getSpellColor, getSpellColorOnHover } from "@/lib/spell";
+import { getSpellColorOnHover, getSpellRawColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useForgetCantrip } from "@/server/use/useForgetCantrip";
 import { useForgetSpell } from "@/server/use/useForgetSpell";
@@ -81,7 +81,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                 maskMode: "alpha",
                 maskSize: "cover",
                 backgroundBlendMode: "luminosity",
-                backgroundColor: getSpellColor(color),
+                backgroundColor: getSpellRawColor(color),
             }}
         />
     );
@@ -283,7 +283,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                                 maskMode: "alpha",
                                 maskSize: "cover",
                                 backgroundBlendMode: "luminosity",
-                                backgroundColor: getSpellColor(color),
+                                backgroundColor: getSpellRawColor(color),
                             }}
                         />
 

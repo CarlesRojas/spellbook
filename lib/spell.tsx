@@ -1,6 +1,6 @@
 import { SpellColor } from "@/type/Spell";
 
-export const getSpellColor = (spellColor: SpellColor) => {
+export const getSpellRawColor = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
         [SpellColor.DARK]: "#005180",
         [SpellColor.LIGHTNING]: "#334bff",
@@ -23,7 +23,53 @@ export const getSpellColor = (spellColor: SpellColor) => {
     return map[spellColor];
 };
 
-export const getSpellBackgroundColor = (spellColor: SpellColor) => {
+export const getSpellColor = (spellColor: SpellColor) => {
+    const map: Record<SpellColor, string> = {
+        [SpellColor.DARK]: "text-[#005180] dark:text-[#005180]",
+        [SpellColor.LIGHTNING]: "text-[#172dd7] dark:text-[#334bff]",
+        [SpellColor.ICE]: "text-[#008fcc] dark:text-[#00b3ff]",
+        [SpellColor.MOVE]: "text-[#4e8eb0] dark:text-[#b6e5ff]",
+        [SpellColor.HEAL]: "text-[#329a93] dark:text-[#19fff0]",
+        [SpellColor.SPECTRAL]: "text-[#2ba88f] dark:text-[#03fcca]",
+        [SpellColor.POISON]: "text-[#1bbc4e] dark:text-[#03fc52]",
+        [SpellColor.ACID]: "text-[#758e31] dark:text-[#bbff00]",
+        [SpellColor.WARM]: "text-[#9e7a3c] dark:text-[#ffce7a]",
+        [SpellColor.HOLY]: "text-[#93862c] dark:text-[#ffdd00]",
+        [SpellColor.FIRE]: "text-[#c56f14] dark:text-[#ff8400]",
+        [SpellColor.SPIKE]: "text-[#ff500a] dark:text-[#ff500a]",
+        [SpellColor.MISSILE]: "text-[#d70b1f] dark:text-[#ff0019]",
+        [SpellColor.COUNTER]: "text-[#cb5482] dark:text-[#ff7daf]",
+        [SpellColor.FAERIE]: "text-[#b944e3] dark:text-[#d154ff]",
+        [SpellColor.SHOCK]: "text-[#965edf] dark:text-[#b47aff]",
+    };
+
+    return map[spellColor];
+};
+
+export const getSpellBorder = (spellColor: SpellColor) => {
+    const map: Record<SpellColor, string> = {
+        [SpellColor.DARK]: "border-[#005180] dark:border-[#005180]",
+        [SpellColor.LIGHTNING]: "border-[#172dd7] dark:border-[#334bff]",
+        [SpellColor.ICE]: "border-[#008fcc] dark:border-[#00b3ff]",
+        [SpellColor.MOVE]: "border-[#4e8eb0] dark:border-[#b6e5ff]",
+        [SpellColor.HEAL]: "border-[#329a93] dark:border-[#19fff0]",
+        [SpellColor.SPECTRAL]: "border-[#2ba88f] dark:border-[#03fcca]",
+        [SpellColor.POISON]: "border-[#1bbc4e] dark:border-[#03fc52]",
+        [SpellColor.ACID]: "border-[#758e31] dark:border-[#bbff00]",
+        [SpellColor.WARM]: "border-[#9e7a3c] dark:border-[#ffce7a]",
+        [SpellColor.HOLY]: "border-[#93862c] dark:border-[#ffdd00]",
+        [SpellColor.FIRE]: "border-[#c56f14] dark:border-[#ff8400]",
+        [SpellColor.SPIKE]: "border-[#ff500a] dark:border-[#ff500a]",
+        [SpellColor.MISSILE]: "border-[#d70b1f] dark:border-[#ff0019]",
+        [SpellColor.COUNTER]: "border-[#cb5482] dark:border-[#ff7daf]",
+        [SpellColor.FAERIE]: "border-[#b944e3] dark:border-[#d154ff]",
+        [SpellColor.SHOCK]: "border-[#965edf] dark:border-[#b47aff]",
+    };
+
+    return map[spellColor];
+};
+
+export const getSpellBackground = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
         [SpellColor.DARK]: "bg-[#005180]/10 dark:bg-[#005180]/20",
         [SpellColor.LIGHTNING]: "bg-[#334bff]/10 dark:bg-[#334bff]/20",
@@ -85,7 +131,7 @@ export const getSpellColorOnHover = (spellColor: SpellColor) => {
     return map[spellColor];
 };
 
-export const getSpellColorBorderOnHover = (spellColor: SpellColor) => {
+export const getSpellBorderOnHover = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
         [SpellColor.DARK]:
             "mouse:hover:border-[#005180] mouse:group-hover:border-[#005180] mouse:hover:dark:border-[#005180] mouse:group-hover:dark:border-[#005180]",
@@ -124,7 +170,7 @@ export const getSpellColorBorderOnHover = (spellColor: SpellColor) => {
     return map[spellColor];
 };
 
-export const getSpellColorBackgroundOnHover = (spellColor: SpellColor) => {
+export const getSpellBackgroundOnHover = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
         [SpellColor.DARK]:
             "mouse:hover:bg-[#005180]/10 mouse:group-hover:bg-[#005180]/10 mouse:hover:dark:bg-[#005180]/10 mouse:group-hover:dark:bg-[#005180]/10",

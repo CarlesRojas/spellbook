@@ -163,7 +163,10 @@ export const LanguageObjectSchema = z.object({
         }),
 
         cast: z.object({
+            outOfSpellSlots: z.string(),
             castWithHigherLevelSlot: z.string(),
+            castWithLevel: z.string(),
+            ritual: z.string(),
         }),
     }),
 

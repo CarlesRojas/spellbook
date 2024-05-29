@@ -278,7 +278,10 @@
         },
 
         "cast": {
-            "castWithHigherLevelSlot": "Do you want to cast this spell with level {{PARAM}} slot?"
+            "outOfSpellSlots": "You are out of level {{PARAM}} spell slots.",
+            "castWithHigherLevelSlot": "At what level do you want to cast this spell?",
+            "castWithLevel": "Cast at level {{PARAM}}",
+            "ritual": "Ritual"
         }
     },
 
