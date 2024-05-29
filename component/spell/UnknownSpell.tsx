@@ -270,7 +270,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
         </div>
     );
 
-    // TODO Show Known/Prepared Spells
+    // TODO Show icon besides Known/Prepared Spells
     return (
         <>
             <div className="flex flex-col items-center gap-2">
