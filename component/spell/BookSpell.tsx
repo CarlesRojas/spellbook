@@ -144,18 +144,6 @@ const BookSpell = ({ spell, language, character }: Props) => {
                         <Button
                             variant="menu"
                             size="menu"
-                            onClick={() => {
-                                onForgetSpell();
-                                onUnprepareSpell(false);
-                            }}
-                        >
-                            <LuBookMinus className="mr-2 h-5 w-5" />
-                            <p className="font-medium tracking-wide">{t.dnd.spell.removeFromSpellbook}</p>
-                        </Button>
-
-                        <Button
-                            variant="menu"
-                            size="menu"
                             onClick={() => (isPrepared ? onUnprepareSpell(true) : onPrepareSpell(false))}
                         >
                             {isPrepared ? (
@@ -168,6 +156,18 @@ const BookSpell = ({ spell, language, character }: Props) => {
                                     ? t.dnd.spell.unprepare
                                     : `${t.dnd.spell.prepare} (${preparedSpells}/${maxPreparedSpells})`}
                             </p>
+                        </Button>
+
+                        <Button
+                            variant="menu"
+                            size="menu"
+                            onClick={() => {
+                                onForgetSpell();
+                                onUnprepareSpell(false);
+                            }}
+                        >
+                            <LuBookMinus className="mr-2 h-5 w-5" />
+                            <p className="font-medium tracking-wide">{t.dnd.spell.removeFromSpellbook}</p>
                         </Button>
 
                         <Button asChild variant="menu" size="menu">
