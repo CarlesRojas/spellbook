@@ -275,6 +275,10 @@
                 "removeCantrip": "{{PARAM}} Cantrip forgotten!",
                 "cast": "{{PARAM}} spell cast!"
             }
+        },
+
+        "cast": {
+            "castWithHigherLevelSlot": "Do you want to cast this spell with level {{PARAM}} slot?"
         }
     },
 

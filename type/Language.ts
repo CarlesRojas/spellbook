@@ -161,6 +161,10 @@ export const LanguageObjectSchema = z.object({
                 cast: z.string(),
             }),
         }),
+
+        cast: z.object({
+            castWithHigherLevelSlot: z.string(),
+        }),
     }),
 
     form: z.object({

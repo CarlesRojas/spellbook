@@ -275,6 +275,10 @@
                 "removeCantrip": "¡Truco {{PARAM}} olvidado!",
                 "cast": "¡Hechizo {{PARAM}} casteado!"
             }
+        },
+
+        "cast": {
+            "castWithHigherLevelSlot": "¿Quieres castear este hechizo con una ranura de nivel {{PARAM}}?"
         }
     },
 

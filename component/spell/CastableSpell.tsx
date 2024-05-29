@@ -1,4 +1,5 @@
 import { Button } from "@/component/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/component/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { useTranslation } from "@/hook/useTranslation";
 import {
@@ -19,7 +20,7 @@ import { Route } from "@/type/Route";
 import { ClassType, Spell } from "@/type/Spell";
 import { getSpellSlotKey } from "@/type/SpellSlots";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { ReactNode, useMemo, useState } from "react";
 import { LuLightbulbOff, LuLoader, LuSparkle, LuView, LuX, LuZapOff } from "react-icons/lu";
 import { toast } from "sonner";
 import { SpellToast, ToastWrapper } from "../ui/toast";
@@ -35,6 +36,7 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     const { index, icon, color, name, level, ritual: isRitual } = spell;
 
     const [popoverOpen, setPopoverOpen] = useState(false);
+    const [castWithHigherLevelSlotDialogOpen, setCastWithHigherLevelSlotDialogOpen] = useState(false);
 
     const isCantrip = level === 0;
     const isPrepared = character.preparedSpells.some(
@@ -170,7 +172,13 @@ const CastableSpell = ({ spell, language, character }: Props) => {
         [ClassType.WARLOCK]: onForgetSpell,
     };
 
-    const isCastable = level === 0 || character.spellSlotsAvailable[getSpellSlotKey(level)] > 0;
+    const castableWithLevel = useMemo(() => {
+        if (level === 0) return true;
+
+        for (let i = level; i <= 9; i++) if (character.spellSlotsAvailable[getSpellSlotKey(i)] > 0) return i;
+
+        return false;
+    }, [character.spellSlotsAvailable, level]);
 
     const hasHigherLeveCast = false;
 
@@ -245,20 +253,23 @@ const CastableSpell = ({ spell, language, character }: Props) => {
             </Popover>
 
             {/* TODO Cast spell for a higher level */}
-            {/* TODO Use higher level if non are available on the current one */}
             <div className="flex h-fit w-fit min-w-fit gap-2 p-2">
                 <Button
                     variant={"outline"}
-                    disabled={!isCastable}
+                    disabled={!castableWithLevel}
                     className={cn(
                         getSpellColorOnHover(color),
                         getSpellColorBorderOnHover(color),
                         getSpellColorBackgroundOnHover(color),
-                        !isCastable && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
+                        !castableWithLevel && "bg-red-500/30 !opacity-100 dark:bg-red-500/40",
                     )}
-                    onClick={() => cast(level)}
+                    onClick={() =>
+                        castableWithLevel === true || castableWithLevel === level
+                            ? cast(level)
+                            : setCastWithHigherLevelSlotDialogOpen(true)
+                    }
                 >
-                    {isCastable ? (
+                    {!!castableWithLevel ? (
                         <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
                     ) : (
                         <LuX className="mr-3 h-4 w-4 stroke-[3]" />
@@ -267,6 +278,35 @@ const CastableSpell = ({ spell, language, character }: Props) => {
                     {t.dnd.spell.cast}
                 </Button>
             </div>
+
+            <Dialog open={castWithHigherLevelSlotDialogOpen} onOpenChange={setCastWithHigherLevelSlotDialogOpen}>
+                <DialogContent>
+                    <DialogHeader className="flex flex-row items-center gap-2">
+                        <DialogTitle>
+                            {t.dnd.cast.castWithHigherLevelSlot.replace("{{PARAM}}", castableWithLevel.toString())}
+                        </DialogTitle>
+                    </DialogHeader>
+
+                    {spellMini()}
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="outline">{t.form.cancel}</Button>
+                        </DialogClose>
+
+                        <Button
+                            onClick={() => {
+                                typeof castableWithLevel === "number" && cast(castableWithLevel);
+                                setCastWithHigherLevelSlotDialogOpen(false);
+                            }}
+                            className={cn(getSpellBackgroundColor(color), getSpellColorBackgroundOnHover(color))}
+                        >
+                            <LuLoader className="mr-3 h-4 w-4 stroke-[3]" />
+                            {t.dnd.spell.cast}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };
