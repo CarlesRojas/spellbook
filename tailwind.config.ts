@@ -31,6 +31,11 @@ const config = {
             screens: {
                 mouse: { raw: "(hover: hover)" },
             },
+            colors: {
+                stone: {
+                    150: "#EEEDEC",
+                },
+            },
         },
     },
     plugins: [

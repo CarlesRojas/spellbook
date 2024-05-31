@@ -118,7 +118,7 @@ const BookSpell = ({ spell, language, character }: Props) => {
                     <PopoverTrigger
                         className={cn(
                             "focus-shadow group relative flex w-full flex-col items-center rounded-md p-2",
-                            isPrepared && "bg-stone-900",
+                            isPrepared && "bg-stone-150 dark:bg-stone-900",
                         )}
                     >
                         <div
