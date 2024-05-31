@@ -97,9 +97,9 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <h1 className="text-lg font-semibold tracking-wide">{name[language]}</h1>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-5">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
                     {tags.map(({ label, value }, index) => (
-                        <div key={index} className="align-self-center flex w-full flex-col items-center sm:items-start">
+                        <div key={index} className="flex w-full flex-col">
                             <p className="text-sm font-medium tracking-wide opacity-50">{label}</p>
                             <p className="font-semibold tracking-wide">{value}</p>
                         </div>
@@ -124,9 +124,9 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <div className="grid w-full max-w-screen-lg gap-8 md:grid-cols-2">
                         {damage.slotLevel && (
                             <div className="flex flex-col">
-                                <h2 className="text-lg font-semibold tracking-wide text-sky-500">
+                                {/* <h2 className="text-lg font-semibold tracking-wide text-sky-500">
                                     {t.dnd.spell.slotLevel}
-                                </h2>
+                                </h2> */}
 
                                 <table className="prose prose-stone w-full table-auto dark:prose-invert">
                                     <thead>
@@ -151,9 +151,9 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
                         {damage.characterLevel && (
                             <div className="flex flex-col">
-                                <h2 className="text-lg font-semibold tracking-wide text-sky-500">
+                                {/* <h2 className="text-lg font-semibold tracking-wide text-sky-500">
                                     {t.dnd.spell.characterLevel}
-                                </h2>
+                                </h2> */}
 
                                 <table className="prose prose-stone w-full table-auto dark:prose-invert">
                                     <thead>
