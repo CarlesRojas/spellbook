@@ -28,7 +28,6 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
     if (!spell) return <NotFound type={NotFoundType.SPELL} language={language} />;
 
     const {
-        index,
         name,
         description,
         highLevelDescription,
@@ -40,10 +39,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
         duration,
         concentration,
         castingTime,
-        attackType,
         school,
-        classes,
-        subclasses,
         damage,
         difficultyClass,
         level,
@@ -51,9 +47,38 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
         color,
     } = spell;
 
+    const tags = [
+        {
+            label: t.dnd.spell.tag.level,
+            value: level === 0 ? t.dnd.cantrip : level + (ritual ? `(${t.dnd.spell.tag.ritual})` : ""),
+        },
+        { label: t.dnd.spell.tag.school, value: t.enum.school[school] },
+        {
+            label: t.dnd.spell.tag.castingTime,
+            value: t.enum.castingTime[castingTime] + (concentration ? ` (${t.dnd.spell.tag.concentration})` : ""),
+        },
+        { label: t.dnd.spell.tag.duration, value: t.enum.duration[duration] },
+        {
+            label: t.dnd.spell.tag.components,
+            value: components.map((component) => t.enum.component[component]).join(", "),
+        },
+        { label: t.dnd.spell.tag.range, value: t.enum.range[range] },
+    ];
+
+    if (areaOfEffect)
+        tags.push({
+            label: t.dnd.spell.tag.areaOfEffect,
+            value: `${t.enum.areaOfEffect[areaOfEffect.type]} (${areaOfEffect.size} ${t.dnd.spell.feet})`,
+        });
+
+    if (difficultyClass) tags.push({ label: t.dnd.spell.tag.savingThrow, value: t.enum.ability[difficultyClass.type] });
+
+    // TODO get damage type from api
+    if (damage && damage.type) tags.push({ label: t.dnd.spell.tag.damageType, value: t.enum.damageType[damage.type] });
+
     return (
         <main className="relative flex h-full w-full flex-col items-center">
-            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-4 p-4">
+            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-6 p-4">
                 <BackButton language={language} />
 
                 <div className="flex w-full flex-col items-center">
@@ -72,11 +97,106 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <h1 className="text-lg font-semibold tracking-wide">{name[language]}</h1>
                 </div>
 
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-5">
+                    {tags.map(({ label, value }, index) => (
+                        <div key={index} className="align-self-center flex w-full flex-col items-center sm:items-start">
+                            <p className="text-sm font-medium tracking-wide opacity-50">{label}</p>
+                            <p className="font-semibold tracking-wide">{value}</p>
+                        </div>
+                    ))}
+                </div>
+
                 <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
                     {parseParagraphsWithDice(description[language])}
                 </div>
 
-                {/* TODO show all spell information */}
+                {highLevelDescription && (
+                    <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
+                        <h2 className="text-lg font-semibold tracking-wide text-sky-500">
+                            {t.dnd.spell.highLevelDescription}
+                        </h2>
+
+                        {parseParagraphsWithDice(highLevelDescription[language])}
+                    </div>
+                )}
+
+                {damage && (damage.slotLevel || damage.characterLevel) && (
+                    <div className="grid w-full max-w-screen-lg gap-8 md:grid-cols-2">
+                        {damage.slotLevel && (
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold tracking-wide text-sky-500">
+                                    {t.dnd.spell.slotLevel}
+                                </h2>
+
+                                <table className="prose prose-stone w-full table-auto dark:prose-invert">
+                                    <thead>
+                                        <tr>
+                                            <th className="p-2 text-left">{t.dnd.spell.slotLevel}</th>
+                                            <th className="p-2 text-left">{t.dnd.spell.damage}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {Object.entries(damage.slotLevel).map(([level, description]) => (
+                                            <tr key={level}>
+                                                <td className="p-2 text-left">{level}</td>
+                                                <td className="p-2 text-left">
+                                                    {parseParagraphsWithDice(description)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+
+                        {damage.characterLevel && (
+                            <div className="flex flex-col">
+                                <h2 className="text-lg font-semibold tracking-wide text-sky-500">
+                                    {t.dnd.spell.characterLevel}
+                                </h2>
+
+                                <table className="prose prose-stone w-full table-auto dark:prose-invert">
+                                    <thead>
+                                        <tr>
+                                            <th className="p-2 text-left">{t.dnd.spell.characterLevel}</th>
+                                            <th className="p-2 text-left">{t.dnd.spell.damage}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {Object.entries(damage.characterLevel).map(([level, description]) => (
+                                            <tr key={level}>
+                                                <td className="p-2 text-left">{level}</td>
+                                                <td className="p-2 text-left">
+                                                    {parseParagraphsWithDice(description)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {difficultyClass && difficultyClass.description && (
+                    <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
+                        <h2 className="text-lg font-semibold tracking-wide text-sky-500">
+                            {t.dnd.spell.difficultyClass}
+                        </h2>
+
+                        {parseParagraphsWithDice(difficultyClass.description[language])}
+                    </div>
+                )}
+
+                {material && (
+                    <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
+                        <h2 className="text-lg font-semibold tracking-wide text-sky-500">{t.dnd.spell.material}</h2>
+
+                        {parseParagraphsWithDice(material[language])}
+                    </div>
+                )}
+
+                {/* TODO remove this section */}
                 <div className="mt-32 flex w-full flex-col gap-4 border-4 border-dashed border-yellow-500 p-4">
                     <VscTools className="h-10 w-10" />
 

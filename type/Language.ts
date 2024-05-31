@@ -118,6 +118,13 @@ export const LanguageObjectSchema = z.object({
             known: z.string(),
             prepared: z.string(),
             spellbook: z.string(),
+            feet: z.string(),
+            highLevelDescription: z.string(),
+            difficultyClass: z.string(),
+            material: z.string(),
+            slotLevel: z.string(),
+            characterLevel: z.string(),
+            damage: z.string(),
 
             view: z.string(),
             cast: z.string(),
@@ -170,6 +177,21 @@ export const LanguageObjectSchema = z.object({
                 cast: z.string(),
                 castAsRitual: z.string(),
                 castAsCantrip: z.string(),
+            }),
+
+            tag: z.object({
+                level: z.string(),
+                school: z.string(),
+                castingTime: z.string(),
+                duration: z.string(),
+                components: z.string(),
+                range: z.string(),
+                areaOfEffect: z.string(),
+                savingThrow: z.string(),
+                damageType: z.string(),
+
+                ritual: z.string(),
+                concentration: z.string(),
             }),
         }),
 

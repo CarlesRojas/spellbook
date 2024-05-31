@@ -233,6 +233,13 @@
             "known": "Known",
             "prepared": "Prepared",
             "spellbook": "Spellbook",
+            "feet": "feet",
+            "highLevelDescription": "Higher level",
+            "difficultyClass": "Difficulty Class",
+            "material": "Material",
+            "slotLevel": "Slot Level",
+            "characterLevel": "Character Level",
+            "damage": "Damage",
 
             "view": "View information",
             "cast": "Cast",
@@ -285,6 +292,21 @@
                 "cast": "{{PARAM}} spell cast!",
                 "castAsRitual": "{{PARAM}} spell cast as ritual!",
                 "castAsCantrip": "{{PARAM}} Cantrip cast!"
+            },
+
+            "tag": {
+                "level": "Level",
+                "school": "School",
+                "castingTime": "Casting Time",
+                "duration": "Duration",
+                "components": "Components",
+                "range": "Range",
+                "areaOfEffect": "Area",
+                "savingThrow": "Saving Throw",
+                "damageType": "Damage Type",
+
+                "ritual": "Ritual",
+                "concentration": "Concentration"
             }
         },
 

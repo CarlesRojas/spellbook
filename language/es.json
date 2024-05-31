@@ -233,6 +233,13 @@
             "known": "Conocidos",
             "prepared": "Preparados",
             "spellbook": "Libro",
+            "feet": "pies",
+            "highLevelDescription": "Nivel superior",
+            "difficultyClass": "Clase de dificultad",
+            "material": "Material",
+            "slotLevel": "Nivel de la ranura",
+            "characterLevel": "Nivel del personaje",
+            "damage": "Daño",
 
             "view": "Ver información",
             "cast": "Castear",
@@ -285,6 +292,21 @@
                 "cast": "¡Hechizo {{PARAM}} casteado!",
                 "castAsRitual": "¡Hechizo {{PARAM}} casteado como ritual!",
                 "castAsCantrip": "¡{{PARAM}} Truco casteado!"
+            },
+
+            "tag": {
+                "level": "Nivel",
+                "school": "Escuela",
+                "castingTime": "Tiempo de casteo",
+                "duration": "Duración",
+                "components": "Componentes",
+                "range": "Rango",
+                "areaOfEffect": "Área",
+                "savingThrow": "Tiro de salvación",
+                "damageType": "Tipo de daño",
+
+                "ritual": "Ritual",
+                "concentration": "Concentración"
             }
         },
 
