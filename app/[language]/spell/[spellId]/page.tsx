@@ -73,7 +73,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
     if (difficultyClass) tags.push({ label: t.dnd.spell.tag.savingThrow, value: t.enum.ability[difficultyClass.type] });
 
-    // TODO get damage type from api
+    // TODO add colors and icons to tags
     if (damage && damage.type) tags.push({ label: t.dnd.spell.tag.damageType, value: t.enum.damageType[damage.type] });
 
     return (
