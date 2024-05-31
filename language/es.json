@@ -201,7 +201,8 @@
             "query": "Buscar...",
             "school": "Escuela",
             "sort": "Ordenado por",
-            "class": "Clase"
+            "class": "Clase",
+            "showUncastable": "Mostrar no casteables"
         }
     },
 

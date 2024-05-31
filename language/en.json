@@ -201,7 +201,8 @@
             "query": "Search...",
             "school": "School",
             "sort": "Sorted by",
-            "class": "Class"
+            "class": "Class",
+            "showUncastable": "Show Uncastable"
         }
     },
 

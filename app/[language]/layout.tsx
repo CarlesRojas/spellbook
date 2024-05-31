@@ -10,7 +10,7 @@ import { type Metadata, type Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import { ReactNode } from "react";
-import "../globals.css";
+import "@/app/globals.css";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 

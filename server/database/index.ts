@@ -1,9 +1,9 @@
 /* eslint-disable no-var */
 import { env } from "@/env";
+import * as schema from "@/server/database/schema/index";
 import type { BuildQueryResult, DBQueryConfig, ExtractTablesWithRelations } from "drizzle-orm";
 import { PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import * as schema from "./schema/index";
 
 declare global {
     var db: PostgresJsDatabase<typeof schema> | undefined;

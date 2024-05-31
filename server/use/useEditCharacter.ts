@@ -1,7 +1,7 @@
 import { getTotalSpellSlots } from "@/lib/character";
+import { updateCharacter } from "@/server/repo/character";
 import { Character, CharacterWithSpells } from "@/type/Character";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateCharacter } from "../repo/character";
 
 export const useEditCharacter = (userEmail: string) => {
     const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
+import { createCharacter } from "@/server/repo/character";
 import { Character } from "@/type/Character";
 import { ClassType } from "@/type/Spell";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCharacter } from "../repo/character";
 
 export const useCreateCharacter = (userEmail: string) => {
     const queryClient = useQueryClient();

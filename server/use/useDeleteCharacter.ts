@@ -1,6 +1,6 @@
+import { deleteCharacter } from "@/server/repo/character";
 import { Character } from "@/type/Character";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCharacter } from "../repo/character";
 
 export const useDeleteCharacter = (userEmail: string) => {
     const queryClient = useQueryClient();

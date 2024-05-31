@@ -1,5 +1,6 @@
 import { createSpell, existsSpell } from "@/server/repo/spell";
 import { createTranslation, translate } from "@/server/repo/translation";
+import { spellIndexes } from "@/server/scraper/spells";
 import { Language } from "@/type/Language";
 import {
     Ability,
@@ -20,7 +21,6 @@ import {
     SpellColor,
     Subclass,
 } from "@/type/Spell";
-import { spellIndexes } from "./spells";
 
 const rangeMap: Record<string, RangeType> = {
     "5 feet": RangeType.FIVE_FEET,

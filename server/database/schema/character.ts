@@ -1,9 +1,9 @@
+import { knownCantrips } from "@/server/database/schema/relations/knownCantrips";
 import { knownSpells } from "@/server/database/schema/relations/knownSpells";
+import { preparedSpells } from "@/server/database/schema/relations/preparedSpells";
 import { spellSlots } from "@/server/database/schema/spellSlots";
 import { relations } from "drizzle-orm";
 import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
-import { knownCantrips } from "./relations/knownCantrips";
-import { preparedSpells } from "./relations/preparedSpells";
 
 export const character = pgTable("character", {
     id: serial("id").primaryKey().notNull(),

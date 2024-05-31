@@ -30,9 +30,10 @@ interface Props {
     spell: Spell;
     language: Language;
     character: CharacterWithSpells;
+    showUncastable: boolean;
 }
 
-const CastableSpell = ({ spell, language, character }: Props) => {
+const CastableSpell = ({ spell, language, character, showUncastable }: Props) => {
     const { t } = useTranslation(language);
     const { index, icon, color, name, level, ritual: isRitual, highLevelDescription, onlyRitual } = spell;
 
@@ -201,10 +202,10 @@ const CastableSpell = ({ spell, language, character }: Props) => {
     if (index === "silence") console.log(minLevelToCast !== level);
     const canOnlyCastRitual = onlyRitual || (isRitual && minLevelToCast !== level && !canCastHigher);
 
-    // TODO toggle to show uncastable spells
+    if (!showUncastable && !isCastable) return null;
 
     return (
-        <div className="flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
+        <div className="castable flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
             <Popover modal={true} open={spellPopoverOpen} onOpenChange={setSpellPopoverOpen}>
                 <PopoverTrigger className="focus-shadow group relative flex w-full items-center gap-2 rounded-md p-2">
                     <div

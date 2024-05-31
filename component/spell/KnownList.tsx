@@ -1,13 +1,13 @@
 "use client";
 
 import QueryFilter from "@/component/filter/QueryFilter";
+import ShowUncastableFilter from "@/component/filter/ShowUncastableFilter";
 import CastableSpell from "@/component/spell/CastableSpell";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Spell } from "@/type/Spell";
-import { Fragment } from "react";
 import { z } from "zod";
 
 interface Props {
@@ -20,6 +20,7 @@ const KnownList = ({ language, spells, character }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
+    const [showUncastable, setShowUncastable] = useUrlState("show-uncastable", false, z.coerce.boolean());
 
     const filteredSpells = spells
         .filter((spell) => {
@@ -31,11 +32,25 @@ const KnownList = ({ language, spells, character }: Props) => {
             return a.level - b.level;
         });
 
-    let lastLevel = -1;
+    const filteredSpellsByLevel: Record<number, Spell[]> = filteredSpells.reduce(
+        (acc, curr) => {
+            const level = curr.level;
+            if (!acc[level]) acc[level] = [];
+            acc[level].push(curr);
+            return acc;
+        },
+        {} as Record<number, Spell[]>,
+    );
 
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
-            <div className="flex w-full justify-end gap-2 md:flex-row">
+            <div className="flex w-full justify-end gap-4 md:flex-row">
+                <ShowUncastableFilter
+                    language={language}
+                    showUncastable={showUncastable}
+                    setShowUncastable={setShowUncastable}
+                />
+
                 <QueryFilter language={language} query={query} setQuery={setQuery} className="w-fit grow" />
             </div>
 
@@ -47,23 +62,27 @@ const KnownList = ({ language, spells, character }: Props) => {
                 </p>
             </div>
 
-            <div className="grid w-full grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-                {filteredSpells.map((spell) => {
-                    const isLevelChange = spell.level !== lastLevel;
-                    lastLevel = spell.level;
+            <div className="flex w-full flex-col gap-2">
+                {Object.entries(filteredSpellsByLevel).map(([level, spells]) => (
+                    <div
+                        key={level}
+                        className="hidden w-full grid-cols-1 gap-2 has-[.castable]:grid md:grid-cols-2 lg:grid-cols-3"
+                    >
+                        <h2 className="sticky top-0 z-20 col-span-1 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 md:col-span-2 lg:col-span-3 mouse:top-16">
+                            {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}
+                        </h2>
 
-                    return (
-                        <Fragment key={spell.index}>
-                            {isLevelChange && (
-                                <h2 className="sticky top-0 z-20 col-span-1 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 md:col-span-2 lg:col-span-3 mouse:top-16">
-                                    {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
-                                </h2>
-                            )}
-
-                            <CastableSpell language={language} spell={spell} character={character} />
-                        </Fragment>
-                    );
-                })}
+                        {spells.map((spell) => (
+                            <CastableSpell
+                                key={spell.index}
+                                language={language}
+                                spell={spell}
+                                character={character}
+                                showUncastable={showUncastable}
+                            />
+                        ))}
+                    </div>
+                ))}
             </div>
         </div>
     );

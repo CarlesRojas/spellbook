@@ -87,6 +87,7 @@ export const LanguageObjectSchema = z.object({
             school: z.string(),
             sort: z.string(),
             class: z.string(),
+            showUncastable: z.string(),
         }),
     }),
 

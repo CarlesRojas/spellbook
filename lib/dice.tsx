@@ -1,8 +1,8 @@
+import { cn } from "@/lib/util";
 import { DICE_REGEX, Dice, diceBackgroundColor, diceColor } from "@/type/Dice";
 import { convertHtmlToReact } from "@hedgedoc/html-to-react";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import uuid from "react-uuid";
-import { cn } from "./util";
 
 export const diceTextToWidget = (diceText: string) => {
     const [number, sides] = diceText.toUpperCase().split("D");

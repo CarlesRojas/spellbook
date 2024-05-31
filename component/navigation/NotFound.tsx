@@ -1,3 +1,4 @@
+import BackButton from "@/component/navigation/BackButton";
 import { useTranslation } from "@/hook/useTranslation";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
@@ -5,7 +6,6 @@ import { ReactNode } from "react";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { GiVisoredHelm } from "react-icons/gi";
 import { LuUser2 } from "react-icons/lu";
-import BackButton from "./BackButton";
 
 interface Props {
     type: NotFoundType;

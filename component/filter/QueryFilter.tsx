@@ -1,13 +1,13 @@
 "use client";
 
+import { Button } from "@/component/ui/button";
+import { Input } from "@/component/ui/input";
 import { useTranslation } from "@/hook/useTranslation";
 import { cn } from "@/lib/util";
 import { Language } from "@/type/Language";
 import debounce from "just-debounce-it";
 import { useMemo, useState } from "react";
 import { LuX } from "react-icons/lu";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 
 interface Props {
     language: Language;

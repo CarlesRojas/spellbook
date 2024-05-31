@@ -1,5 +1,6 @@
 import { getClassIcon } from "@/component/character/CharacterItem";
 import { Button } from "@/component/ui/button";
+import { DialogFooter } from "@/component/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/component/ui/form";
 import { Input } from "@/component/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/component/ui/radio-group";
@@ -21,7 +22,6 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { useForm } from "react-hook-form";
 import { LuLoader2, LuMinus, LuPlus } from "react-icons/lu";
 import { z } from "zod";
-import { DialogFooter } from "../ui/dialog";
 
 interface Props {
     user: User;

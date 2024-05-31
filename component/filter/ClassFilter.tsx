@@ -1,11 +1,11 @@
 "use client";
 
+import { Button } from "@/component/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/component/ui/dropdown-menu";
 import { useTranslation } from "@/hook/useTranslation";
 import { Language } from "@/type/Language";
 import { ClassType } from "@/type/Spell";
 import { LuChevronDown } from "react-icons/lu";
-import { Button } from "../ui/button";
 
 interface Props {
     language: Language;
