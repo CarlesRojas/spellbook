@@ -181,7 +181,7 @@ const getSpellInformation = async (spellId: string): Promise<DbSpell> => {
 
         const damage: Damage | undefined = data.damage
             ? {
-                  type: data.damage.damage_type ? damageTypeMap[data.damage.damage_type] : undefined,
+                  type: data.damage.damage_type ? damageTypeMap[data.damage.damage_type.index] : undefined,
                   slotLevel: data.damage?.damage_at_slot_level,
                   characterLevel: data.damage?.damage_at_character_level,
               }
