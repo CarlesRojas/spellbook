@@ -5,6 +5,7 @@ import ShowUncastableFilter from "@/component/filter/ShowUncastableFilter";
 import CastableSpell from "@/component/spell/CastableSpell";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
+import { getSpellsByLevel } from "@/lib/spell";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Spell } from "@/type/Spell";
@@ -32,15 +33,7 @@ const KnownList = ({ language, spells, character }: Props) => {
             return a.level - b.level;
         });
 
-    const filteredSpellsByLevel: Record<number, Spell[]> = filteredSpells.reduce(
-        (acc, curr) => {
-            const level = curr.level;
-            if (!acc[level]) acc[level] = [];
-            acc[level].push(curr);
-            return acc;
-        },
-        {} as Record<number, Spell[]>,
-    );
+    const spellsByLevel = getSpellsByLevel(filteredSpells);
 
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
@@ -63,10 +56,10 @@ const KnownList = ({ language, spells, character }: Props) => {
             </div>
 
             <div className="flex w-full flex-col gap-2">
-                {Object.entries(filteredSpellsByLevel).map(([level, spells]) => (
+                {Object.entries(spellsByLevel).map(([level, spells]) => (
                     <div
                         key={level}
-                        className="hidden w-full grid-cols-1 gap-2 has-[.castable]:grid md:grid-cols-2 lg:grid-cols-3"
+                        className="hidden w-full grid-cols-1 gap-2 has-[.spell]:grid md:grid-cols-2 lg:grid-cols-3"
                     >
                         <h2 className="sticky top-0 z-20 col-span-1 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 md:col-span-2 lg:col-span-3 mouse:top-16">
                             {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}

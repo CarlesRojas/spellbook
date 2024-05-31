@@ -222,7 +222,7 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
     if (!showUncastable && !isCastable) return null;
 
     return (
-        <div className="castable flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
+        <div className="spell flex items-center justify-between rounded-lg border border-stone-200 bg-stone-50 dark:border-stone-900 dark:bg-[#141210]">
             <Popover modal={true} open={spellPopoverOpen} onOpenChange={setSpellPopoverOpen}>
                 <PopoverTrigger className="focus-shadow group relative flex w-full items-center gap-2 rounded-md p-2">
                     <div

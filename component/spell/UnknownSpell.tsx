@@ -272,7 +272,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
 
     return (
         <>
-            <div className="flex flex-col items-center gap-2">
+            <div className="spell flex flex-col items-center gap-2">
                 <Popover modal={true} open={popoverOpen} onOpenChange={setPopoverOpen}>
                     <PopoverTrigger
                         className={cn(

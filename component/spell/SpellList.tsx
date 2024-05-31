@@ -5,10 +5,10 @@ import QueryFilter from "@/component/filter/QueryFilter";
 import SpellItem from "@/component/spell/SpellItem";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
+import { getSpellsByLevel } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { GetAllSpellsReturnType, useSpellsPreloaded } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
-import { Fragment } from "react";
 import { z } from "zod";
 
 interface Props {
@@ -32,7 +32,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
             return a.level - b.level;
         });
 
-    let lastLevel = -1;
+    const spellsByLevel = getSpellsByLevel(filteredSpells);
 
     return (
         <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col p-4">
@@ -48,23 +48,21 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                 </p>
             </div>
 
-            <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-                {filteredSpells.map((spell) => {
-                    const isLevelChange = spell.level !== lastLevel;
-                    lastLevel = spell.level;
+            <div className="flex w-full flex-col gap-2">
+                {Object.entries(spellsByLevel).map(([level, spells]) => (
+                    <div
+                        key={level}
+                        className="hidden w-full grid-cols-3 gap-4 has-[.spell]:grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
+                    >
+                        <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
+                            {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}
+                        </h2>
 
-                    return (
-                        <Fragment key={spell.index}>
-                            {isLevelChange && (
-                                <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-3 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
-                                    {spell.level === 0 ? t.dnd.cantrips : `${t.filter.level} ${spell.level}`}
-                                </h2>
-                            )}
-
-                            <SpellItem language={language} spell={spell} />
-                        </Fragment>
-                    );
-                })}
+                        {spells.map((spell) => (
+                            <SpellItem key={spell.index} language={language} spell={spell} />
+                        ))}
+                    </div>
+                ))}
             </div>
 
             <ScrollToTop />

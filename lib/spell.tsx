@@ -1,4 +1,4 @@
-import { SpellColor } from "@/type/Spell";
+import { Spell, SpellColor } from "@/type/Spell";
 
 export const getSpellRawColor = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
@@ -207,4 +207,18 @@ export const getSpellBackgroundOnHover = (spellColor: SpellColor) => {
     };
 
     return map[spellColor];
+};
+
+export const getSpellsByLevel = (spells: Spell[]) => {
+    const spellsByLevel: Record<number, Spell[]> = spells.reduce(
+        (acc, curr) => {
+            const level = curr.level;
+            if (!acc[level]) acc[level] = [];
+            acc[level].push(curr);
+            return acc;
+        },
+        {} as Record<number, Spell[]>,
+    );
+
+    return spellsByLevel;
 };
