@@ -261,6 +261,14 @@
             "cannotPrepare": "You can't prepare more spells",
             "cannotPrepareDescription": "You can prepare up to {{PARAM}} spells.",
 
+            "confirmation": {
+                "unprepare": "Are you sure you want to unprepare this spell?",
+                "forget": "Are you sure you want to forget this spell?",
+                "removeCantrip": "Are you sure you want to forget this Cantrip?",
+                "unprepareFromDomain": "Are you sure you want to remove this spell from your Domain?",
+                "unprepareFromOath": "Are you sure you want to remove this spell from your Oath?"
+            },
+
             "toast": {
                 "learn": "{{PARAM}} spell learned!",
                 "forget": "{{PARAM}} spell forgotten!",

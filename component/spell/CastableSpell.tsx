@@ -1,5 +1,6 @@
 import HigherLevelDialog from "@/component/spell/HigherLevelDialog";
 import { Button } from "@/component/ui/button";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/component/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
@@ -39,6 +40,11 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
 
     const [spellPopoverOpen, setSpellPopoverOpen] = useState(false);
     const [castWithHigherLevelSlotDialogOpen, setCastWithHigherLevelSlotDialogOpen] = useState(false);
+    const [removeSpellDialogOpen, setRemoveSpellDialogOpen] = useState(false);
+    const openRemoveSpellDialog = () => {
+        setSpellPopoverOpen(false);
+        setRemoveSpellDialogOpen(true);
+    };
 
     const isCantrip = level === 0;
     const isPrepared = character.preparedSpells.some(
@@ -158,6 +164,17 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
         [ClassType.WARLOCK]: t.dnd.spell.forget,
     };
 
+    const removeSpellConfirmationText: Record<ClassType, string> = {
+        [ClassType.WIZARD]: t.dnd.spell.confirmation.unprepare,
+        [ClassType.SORCERER]: t.dnd.spell.confirmation.forget,
+        [ClassType.CLERIC]: t.dnd.spell.confirmation.unprepare,
+        [ClassType.PALADIN]: t.dnd.spell.confirmation.unprepare,
+        [ClassType.RANGER]: t.dnd.spell.confirmation.forget,
+        [ClassType.BARD]: t.dnd.spell.confirmation.forget,
+        [ClassType.DRUID]: t.dnd.spell.confirmation.unprepare,
+        [ClassType.WARLOCK]: t.dnd.spell.confirmation.forget,
+    };
+
     const removeSpellIcon: Record<ClassType, ReactNode> = {
         [ClassType.WIZARD]: <LuSparkle className="mr-2 h-5 w-5 rotate-45" />,
         [ClassType.SORCERER]: <LuLightbulbOff className="mr-2 h-5 w-5" />,
@@ -234,7 +251,7 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
                     {spellMini("mb-2 w-full border-b border-stone-300 px-2 pb-2 dark:border-stone-700")}
 
                     {isCantrip && (
-                        <Button variant="menu" size="menu" onClick={onForgetCantrip}>
+                        <Button variant="menu" size="menu" onClick={openRemoveSpellDialog}>
                             <LuZapOff className="mr-2 h-5 w-5" />
                             <p className="font-medium tracking-wide">{t.dnd.spell.removeCantrip}</p>
                         </Button>
@@ -243,21 +260,21 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
                     {!isCantrip && (
                         <>
                             {(![ClassType.CLERIC, ClassType.PALADIN].includes(character.class) || !isOathOrDomain) && (
-                                <Button variant="menu" size="menu" onClick={removeSpellAction[character.class]}>
+                                <Button variant="menu" size="menu" onClick={openRemoveSpellDialog}>
                                     {removeSpellIcon[character.class]}
                                     <p className="font-medium tracking-wide">{removeSpellText[character.class]}</p>
                                 </Button>
                             )}
 
                             {character.class === ClassType.CLERIC && !isPrepared && (
-                                <Button variant="menu" size="menu" onClick={onUnprepareSpell}>
+                                <Button variant="menu" size="menu" onClick={openRemoveSpellDialog}>
                                     <LuX className="mr-2 h-5 w-5" />
                                     <p className="font-medium tracking-wide">{t.dnd.spell.unprepareFromDomain}</p>
                                 </Button>
                             )}
 
                             {character.class === ClassType.PALADIN && !isPrepared && (
-                                <Button variant="menu" size="menu" onClick={onUnprepareSpell}>
+                                <Button variant="menu" size="menu" onClick={openRemoveSpellDialog}>
                                     <LuX className="mr-2 h-5 w-5" />
                                     <p className="font-medium tracking-wide">{t.dnd.spell.unprepareFromOath}</p>
                                 </Button>
@@ -328,6 +345,71 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
                     availableSpellSlots={character.spellSlotsAvailable}
                 />
             )}
+
+            <Dialog open={removeSpellDialogOpen} onOpenChange={setRemoveSpellDialogOpen}>
+                <DialogContent>
+                    <DialogHeader className="flex flex-row items-center gap-2">
+                        <DialogTitle>{spellMini()}</DialogTitle>
+                    </DialogHeader>
+
+                    {isCantrip && <p className="px-2 opacity-75">{t.dnd.spell.confirmation.removeCantrip}</p>}
+
+                    {!isCantrip && (
+                        <>
+                            {(![ClassType.CLERIC, ClassType.PALADIN].includes(character.class) || !isOathOrDomain) && (
+                                <p className="px-2 opacity-75">{removeSpellConfirmationText[character.class]}</p>
+                            )}
+
+                            {character.class === ClassType.CLERIC && !isPrepared && (
+                                <p className="px-2 opacity-75">{t.dnd.spell.confirmation.unprepareFromDomain}</p>
+                            )}
+
+                            {character.class === ClassType.PALADIN && !isPrepared && (
+                                <p className="px-2 opacity-75">{t.dnd.spell.confirmation.unprepareFromOath}</p>
+                            )}
+                        </>
+                    )}
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="outline">{t.form.cancel}</Button>
+                        </DialogClose>
+
+                        {isCantrip && (
+                            <Button variant="destructive" onClick={onForgetCantrip}>
+                                <LuZapOff className="mr-2 h-5 w-5" />
+                                <p className="opacity-75">{t.dnd.spell.removeCantrip}</p>
+                            </Button>
+                        )}
+
+                        {!isCantrip && (
+                            <>
+                                {(![ClassType.CLERIC, ClassType.PALADIN].includes(character.class) ||
+                                    !isOathOrDomain) && (
+                                    <Button variant="destructive" onClick={removeSpellAction[character.class]}>
+                                        {removeSpellIcon[character.class]}
+                                        <p className="font-medium tracking-wide">{removeSpellText[character.class]}</p>
+                                    </Button>
+                                )}
+
+                                {character.class === ClassType.CLERIC && !isPrepared && (
+                                    <Button variant="destructive" onClick={onUnprepareSpell}>
+                                        <LuX className="mr-2 h-5 w-5" />
+                                        <p className="font-medium tracking-wide">{t.dnd.spell.unprepareFromDomain}</p>
+                                    </Button>
+                                )}
+
+                                {character.class === ClassType.PALADIN && !isPrepared && (
+                                    <Button variant="destructive" onClick={onUnprepareSpell}>
+                                        <LuX className="mr-2 h-5 w-5" />
+                                        <p className="font-medium tracking-wide">{t.dnd.spell.unprepareFromOath}</p>
+                                    </Button>
+                                )}
+                            </>
+                        )}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };

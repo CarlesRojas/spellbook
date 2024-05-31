@@ -261,6 +261,14 @@
             "cannotPrepare": "No puedes preparar más hechizos",
             "cannotPrepareDescription": "Ya has preparado todos los hechizos que puedes preparar ({{PARAM}}).",
 
+            "confirmation": {
+                "unprepare": "¿Estas seguro que quieres despreparar este hechizo?",
+                "forget": "¿Estas seguro que quieres olvidar este hechizo?",
+                "removeCantrip": "¿Estas seguro que quieres olvidar este Truco?",
+                "unprepareFromDomain": "¿Estas seguro que quieres quitar este hechizo de tu Dominio?",
+                "unprepareFromOath": "¿Estas seguro que quieres quitar este hechizo de tu Juramento?"
+            },
+
             "toast": {
                 "learn": "¡Hechizo {{PARAM}} aprendido!",
                 "forget": "¡Hechizo {{PARAM}} olvidado!",
