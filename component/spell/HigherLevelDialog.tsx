@@ -53,8 +53,6 @@ const HigherLevelDialog = ({ spell, spellMini, language, open, onOpenChange, cas
         level: z.number().min(-1).max(9),
     });
 
-    console.log(availableLevels[0] === -1 && availableLevels.length > 1 ? availableLevels[1] : availableLevels[0]);
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {

@@ -2,7 +2,8 @@
     "id": "spellbook",
     "name": "SpellBook",
     "short_name": "SpellBook",
-    "description": "Create you own spell books for D&D 5e",
+    "description": "Discover all D&D 5e spells! Create characters, and track your spell slots.",
+    "full-description": "Unleash your magical potential with our ultimate Dungeons & Dragons 5th Edition spell management app! Whether you're a seasoned wizard or a new adventurer, our app provides everything you need to elevate your spellcasting experience. - All D&D 5E Spells at Your Fingertips: Browse and explore an extensive database of every spell from D&D 5E, complete with detailed descriptions, effects, and requirements. Never miss out on a crucial incantation again! - Create and Customize Characters: Easily create unique characters, each with their own tailored spellbooks. Personalize your spell lists to fit your character's class, level, and unique abilities. - Effortless Spell Slot Management: Keep track of your spell slots with ease. Our app helps you manage your spell usage, ensuring you always know how many spells you have left to cast during your adventures. With an intuitive interface and powerful features, our app is designed to enhance your D&D experience, allowing you to focus on the magic and wonder of your journey. Download now and start your spellbinding adventure!",
     "icons": [
         {
             "src": "favicon.ico",

@@ -216,7 +216,6 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
 
     const canCastHigher = higherSpellSlotsAvailable && highLevelDescription;
 
-    if (index === "silence") console.log(minLevelToCast !== level);
     const canOnlyCastRitual = onlyRitual || (isRitual && minLevelToCast !== level && !canCastHigher);
 
     if (!showUncastable && !isCastable) return null;

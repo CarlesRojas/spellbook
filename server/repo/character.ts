@@ -96,7 +96,7 @@ export const getUserCharacters = async (userEmail: string) => {
     const result = await db.query.characters.findMany({
         where: (characters, { eq }) => eq(characters.userEmail, userEmail),
         with: { character: true },
-        orderBy: (characters, { desc }) => desc(characters.characterId),
+        orderBy: (characters, { asc }) => asc(characters.characterId),
     });
 
     return result.filter(({ character }) => !!character).map(({ character }) => toCharacter(character!));
