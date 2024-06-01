@@ -4,13 +4,11 @@ import NotFound from "@/component/navigation/NotFound";
 import { useTranslation } from "@/hook/useTranslation";
 import { parseParagraphsWithDice } from "@/lib/dice";
 import { damageColor, damageTypeIcon, getSpellRawColor } from "@/lib/spell";
-import { cn, renderObject } from "@/lib/util";
+import { cn } from "@/lib/util";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
-import { DamageType } from "@/type/Spell";
 import { ReactNode } from "react";
-import { VscTools } from "react-icons/vsc";
 
 interface Props extends PageProps {
     params: { language: Language; spellId: string };
@@ -92,7 +90,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
     return (
         <main className="relative flex h-full w-full flex-col items-center">
-            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-6 p-4">
+            <div className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col gap-8 p-4">
                 <BackButton language={language} />
 
                 <div className="flex w-full flex-col items-center">
@@ -131,15 +129,6 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     {parseParagraphsWithDice(description[language])}
                 </div>
 
-                <div className="flex flex-col gap-4">
-                    {Object.values(DamageType).map((dmg) => (
-                        <div className="flex items-center gap-1" key={dmg}>
-                            {icon && <div className="h-fit w-fit">{damageTypeIcon[dmg]}</div>}
-                            <p className={cn("font-bold tracking-wide", damageColor[dmg])}>{t.enum.damageType[dmg]}</p>
-                        </div>
-                    ))}
-                </div>
-
                 {highLevelDescription && (
                     <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
                         <h2 className="text-lg font-semibold tracking-wide text-sky-500">
@@ -154,10 +143,6 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     <div className="grid w-full max-w-screen-lg gap-8 md:grid-cols-2">
                         {damage.slotLevel && (
                             <div className="flex flex-col">
-                                {/* <h2 className="text-lg font-semibold tracking-wide text-sky-500">
-                                    {t.dnd.spell.slotLevel}
-                                </h2> */}
-
                                 <table className="prose prose-stone w-full table-auto dark:prose-invert">
                                     <thead>
                                         <tr>
@@ -181,10 +166,6 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
                         {damage.characterLevel && (
                             <div className="flex flex-col">
-                                {/* <h2 className="text-lg font-semibold tracking-wide text-sky-500">
-                                    {t.dnd.spell.characterLevel}
-                                </h2> */}
-
                                 <table className="prose prose-stone w-full table-auto dark:prose-invert">
                                     <thead>
                                         <tr>
@@ -225,13 +206,6 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                         {parseParagraphsWithDice(material[language])}
                     </div>
                 )}
-
-                {/* TODO remove this section */}
-                <div className="mt-32 flex w-full flex-col gap-4 border-4 border-dashed border-yellow-500 p-4">
-                    <VscTools className="h-10 w-10" />
-
-                    {renderObject(spell)}
-                </div>
             </div>
         </main>
     );
