@@ -42,8 +42,64 @@
     "display_override": ["standalone", "fullscreen", "minimal-ui", "window-controls-overlay", "browser"],
     "display": "standalone",
     "orientation": "portrait",
-    "shortcuts": [],
-    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "My Characters",
+            "url": "/characters",
+            "description": "View your characters",
+            "icons": [
+                {
+                    "src": "asset/icon/character.png",
+                    "type": "image/png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "asset/android/screenshot1.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Extensive D&D Spell list"
+        },
+        {
+            "src": "asset/android/screenshot2.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Create your characters"
+        },
+        {
+            "src": "asset/android/screenshot3.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Personalize your spell lists"
+        },
+        {
+            "src": "asset/android/screenshot4.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Easily track spell slots"
+        },
+        {
+            "src": "asset/android/screenshot5.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Detailed spell descriptions"
+        },
+        {
+            "src": "asset/android/screenshot6.png",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Light / Dark modes"
+        }
+    ],
     "prefer_related_applications": false,
     "categories": ["entertainment", "games", "lifestyle", "productivity", "utilities"],
     "iarc_rating_id": ""
