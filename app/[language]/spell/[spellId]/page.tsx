@@ -3,11 +3,13 @@ import BackButton from "@/component/navigation/BackButton";
 import NotFound from "@/component/navigation/NotFound";
 import { useTranslation } from "@/hook/useTranslation";
 import { parseParagraphsWithDice } from "@/lib/dice";
-import { getSpellRawColor } from "@/lib/spell";
-import { renderObject } from "@/lib/util";
+import { damageColor, damageTypeIcon, getSpellRawColor } from "@/lib/spell";
+import { cn, renderObject } from "@/lib/util";
 import { getAllSpells, getSpell } from "@/server/repo/spell";
 import { Language } from "@/type/Language";
 import { NotFoundType } from "@/type/NotFoundType";
+import { DamageType } from "@/type/Spell";
+import { ReactNode } from "react";
 import { VscTools } from "react-icons/vsc";
 
 interface Props extends PageProps {
@@ -47,12 +49,16 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
         color,
     } = spell;
 
-    const tags = [
+    const tags: {
+        label: string;
+        value: string;
+        icon?: ReactNode;
+        color?: string;
+    }[] = [
         {
             label: t.dnd.spell.tag.level,
             value: level === 0 ? t.dnd.cantrip : level + (ritual ? `(${t.dnd.spell.tag.ritual})` : ""),
         },
-        { label: t.dnd.spell.tag.school, value: t.enum.school[school] },
         {
             label: t.dnd.spell.tag.castingTime,
             value: t.enum.castingTime[castingTime] + (concentration ? ` (${t.dnd.spell.tag.concentration})` : ""),
@@ -62,7 +68,10 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
             label: t.dnd.spell.tag.components,
             value: components.map((component) => t.enum.component[component]).join(", "),
         },
-        { label: t.dnd.spell.tag.range, value: t.enum.range[range] },
+        {
+            label: t.dnd.spell.tag.range,
+            value: t.enum.range[range],
+        },
     ];
 
     if (areaOfEffect)
@@ -73,8 +82,13 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
 
     if (difficultyClass) tags.push({ label: t.dnd.spell.tag.savingThrow, value: t.enum.ability[difficultyClass.type] });
 
-    // TODO add colors and icons to tags
-    if (damage && damage.type) tags.push({ label: t.dnd.spell.tag.damageType, value: t.enum.damageType[damage.type] });
+    if (damage && damage.type)
+        tags.push({
+            label: t.dnd.spell.tag.damageType,
+            value: t.enum.damageType[damage.type],
+            icon: damageTypeIcon[damage.type],
+            color: damageColor[damage.type],
+        });
 
     return (
         <main className="relative flex h-full w-full flex-col items-center">
@@ -95,19 +109,35 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                     />
 
                     <h1 className="text-lg font-semibold tracking-wide">{name[language]}</h1>
+                    <p className="font-medium tracking-wide opacity-50">{t.enum.school[school]}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                    {tags.map(({ label, value }, index) => (
+                    {tags.map(({ label, value, icon, color }, index) => (
                         <div key={index} className="flex w-full flex-col">
                             <p className="text-sm font-medium tracking-wide opacity-50">{label}</p>
-                            <p className="font-semibold tracking-wide">{value}</p>
+
+                            <div className="flex items-center gap-1">
+                                {icon && <div className="h-fit w-fit">{icon}</div>}
+                                <p className={cn("font-semibold tracking-wide", color, color && "font-bold")}>
+                                    {value}
+                                </p>
+                            </div>
                         </div>
                     ))}
                 </div>
 
                 <div className="prose prose-stone w-full max-w-screen-lg dark:prose-invert">
                     {parseParagraphsWithDice(description[language])}
+                </div>
+
+                <div className="flex flex-col gap-4">
+                    {Object.values(DamageType).map((dmg) => (
+                        <div className="flex items-center gap-1" key={dmg}>
+                            {icon && <div className="h-fit w-fit">{damageTypeIcon[dmg]}</div>}
+                            <p className={cn("font-bold tracking-wide", damageColor[dmg])}>{t.enum.damageType[dmg]}</p>
+                        </div>
+                    ))}
                 </div>
 
                 {highLevelDescription && (

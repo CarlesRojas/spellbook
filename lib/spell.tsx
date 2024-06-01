@@ -1,4 +1,112 @@
-import { Spell, SpellColor } from "@/type/Spell";
+import { cn } from "@/lib/util";
+import { DamageType, Spell, SpellColor } from "@/type/Spell";
+import { ReactNode } from "react";
+import { FaBolt } from "react-icons/fa";
+import { FaFireFlameCurved, FaSkullCrossbones } from "react-icons/fa6";
+import { GiBroadheadArrow, GiSpikes, GiTombstone } from "react-icons/gi";
+import { ImHammer2 } from "react-icons/im";
+import { IoRadio } from "react-icons/io5";
+import { PiBrainFill, PiSnowflakeBold } from "react-icons/pi";
+import { RiSwordFill } from "react-icons/ri";
+import { TbDropletFilled } from "react-icons/tb";
+
+export const getSpellsByLevel = (spells: Spell[]) => {
+    const spellsByLevel: Record<number, Spell[]> = spells.reduce(
+        (acc, curr) => {
+            const level = curr.level;
+            if (!acc[level]) acc[level] = [];
+            acc[level].push(curr);
+            return acc;
+        },
+        {} as Record<number, Spell[]>,
+    );
+
+    return spellsByLevel;
+};
+
+export const damageColor: Record<DamageType, string> = {
+    [DamageType.ACID]: "text-[#acd145] dark:text-[#bbff00]",
+    [DamageType.FORCE]: "text-[#d70b1f] dark:text-[#ff0019]",
+    [DamageType.BLUDGEONING]: "text-[#dca03a] dark:text-[#ffce7a]",
+    [DamageType.SLASHING]: "text-[#5d5d5d] dark:text-[#d7d7d7]",
+    [DamageType.NECROTIC]: "text-[#2cb59a] dark:text-[#03fcca]",
+    [DamageType.RADIANT]: "text-[#c4af2a] dark:text-[#ffdd00]",
+    [DamageType.FIRE]: "text-[#ff8400] dark:text-[#ff8400]",
+    [DamageType.LIGHTNING]: "text-[#334bff] dark:text-[#334bff]",
+    [DamageType.POISON]: "text-[#29c95c] dark:text-[#03fc52]",
+    [DamageType.COLD]: "text-[#00b3ff] dark:text-[#00b3ff]",
+    [DamageType.PSYCHIC]: "text-[#ff7daf] dark:text-[#ff7daf]",
+    [DamageType.PIERCING]: "text-[#4e8eb0] dark:text-[#b6e5ff]",
+    [DamageType.THUNDER]: "text-[#965edf] dark:text-[#b47aff]",
+};
+
+export const damageTypeIcon: Record<DamageType, ReactNode> = {
+    [DamageType.ACID]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <TbDropletFilled className={cn("h-full w-full", damageColor[DamageType.ACID])} />
+        </div>
+    ),
+    [DamageType.FORCE]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <GiSpikes className={cn("h-full w-full scale-[1.2]", damageColor[DamageType.FORCE])} />
+        </div>
+    ),
+    [DamageType.BLUDGEONING]: (
+        <div className="w-6overflow-hidden relative h-6">
+            <ImHammer2 className={cn("h-full w-full scale-[0.9]", damageColor[DamageType.BLUDGEONING])} />
+        </div>
+    ),
+    [DamageType.SLASHING]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <RiSwordFill className={cn("h-full w-full", damageColor[DamageType.SLASHING])} />
+        </div>
+    ),
+    [DamageType.NECROTIC]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <GiTombstone className={cn("h-full w-full", damageColor[DamageType.NECROTIC])} />
+        </div>
+    ),
+    [DamageType.RADIANT]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <GiSpikes className={cn("h-full w-full scale-[1.2]", damageColor[DamageType.RADIANT])} />
+        </div>
+    ),
+    [DamageType.FIRE]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <FaFireFlameCurved className={cn("h-full w-full scale-[0.9]", damageColor[DamageType.FIRE])} />
+        </div>
+    ),
+    [DamageType.LIGHTNING]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <FaBolt className={cn("h-full w-full scale-[0.9]", damageColor[DamageType.LIGHTNING])} />
+        </div>
+    ),
+    [DamageType.POISON]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <FaSkullCrossbones className={cn("h-full w-full scale-[0.9]", damageColor[DamageType.POISON])} />
+        </div>
+    ),
+    [DamageType.COLD]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <PiSnowflakeBold className={cn("h-full w-full scale-[1.1]", damageColor[DamageType.COLD])} />
+        </div>
+    ),
+    [DamageType.PSYCHIC]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <PiBrainFill className={cn("h-full w-full", damageColor[DamageType.PSYCHIC])} />
+        </div>
+    ),
+    [DamageType.PIERCING]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <GiBroadheadArrow className={cn("h-full w-full scale-[0.9]", damageColor[DamageType.PIERCING])} />
+        </div>
+    ),
+    [DamageType.THUNDER]: (
+        <div className="relative h-6 w-6 overflow-hidden">
+            <IoRadio className={cn("h-full w-full scale-[0.9]", damageColor[DamageType.THUNDER])} />
+        </div>
+    ),
+};
 
 export const getSpellRawColor = (spellColor: SpellColor) => {
     const map: Record<SpellColor, string> = {
@@ -207,18 +315,4 @@ export const getSpellBackgroundOnHover = (spellColor: SpellColor) => {
     };
 
     return map[spellColor];
-};
-
-export const getSpellsByLevel = (spells: Spell[]) => {
-    const spellsByLevel: Record<number, Spell[]> = spells.reduce(
-        (acc, curr) => {
-            const level = curr.level;
-            if (!acc[level]) acc[level] = [];
-            acc[level].push(curr);
-            return acc;
-        },
-        {} as Record<number, Spell[]>,
-    );
-
-    return spellsByLevel;
 };
