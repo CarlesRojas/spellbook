@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.spellbook.dnd",
+            "sha256_cert_fingerprints": [
+                "04:0C:3C:96:57:95:8E:98:AD:C4:1D:15:2E:02:81:0D:4D:76:75:27:4C:20:80:61:77:5C:D3:97:85:27:EF:88"
+            ]
+        }
+    }
+]
