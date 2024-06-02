@@ -1,17 +1,14 @@
 "use client";
 
-import ShowUncastableFilter from "@/component/filter/ShowUncastableFilter";
 import CastableSpell from "@/component/spell/CastableSpell";
 import { Button } from "@/component/ui/button";
 import { useCharacterStatusSize } from "@/hook/useCharacterStatusSize";
 import { useTranslation } from "@/hook/useTranslation";
-import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { ClassType, Spell, SpellSection } from "@/type/Spell";
 import { LuArrowLeft } from "react-icons/lu";
-import { z } from "zod";
 
 interface Props {
     language: Language;
@@ -23,8 +20,6 @@ interface Props {
 const PreparedList = ({ language, spells, character, setSpellSection }: Props) => {
     const { t } = useTranslation(language);
     const isWizard = character.class === ClassType.WIZARD;
-
-    const [showUncastable, setShowUncastable] = useUrlState("show-uncastable", false, z.coerce.boolean());
 
     const filteredSpells = spells
         .filter((spell) => {
@@ -41,14 +36,6 @@ const PreparedList = ({ language, spells, character, setSpellSection }: Props) =
 
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
-            <div className="flex w-full justify-end gap-4 md:flex-row">
-                <ShowUncastableFilter
-                    language={language}
-                    showUncastable={showUncastable}
-                    setShowUncastable={setShowUncastable}
-                />
-            </div>
-
             <div className="flex justify-end">
                 <p className="text-sm font-medium tracking-wide opacity-60">
                     {filteredSpells.length > 0
@@ -76,7 +63,7 @@ const PreparedList = ({ language, spells, character, setSpellSection }: Props) =
                                 language={language}
                                 spell={spell}
                                 character={character}
-                                showUncastable={showUncastable}
+                                showUncastable={true}
                             />
                         ))}
                     </div>

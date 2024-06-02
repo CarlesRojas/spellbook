@@ -1,7 +1,6 @@
 "use client";
 
 import QueryFilter from "@/component/filter/QueryFilter";
-import ShowUncastableFilter from "@/component/filter/ShowUncastableFilter";
 import CastableSpell from "@/component/spell/CastableSpell";
 import { Button } from "@/component/ui/button";
 import { useCharacterStatusSize } from "@/hook/useCharacterStatusSize";
@@ -25,7 +24,6 @@ const KnownList = ({ language, spells, character, setSpellSection }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
-    const [showUncastable, setShowUncastable] = useUrlState("show-uncastable", false, z.coerce.boolean());
 
     const filteredSpells = spells
         .filter((spell) => {
@@ -44,12 +42,6 @@ const KnownList = ({ language, spells, character, setSpellSection }: Props) => {
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
             <div className="flex w-full justify-end gap-4 md:flex-row">
-                <ShowUncastableFilter
-                    language={language}
-                    showUncastable={showUncastable}
-                    setShowUncastable={setShowUncastable}
-                />
-
                 <QueryFilter language={language} query={query} setQuery={setQuery} className="w-fit grow" />
             </div>
 
@@ -80,7 +72,7 @@ const KnownList = ({ language, spells, character, setSpellSection }: Props) => {
                                 language={language}
                                 spell={spell}
                                 character={character}
-                                showUncastable={showUncastable}
+                                showUncastable={true}
                             />
                         ))}
                     </div>
