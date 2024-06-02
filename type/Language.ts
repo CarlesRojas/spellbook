@@ -156,6 +156,12 @@ export const LanguageObjectSchema = z.object({
             cannotPrepare: z.string(),
             cannotPrepareDescription: z.string(),
 
+            noSpellsLearned: z.string(),
+            noSpellsPrepared: z.string(),
+            noSpellsInSpellbook: z.string(),
+            viewAllSpells: z.string(),
+            viewSpellbook: z.string(),
+
             confirmation: z.object({
                 unprepare: z.string(),
                 forget: z.string(),

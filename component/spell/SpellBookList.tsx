@@ -2,21 +2,24 @@
 
 import QueryFilter from "@/component/filter/QueryFilter";
 import BookSpell from "@/component/spell/BookSpell";
+import { Button } from "@/component/ui/button";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
-import { Spell } from "@/type/Spell";
+import { Spell, SpellSection } from "@/type/Spell";
+import { LuArrowLeft } from "react-icons/lu";
 import { z } from "zod";
 
 interface Props {
     language: Language;
     spells: Spell[];
     character: CharacterWithSpells;
+    setSpellSection: (newState: SpellSection, scroll?: boolean) => void;
 }
 
-const SpellBookList = ({ language, spells, character }: Props) => {
+const SpellBookList = ({ language, spells, character, setSpellSection }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
@@ -63,6 +66,17 @@ const SpellBookList = ({ language, spells, character }: Props) => {
                     </div>
                 ))}
             </div>
+
+            {spells.length === 0 && (
+                <div className="flex h-fit w-full flex-col items-center justify-center gap-2 pt-32">
+                    <p className="font-medium tracking-wide opacity-90">{t.dnd.spell.noSpellsInSpellbook}</p>
+
+                    <Button variant="outline" onClick={() => setSpellSection(SpellSection.ALL)}>
+                        <LuArrowLeft className="mr-3 h-4 w-4 stroke-[3]" />
+                        {t.dnd.spell.viewAllSpells}
+                    </Button>
+                </div>
+            )}
         </div>
     );
 };

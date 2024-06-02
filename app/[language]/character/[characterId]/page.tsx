@@ -56,6 +56,7 @@ const Characters = ({ params: { language, characterId } }: Props) => {
                         language={language}
                         spells={spells.data}
                         spellSection={spellSection}
+                        setSpellSection={setSpellSection}
                     />
                 )}
             </div>

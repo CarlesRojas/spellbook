@@ -13,9 +13,10 @@ interface Props {
     character: CharacterWithSpells;
     spells: GetAllSpellsReturnType;
     spellSection: SpellSection;
+    setSpellSection: (newState: SpellSection, scroll?: boolean) => void;
 }
 
-const CharacterSpells = ({ language, character, spells, spellSection }: Props) => {
+const CharacterSpells = ({ language, character, spells, spellSection, setSpellSection }: Props) => {
     const spellBookRituals = character.knownSpells
         .filter(({ index, ritual }) => {
             if (character.preparedSpells.some(({ index: spellIndex }) => spellIndex === index)) return false;
@@ -32,11 +33,17 @@ const CharacterSpells = ({ language, character, spells, spellSection }: Props) =
                     language={language}
                     spells={[...character.knownSpells, ...character.knownCantrips]}
                     character={character}
+                    setSpellSection={setSpellSection}
                 />
             )}
 
             {spellSection === SpellSection.KNOWN && character.class === ClassType.WIZARD && (
-                <SpellBookList language={language} spells={character.knownSpells} character={character} />
+                <SpellBookList
+                    language={language}
+                    spells={character.knownSpells}
+                    character={character}
+                    setSpellSection={setSpellSection}
+                />
             )}
 
             {spellSection === SpellSection.PREPARED && (
@@ -48,6 +55,7 @@ const CharacterSpells = ({ language, character, spells, spellSection }: Props) =
                         ...(character.class === ClassType.WIZARD ? spellBookRituals : []),
                     ]}
                     character={character}
+                    setSpellSection={setSpellSection}
                 />
             )}
 

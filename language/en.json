@@ -270,6 +270,12 @@
             "cannotPrepare": "You can't prepare more spells",
             "cannotPrepareDescription": "You can prepare up to {{PARAM}} spells.",
 
+            "noSpellsLearned": "You haven't learned any spells yet",
+            "noSpellsPrepared": "You haven't prepared any spells yet",
+            "noSpellsInSpellbook": "You haven't added any spells to your spellbook yet",
+            "viewAllSpells": "View all spells",
+            "viewSpellbook": "View spellbook",
+
             "confirmation": {
                 "unprepare": "Are you sure you want to unprepare this spell?",
                 "forget": "Are you sure you want to forget this spell?",

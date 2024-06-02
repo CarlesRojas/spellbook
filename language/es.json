@@ -270,6 +270,12 @@
             "cannotPrepare": "No puedes preparar más hechizos",
             "cannotPrepareDescription": "Ya has preparado todos los hechizos que puedes preparar ({{PARAM}}).",
 
+            "noSpellsLearned": "Aún no has aprendido ningún hechizo",
+            "noSpellsPrepared": "Aún no has preparado ningún hechizo",
+            "noSpellsInSpellbook": "Aún no has añadido ningún hechizo a tu libro de hechizos",
+            "viewAllSpells": "Ver todos los hechizos",
+            "viewSpellbook": "Ver libro de hechizos",
+
             "confirmation": {
                 "unprepare": "¿Estas seguro que quieres despreparar este hechizo?",
                 "forget": "¿Estas seguro que quieres olvidar este hechizo?",
