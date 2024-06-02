@@ -12,6 +12,7 @@ export const CharacterSchema = z.object({
     ability: z.number(),
 
     spellSlotsAvailableId: z.number(),
+    concentratingOnId: z.string().nullable(),
 });
 export type Character = z.infer<typeof CharacterSchema>;
 
@@ -20,6 +21,7 @@ export const CharacterWithSpellsSchema = CharacterSchema.extend({
     preparedSpells: z.array(SpellWithCountsSchema),
     knownCantrips: z.array(SpellSchema),
     spellSlotsAvailable: SpellSlotsSchema,
+    concentratingOn: SpellSchema.nullable().optional(),
 });
 export type CharacterWithSpells = z.infer<typeof CharacterWithSpellsSchema>;
 

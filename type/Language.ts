@@ -160,6 +160,8 @@ export const LanguageObjectSchema = z.object({
             unprepareFromOath: z.string(),
             cannotPrepare: z.string(),
             cannotPrepareDescription: z.string(),
+            concentratingOn: z.string(),
+            stopConcentrating: z.string(),
 
             noSpellsLearned: z.string(),
             noSpellsPrepared: z.string(),

@@ -46,7 +46,7 @@ const ToastWrapper = ({
     return (
         <div
             className={cn(
-                "flex w-full grow gap-4 rounded-lg border border-stone-300 bg-stone-50 p-2 shadow-lg dark:border-stone-700 dark:bg-black",
+                "flex w-full grow gap-4 rounded-lg border border-stone-300 bg-stone-50 p-2 shadow-md dark:border-stone-700 dark:bg-black",
                 className,
             )}
         >
@@ -87,7 +87,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
             position={isMouse ? "bottom-right" : "bottom-center"}
             toastOptions={{
                 classNames: {
-                    toast: "rounded-lg group w-full toast group-[.toaster]:bg-stone-50 group-[.toaster]:text-stone-950 group-[.toaster]:border-stone-300 group-[.toaster]:shadow-lg dark:group-[.toaster]:bg-black dark:group-[.toaster]:text-stone-50 dark:group-[.toaster]:border-stone-700",
+                    toast: "rounded-lg group w-full toast group-[.toaster]:bg-stone-50 group-[.toaster]:text-stone-950 group-[.toaster]:border-stone-300 dark:group-[.toaster]:bg-black dark:group-[.toaster]:text-stone-50 dark:group-[.toaster]:border-stone-700",
                     description: "group-[.toast]:text-stone-500 dark:group-[.toast]:text-stone-400",
                     actionButton:
                         "group-[.toast]:bg-stone-900 group-[.toast]:text-stone-50 dark:group-[.toast]:bg-stone-50 dark:group-[.toast]:text-stone-900",

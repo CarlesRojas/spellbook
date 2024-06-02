@@ -28,6 +28,7 @@ type SelectedCharacterWithSpells = InferResultType<
             with: { spell: { with: { name: true; description: true; highLevelDescription: true; material: true } } };
         };
         spellSlotsAvailable: true;
+        concentratingOn: true;
     }
 >;
 
@@ -85,6 +86,7 @@ export const getCharacter = async (id: number) => {
                 },
             },
             spellSlotsAvailable: true,
+            concentratingOn: { with: { name: true, description: true, highLevelDescription: true, material: true } },
         },
     });
 
@@ -115,6 +117,13 @@ export const updateCharacter = async (updatedCharacter: Character) => {
             .update(spellSlots)
             .set(getTotalSpellSlots(updatedCharacter.class, updatedCharacter.level))
             .where(eq(spellSlots.id, oldCharacter.spellSlotsAvailableId));
+};
+
+export const setConcentratingSpell = async (updatedCharacter: CharacterWithSpells) => {
+    await db
+        .update(character)
+        .set({ ...updatedCharacter, concentratingOnId: updatedCharacter.concentratingOnId })
+        .where(eq(character.id, updatedCharacter.id));
 };
 
 export const deleteCharacter = async (id: number) => {

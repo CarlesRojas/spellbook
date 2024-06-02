@@ -1,6 +1,7 @@
 import { knownCantrips } from "@/server/database/schema/relations/knownCantrips";
 import { knownSpells } from "@/server/database/schema/relations/knownSpells";
 import { preparedSpells } from "@/server/database/schema/relations/preparedSpells";
+import { spell } from "@/server/database/schema/spell";
 import { spellSlots } from "@/server/database/schema/spellSlots";
 import { relations } from "drizzle-orm";
 import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
@@ -14,6 +15,7 @@ export const character = pgTable("character", {
     ability: integer("ability").notNull(),
 
     spellSlotsAvailableId: integer("spellSlotsAvailableId").references(() => spellSlots.id, { onDelete: "restrict" }),
+    concentratingOnId: text("concentratingOnId").references(() => spell.index, { onDelete: "restrict" }),
 });
 
 export const characterRelations = relations(character, ({ many, one }) => ({
@@ -24,5 +26,9 @@ export const characterRelations = relations(character, ({ many, one }) => ({
     spellSlotsAvailable: one(spellSlots, {
         fields: [character.spellSlotsAvailableId],
         references: [spellSlots.id],
+    }),
+    concentratingOn: one(spell, {
+        fields: [character.concentratingOnId],
+        references: [spell.index],
     }),
 }));

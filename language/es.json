@@ -293,6 +293,8 @@
             "unprepareFromOath": "Quitar de Juramento",
             "cannotPrepare": "No puedes preparar más hechizos",
             "cannotPrepareDescription": "Ya has preparado todos los hechizos que puedes preparar ({{PARAM}}).",
+            "concentratingOn": "Concentrando en ",
+            "stopConcentrating": "Parar",
 
             "noSpellsLearned": "Aún no has aprendido ningún hechizo",
             "noSpellsPrepared": "Aún no has preparado ningún hechizo",

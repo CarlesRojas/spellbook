@@ -32,9 +32,10 @@ interface Props {
     language: Language;
     character: CharacterWithSpells;
     showUncastable: boolean;
+    setConcentratingSpell?: (spell: Spell | null) => void;
 }
 
-const CastableSpell = ({ spell, language, character, showUncastable }: Props) => {
+const CastableSpell = ({ spell, language, character, showUncastable, setConcentratingSpell }: Props) => {
     const { t } = useTranslation(language);
     const {
         index,
@@ -128,6 +129,8 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
     const cast = (castedSpellLevel: number) => {
         setCastWithHigherLevelSlotDialogOpen(false);
         if (castedSpellLevel > 0) spendSpellSlot(castedSpellLevel);
+
+        if (concentration) setConcentratingSpell?.(spell);
 
         toast.custom((currToast) => (
             <ToastWrapper onClose={() => toast.dismiss(currToast)} className={cn(getSpellBackground(color))}>

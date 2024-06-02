@@ -6,7 +6,8 @@ import { Button } from "@/component/ui/button";
 import { useCharacterStatusSize } from "@/hook/useCharacterStatusSize";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
-import { getSpellsByLevel } from "@/lib/spell";
+import { getSpellRawColor, getSpellsByLevel } from "@/lib/spell";
+import { useSetConcentratingOnSpell } from "@/server/use/useSetConcentratingOnSpell";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Spell, SpellSection } from "@/type/Spell";
@@ -38,6 +39,8 @@ const KnownList = ({ language, spells, character, setSpellSection }: Props) => {
     const spellsByLevel = getSpellsByLevel(filteredSpells);
 
     const statusBarHeight = useCharacterStatusSize();
+
+    const setConcentratingOnSpell = useSetConcentratingOnSpell();
 
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
@@ -73,6 +76,13 @@ const KnownList = ({ language, spells, character, setSpellSection }: Props) => {
                                 spell={spell}
                                 character={character}
                                 showUncastable={true}
+                                setConcentratingSpell={(concentratingSpell: Spell | null) =>
+                                    setConcentratingOnSpell.mutate({
+                                        ...character,
+                                        concentratingOnId: concentratingSpell?.index ?? null,
+                                        concentratingOn: concentratingSpell,
+                                    })
+                                }
                             />
                         ))}
                     </div>
@@ -89,6 +99,42 @@ const KnownList = ({ language, spells, character, setSpellSection }: Props) => {
                         <LuArrowLeft className="mr-3 h-4 w-4 stroke-[3]" />
                         {t.dnd.spell.viewAllSpells}
                     </Button>
+                </div>
+            )}
+
+            {character.concentratingOn && (
+                <div className="fixed bottom-[4.75rem] left-3 right-20 z-40 h-fit w-fit rounded-lg bg-white shadow-md dark:bg-black mouse:bottom-6 mouse:left-6 mouse:right-28">
+                    <div className="flex h-fit w-fit items-center gap-2 rounded-lg border border-stone-300 p-2 dark:border-stone-700">
+                        <div
+                            className="inline-block h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 bg-cover brightness-90 dark:brightness-100"
+                            style={{
+                                backgroundImage: `url(/spell/${character.concentratingOn.icon})`,
+                                maskImage: `url(/spell/${character.concentratingOn.icon})`,
+                                maskMode: "alpha",
+                                maskSize: "cover",
+                                backgroundBlendMode: "luminosity",
+                                backgroundColor: getSpellRawColor(character.concentratingOn.color),
+                            }}
+                        />
+
+                        <p className="w-full text-left text-sm font-medium leading-tight tracking-wide opacity-90">
+                            {`${t.dnd.spell.concentratingOn} ${character.concentratingOn.name[language]}`}
+                        </p>
+
+                        <Button
+                            className="ml-2 min-w-fit"
+                            variant="secondary"
+                            onClick={() =>
+                                setConcentratingOnSpell.mutate({
+                                    ...character,
+                                    concentratingOnId: null,
+                                    concentratingOn: null,
+                                })
+                            }
+                        >
+                            {t.dnd.spell.stopConcentrating}
+                        </Button>
+                    </div>
                 </div>
             )}
         </div>
