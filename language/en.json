@@ -262,6 +262,8 @@
             "slotLevel": "Slot Level",
             "characterLevel": "Character Level",
             "damage": "Damage",
+            "classes": "Classes",
+            "subclasses": "Subclasses",
 
             "view": "View information",
             "cast": "Cast",

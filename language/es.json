@@ -262,6 +262,8 @@
             "slotLevel": "Nivel de la ranura",
             "characterLevel": "Nivel del personaje",
             "damage": "Daño",
+            "classes": "Clases",
+            "subclasses": "Subclases",
 
             "view": "Ver información",
             "cast": "Castear",

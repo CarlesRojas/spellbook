@@ -45,6 +45,8 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
         level,
         icon,
         color,
+        classes,
+        subclasses,
     } = spell;
 
     const tags: {
@@ -204,6 +206,26 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                         <h2 className="text-lg font-semibold tracking-wide text-sky-500">{t.dnd.spell.material}</h2>
 
                         {parseParagraphsWithDice(material[language])}
+                    </div>
+                )}
+
+                {classes.length > 0 && (
+                    <div className="max-w-screen-lg">
+                        <h2 className="text-lg font-semibold tracking-wide text-sky-500">{t.dnd.spell.classes}</h2>
+
+                        <p className="flex w-full flex-wrap items-center gap-x-2">
+                            {classes.map((classType) => t.enum.class[classType]).join(", ")}
+                        </p>
+                    </div>
+                )}
+
+                {subclasses.length > 0 && (
+                    <div className="max-w-screen-lg">
+                        <h2 className="text-lg font-semibold tracking-wide text-sky-500">{t.dnd.spell.subclasses}</h2>
+
+                        <p className="flex w-full flex-wrap items-center gap-x-2">
+                            {subclasses.map((classType) => t.enum.subclass[classType]).join(", ")}
+                        </p>
                     </div>
                 )}
             </div>

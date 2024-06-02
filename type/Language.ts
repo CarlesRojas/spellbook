@@ -129,6 +129,8 @@ export const LanguageObjectSchema = z.object({
             slotLevel: z.string(),
             characterLevel: z.string(),
             damage: z.string(),
+            classes: z.string(),
+            subclasses: z.string(),
 
             view: z.string(),
             cast: z.string(),
