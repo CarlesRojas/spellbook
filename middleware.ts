@@ -1,6 +1,6 @@
 import { env } from "@/env";
 import { pathnameToRoute } from "@/hook/useRoute";
-import { DEFAULT_LANGUAGE, LANGUAGES } from "@/type/Language";
+import { DEFAULT_LANGUAGE, LANGUAGES, LANGUAGE_COOKIE_NAME, Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import acceptLanguage from "accept-language";
 import withAuth, { NextRequestWithAuth } from "next-auth/middleware";
@@ -21,6 +21,15 @@ const excludedPaths = [
     ".png",
     ".ico",
 ];
+
+const getLanguageInCookie = (request: NextRequestWithAuth) => {
+    const cookie = request.cookies.get(LANGUAGE_COOKIE_NAME);
+    if (!cookie) return null;
+
+    if (!Object.values(Language).includes(cookie.value as Language)) return null;
+
+    return cookie.value;
+};
 
 const getLanguageInPathname = (pathname: string) => {
     for (const language of LANGUAGES) if (pathname.startsWith(`/${language}`)) return language;
@@ -45,6 +54,7 @@ export default withAuth(
 
         let language =
             getLanguageInPathname(path) ??
+            getLanguageInCookie(request) ??
             acceptLanguage.get(request.headers.get("Accept-Language")) ??
             DEFAULT_LANGUAGE;
 
@@ -54,7 +64,10 @@ export default withAuth(
         if (userRoutes.includes(currentRoute) && !isUserAuthenticated(request))
             return NextResponse.redirect(new URL(`/${language}${Route.SPELLS}`, request.url));
 
-        return NextResponse.next();
+        const response = NextResponse.next();
+        response.cookies.set(LANGUAGE_COOKIE_NAME, language);
+
+        return response;
     },
     {
         secret: env.NEXTAUTH_SECRET,

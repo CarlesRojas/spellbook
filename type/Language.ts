@@ -30,6 +30,7 @@ export enum Language {
 }
 export const DEFAULT_LANGUAGE = Language.ES;
 export const LANGUAGES = Object.values(Language);
+export const LANGUAGE_COOKIE_NAME = "SPELLBOOK_LANGUAGE";
 
 export const LanguageObjectSchema = z.object({
     title: z.string(),
