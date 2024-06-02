@@ -249,7 +249,7 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
                         }}
                     />
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-1">
                         <h3
                             className={cn(
                                 "w-full overflow-hidden text-ellipsis text-left text-sm font-semibold leading-tight",
@@ -259,10 +259,10 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
                             {name[language]}
                         </h3>
 
-                        <p className="flex flex-wrap gap-x-3 text-left text-xs leading-tight opacity-60">
-                            <span>{t.enum.range[range]}</span>
+                        <p className="flex flex-wrap gap-x-2 text-left text-xs leading-tight opacity-60">
+                            <span>{t.enum.rangeShort[range]}</span>
                             <span>{t.enum.castingTime[castingTime]}</span>
-                            {components.length > 0 && <span>{components.join(", ")}</span>}
+                            {components.length > 0 && <span>{components.join(" ")}</span>}
                             {concentration && <span>{t.dnd.spell.tag.concentration}</span>}
                         </p>
                     </div>

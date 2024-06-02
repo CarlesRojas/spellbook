@@ -60,6 +60,7 @@ export const LanguageObjectSchema = z.object({
         notFound: z.object(Object.fromEntries(Object.values(NotFoundType).map((item) => [item, z.string()]))),
         sort: z.object(Object.fromEntries(Object.values(Sort).map((item) => [item, z.string()]))),
         range: z.object(Object.fromEntries(Object.values(RangeType).map((item) => [item, z.string()]))),
+        rangeShort: z.object(Object.fromEntries(Object.values(RangeType).map((item) => [item, z.string()]))),
         component: z.object(Object.fromEntries(Object.values(Component).map((item) => [item, z.string()]))),
         areaOfEffect: z.object(Object.fromEntries(Object.values(AreaOfEffectType).map((item) => [item, z.string()]))),
         class: z.object(Object.fromEntries(Object.values(ClassType).map((item) => [item, z.string()]))),

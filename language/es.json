@@ -66,6 +66,26 @@
             "SELF": "Personal"
         },
 
+        "rangeShort": {
+            "FIVE_FEET": "5ft",
+            "TEN_FEET": "10ft",
+            "THIRTY_FEET": "30ft",
+            "SIXTY_FEET": "60ft",
+            "NINETY_FEET": "90ft",
+            "HUNDRED_FEET": "100ft",
+            "HUNDRED_AND_TWENTY_FEET": "120ft",
+            "HUNDRED_AND_FIFTY_FEET": "150ft",
+            "THREE_HUNDRED_FEET": "300ft",
+            "FIVE_HUNDRED_FEET": "500ft",
+            "ONE_MILE": "1mi",
+            "FIVE_HUNDRED_MILES": "500mi",
+            "UNLIMITED": "Ilimitado",
+            "SPECIAL": "Especial",
+            "SIGHT": "Vista",
+            "TOUCH": "Toque",
+            "SELF": "Personal"
+        },
+
         "component": {
             "V": "Verbal",
             "S": "Somático",
