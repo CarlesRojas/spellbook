@@ -125,7 +125,7 @@ const CharacterStatus = (props: Props) => {
                             <div className="flex w-fit grow flex-col md:grow-0">
                                 <h3 className="truncate text-left font-semibold">{name}</h3>
 
-                                <div className="flex flex-wrap items-baseline gap-x-3 text-xs sm:gap-4 md:text-sm">
+                                <div className="flex flex-wrap items-baseline gap-x-3 text-xs sm:gap-x-4 md:text-sm">
                                     <span className="flex gap-1">
                                         <span className="font-medium opacity-50">{t.dnd.level}</span>
                                         <strong className="font-semibold">{level}</strong>
