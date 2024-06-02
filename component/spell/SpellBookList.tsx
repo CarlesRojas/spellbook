@@ -69,7 +69,9 @@ const SpellBookList = ({ language, spells, character, setSpellSection }: Props) 
 
             {spells.length === 0 && (
                 <div className="flex h-fit w-full flex-col items-center justify-center gap-2 pt-32">
-                    <p className="font-medium tracking-wide opacity-90">{t.dnd.spell.noSpellsInSpellbook}</p>
+                    <p className="w-full text-center font-medium tracking-wide opacity-90">
+                        {t.dnd.spell.noSpellsInSpellbook}
+                    </p>
 
                     <Button variant="outline" onClick={() => setSpellSection(SpellSection.ALL)}>
                         <LuArrowLeft className="mr-3 h-4 w-4 stroke-[3]" />

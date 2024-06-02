@@ -79,7 +79,9 @@ const PreparedList = ({ language, spells, character, setSpellSection }: Props) =
 
             {spells.length === 0 && (
                 <div className="flex h-fit w-full flex-col items-center justify-center gap-2 pt-32">
-                    <p className="font-medium tracking-wide opacity-90">{t.dnd.spell.noSpellsPrepared}</p>
+                    <p className="w-full text-center font-medium tracking-wide opacity-90">
+                        {t.dnd.spell.noSpellsPrepared}
+                    </p>
 
                     <Button
                         variant="outline"
