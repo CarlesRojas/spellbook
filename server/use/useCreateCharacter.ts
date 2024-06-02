@@ -15,7 +15,13 @@ export const useCreateCharacter = (userEmail: string) => {
 
             const newData: Character[] | undefined = previousData
                 ? [
-                      { ...newCharacter, class: newCharacter.class as ClassType, id: -1, spellSlotsAvailableId: -1 },
+                      {
+                          ...newCharacter,
+                          class: newCharacter.class as ClassType,
+                          id: -1,
+                          concentratingOnId: newCharacter.concentratingOnId ?? null,
+                          spellSlotsAvailableId: -1,
+                      },
                       ...previousData,
                   ]
                 : undefined;
