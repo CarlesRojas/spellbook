@@ -24,10 +24,11 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
 
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [popoverOpen, setPopoverOpen] = useState(false);
 
     return (
         <>
-            <Popover modal={true}>
+            <Popover modal={true} open={popoverOpen} onOpenChange={setPopoverOpen}>
                 <PopoverTrigger asChild>
                     <Button variant="outline" size="icon">
                         <LuMoreHorizontal className="h-4 w-4 stroke-[3]" />
@@ -35,12 +36,26 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
                 </PopoverTrigger>
 
                 <PopoverContent className="mx-2 my-3">
-                    <Button variant="menu" size="menu" onClick={() => setEditDialogOpen(true)}>
+                    <Button
+                        variant="menu"
+                        size="menu"
+                        onClick={() => {
+                            setEditDialogOpen(true);
+                            setPopoverOpen(false);
+                        }}
+                    >
                         <LuPencil className="mr-2 h-5 w-5" />
                         <p className="font-medium tracking-wide">{t.form.edit}</p>
                     </Button>
 
-                    <Button variant="menu" size="menu" onClick={() => setDeleteDialogOpen(true)}>
+                    <Button
+                        variant="menu"
+                        size="menu"
+                        onClick={() => {
+                            setDeleteDialogOpen(true);
+                            setPopoverOpen(false);
+                        }}
+                    >
                         <LuTrash2 className="mr-2 h-5 w-5 text-red-500" />
                         <p className="font-medium tracking-wide text-red-500">{t.form.delete}</p>
                     </Button>
