@@ -3,7 +3,7 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
-import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount } from "@/lib/character";
+import { getCantripsAmount, getKnowSpellsAmount, getPreparedSpellsAmount, getTotalSpellSlots } from "@/lib/character";
 import { getSpellColorOnHover, getSpellRawColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useForgetCantrip } from "@/server/use/useForgetCantrip";
@@ -16,6 +16,7 @@ import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import { ClassType, Spell } from "@/type/Spell";
+import { getHighestLevelSpellSlot } from "@/type/SpellSlots";
 import Link from "next/link";
 import { ReactNode, useState } from "react";
 import {
@@ -44,6 +45,8 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
 
     const { index, icon, color, name, level } = spell;
     const isCantrip = level === 0;
+    const highestLevelSpellSlot = getHighestLevelSpellSlot(getTotalSpellSlots(character.class, character.level));
+    const isWizard = character.class === ClassType.WIZARD;
 
     const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -87,9 +90,12 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
     );
 
     const [learnDialogOpen, setLearnDialogOpen] = useState(false);
-    const onLearnSpell = (bypassMax: boolean) => {
+    const [learnHigherLevelDialogOpen, setLearnHigherLevelDialogOpen] = useState(false);
+    const onLearnSpell = (bypassMax: boolean, bypassHigherLevel: boolean) => {
         setPopoverOpen(false);
         if (!bypassMax && maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
+        if (!bypassHigherLevel && !isWizard && level > highestLevelSpellSlot)
+            return setLearnHigherLevelDialogOpen(true);
 
         learnSpell.mutate({ characterId: character.id, spellIndex: index, spell });
         toast.custom((currToast) => (
@@ -121,9 +127,11 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
     };
 
     const [prepareDialogOpen, setPrepareDialogOpen] = useState(false);
-    const onPrepareSpell = (bypassMax: boolean, isOathOrDomain: boolean) => {
+    const [prepareHigherLevelDialogOpen, setPrepareHigherLevelDialogOpen] = useState(false);
+    const onPrepareSpell = (bypassMax: boolean, bypassHigherLevel: boolean, isOathOrDomain: boolean) => {
         setPopoverOpen(false);
         if (!bypassMax && !isOathOrDomain && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
+        if (!bypassHigherLevel && level > highestLevelSpellSlot) return setPrepareHigherLevelDialogOpen(true);
 
         prepareSpell.mutate({
             characterId: character.id,
@@ -252,14 +260,14 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
     };
 
     const addSpellAction: Record<ClassType, () => void> = {
-        [ClassType.WIZARD]: () => (isKnown ? onForgetSpell() : onLearnSpell(false)),
-        [ClassType.SORCERER]: () => (isKnown ? onForgetSpell() : onLearnSpell(false)),
-        [ClassType.CLERIC]: () => (isPrepared ? onUnprepareSpell() : onPrepareSpell(false, false)),
-        [ClassType.PALADIN]: () => (isPrepared ? onUnprepareSpell() : onPrepareSpell(false, false)),
-        [ClassType.RANGER]: () => (isKnown ? onForgetSpell() : onLearnSpell(false)),
-        [ClassType.BARD]: () => (isKnown ? onForgetSpell() : onLearnSpell(false)),
-        [ClassType.DRUID]: () => (isPrepared ? onUnprepareSpell() : onPrepareSpell(false, false)),
-        [ClassType.WARLOCK]: () => (isKnown ? onForgetSpell() : onLearnSpell(false)),
+        [ClassType.WIZARD]: () => (isKnown ? onForgetSpell() : onLearnSpell(false, false)),
+        [ClassType.SORCERER]: () => (isKnown ? onForgetSpell() : onLearnSpell(false, false)),
+        [ClassType.CLERIC]: () => (isPrepared ? onUnprepareSpell() : onPrepareSpell(false, false, false)),
+        [ClassType.PALADIN]: () => (isPrepared ? onUnprepareSpell() : onPrepareSpell(false, false, false)),
+        [ClassType.RANGER]: () => (isKnown ? onForgetSpell() : onLearnSpell(false, false)),
+        [ClassType.BARD]: () => (isKnown ? onForgetSpell() : onLearnSpell(false, false)),
+        [ClassType.DRUID]: () => (isPrepared ? onUnprepareSpell() : onPrepareSpell(false, false, false)),
+        [ClassType.WARLOCK]: () => (isKnown ? onForgetSpell() : onLearnSpell(false, false)),
     };
 
     const spellMini = (className?: string) => (
@@ -339,7 +347,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                                         variant="menu"
                                         size="menu"
                                         onClick={() =>
-                                            isOathOrDomain ? onUnprepareSpell() : onPrepareSpell(false, true)
+                                            isOathOrDomain ? onUnprepareSpell() : onPrepareSpell(false, false, true)
                                         }
                                     >
                                         {isOathOrDomain ? (
@@ -360,7 +368,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                                         variant="menu"
                                         size="menu"
                                         onClick={() =>
-                                            isOathOrDomain ? onUnprepareSpell() : onPrepareSpell(false, true)
+                                            isOathOrDomain ? onUnprepareSpell() : onPrepareSpell(false, false, true)
                                         }
                                     >
                                         {isOathOrDomain ? (
@@ -391,10 +399,10 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
             <Dialog open={learnDialogOpen} onOpenChange={setLearnDialogOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t.dnd.spell.cannotLearn}</DialogTitle>
+                        <DialogTitle>{spellMini()}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
+                    <p className="text-sm opacity-80">{t.dnd.spell.cannotLearn}</p>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
                         <DialogClose asChild>
@@ -406,7 +414,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                             type="button"
                             onClick={() => {
                                 setLearnDialogOpen(false);
-                                onLearnSpell(true);
+                                onLearnSpell(true, false);
                             }}
                         >
                             <LuLightbulb className="mr-2 h-5 w-5" />
@@ -419,10 +427,10 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
             <Dialog open={prepareDialogOpen} onOpenChange={setPrepareDialogOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t.dnd.spell.cannotPrepare}</DialogTitle>
+                        <DialogTitle>{spellMini()}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
+                    <p className="text-sm opacity-70">{t.dnd.spell.cannotPrepare}</p>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
                         <DialogClose asChild>
@@ -434,7 +442,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                             type="button"
                             onClick={() => {
                                 setPrepareDialogOpen(false);
-                                onPrepareSpell(true, false);
+                                onPrepareSpell(true, false, false);
                             }}
                         >
                             <LuSparkle className="mr-2 h-5 w-5" />
@@ -447,10 +455,10 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
             <Dialog open={cantripDialogOpen} onOpenChange={setCantripDialogOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t.dnd.spell.cannotAddCantrip}</DialogTitle>
+                        <DialogTitle>{spellMini()}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
+                    <p className="text-sm opacity-70">{t.dnd.spell.cannotAddCantrip}</p>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
                         <DialogClose asChild>
@@ -467,6 +475,72 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
                         >
                             <LuZap className="mr-2 h-5 w-5" />
                             {t.dnd.spell.addCantripAnyway}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={learnHigherLevelDialogOpen} onOpenChange={setLearnHigherLevelDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{spellMini()}</DialogTitle>
+                    </DialogHeader>
+
+                    <p className="text-sm opacity-70">
+                        {t.dnd.spell.learnSpellLevelTooHigh.replace(
+                            "{{PARAM}}",
+                            (highestLevelSpellSlot + 1).toString(),
+                        )}
+                    </p>
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+
+                        <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => {
+                                setLearnHigherLevelDialogOpen(false);
+                                onLearnSpell(true, true);
+                            }}
+                        >
+                            <LuLightbulb className="mr-2 h-5 w-5" />
+                            {t.dnd.spell.learnAnyway}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={prepareHigherLevelDialogOpen} onOpenChange={setPrepareHigherLevelDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{spellMini()}</DialogTitle>
+                    </DialogHeader>
+
+                    <p className="text-sm opacity-70">
+                        {t.dnd.spell.prepareSpellLevelTooHigh.replace(
+                            "{{PARAM}}",
+                            (highestLevelSpellSlot + 1).toString(),
+                        )}
+                    </p>
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+
+                        <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => {
+                                setPrepareHigherLevelDialogOpen(false);
+                                onPrepareSpell(true, true, false);
+                            }}
+                        >
+                            <LuSparkle className="mr-2 h-5 w-5" />
+                            {t.dnd.spell.prepareAnyway}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

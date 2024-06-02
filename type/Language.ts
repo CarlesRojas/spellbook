@@ -136,6 +136,8 @@ export const LanguageObjectSchema = z.object({
             removeFromSpellbook: z.string(),
             cannotLearn: z.string(),
             cannotLearnDescription: z.string(),
+            learnSpellLevelTooHigh: z.string(),
+            prepareSpellLevelTooHigh: z.string(),
 
             addCantrip: z.string(),
             removeCantrip: z.string(),

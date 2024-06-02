@@ -29,6 +29,15 @@ export const ZERO_SPELL_SLOTS: SpellSlots = SpellSlotsSchema.parse({
 export const getSpellSlotKey = (level: number) => `level${level}` as keyof SpellSlots;
 export const getLevelKey = (slot: keyof SpellSlots) => parseInt(slot.replace(/\D/g, ""));
 
+export const getHighestLevelSpellSlot = (totalSpellSlots: SpellSlots) => {
+    let max = 0;
+    for (const [slot, amount] of Object.entries(totalSpellSlots)) {
+        const slotLevel = getLevelKey(slot as keyof SpellSlots);
+        if (amount > 0 && slotLevel > max) max = slotLevel;
+    }
+    return max;
+};
+
 export const WIZARD_SPELL_SLOTS: ArrayWith20Positions<SpellSlots> = [
     { level1: 2, level2: 0, level3: 0, level4: 0, level5: 0, level6: 0, level7: 0, level8: 0, level9: 0 },
     { level1: 3, level2: 0, level3: 0, level4: 0, level5: 0, level6: 0, level7: 0, level8: 0, level9: 0 },

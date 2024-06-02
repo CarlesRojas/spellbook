@@ -251,6 +251,8 @@
             "removeFromSpellbook": "Quitar del Libro de Hechizos",
             "cannotLearn": "No puedes aprender más hechizos",
             "cannotLearnDescription": "Ya conoces todos los hechizos que puedes aprender ({{PARAM}}).",
+            "learnSpellLevelTooHigh": "No puedes aprender hechizos de nivel {{PARAM}} o superior",
+            "prepareSpellLevelTooHigh": "No puedes preparar hechizos de nivel {{PARAM}} o superior",
 
             "addCantrip": "Aprender Truco",
             "removeCantrip": "Olvidar Truco",

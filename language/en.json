@@ -251,6 +251,8 @@
             "removeFromSpellbook": "Remove from Spellbook",
             "cannotLearn": "You can't learn more spells",
             "cannotLearnDescription": "You can learn up to {{PARAM}} spells.",
+            "learnSpellLevelTooHigh": "You can't learn spells of level {{PARAM}} or higher",
+            "prepareSpellLevelTooHigh": "You can't prepare spells of level {{PARAM}} or higher",
 
             "addCantrip": "Learn Cantrip",
             "removeCantrip": "Forget Cantrip",

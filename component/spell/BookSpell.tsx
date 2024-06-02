@@ -3,7 +3,7 @@ import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogT
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { SpellToast, ToastWrapper } from "@/component/ui/toast";
 import { useTranslation } from "@/hook/useTranslation";
-import { getPreparedSpellsAmount } from "@/lib/character";
+import { getPreparedSpellsAmount, getTotalSpellSlots } from "@/lib/character";
 import { getSpellColorOnHover, getSpellRawColor } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useForgetSpell } from "@/server/use/useForgetSpell";
@@ -13,6 +13,7 @@ import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { Route } from "@/type/Route";
 import { Spell } from "@/type/Spell";
+import { getHighestLevelSpellSlot } from "@/type/SpellSlots";
 import Link from "next/link";
 import { useState } from "react";
 import { LuBookMinus, LuSparkle, LuView } from "react-icons/lu";
@@ -28,6 +29,7 @@ const BookSpell = ({ spell, language, character }: Props) => {
     const { t } = useTranslation(language);
 
     const { index, icon, color, name, level } = spell;
+    const highestLevelSpellSlot = getHighestLevelSpellSlot(getTotalSpellSlots(character.class, character.level));
 
     const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -69,10 +71,12 @@ const BookSpell = ({ spell, language, character }: Props) => {
     };
 
     const [prepareDialogOpen, setPrepareDialogOpen] = useState(false);
-    const onPrepareSpell = (bypassMax: boolean) => {
+    const [prepareHigherLevelDialogOpen, setPrepareHigherLevelDialogOpen] = useState(false);
+    const onPrepareSpell = (bypassMax: boolean, bypassHigherLevel: boolean) => {
         setPopoverOpen(false);
 
         if (!bypassMax && preparedSpells >= maxPreparedSpells) return setPrepareDialogOpen(true);
+        if (!bypassHigherLevel && level > highestLevelSpellSlot) return setPrepareHigherLevelDialogOpen(true);
 
         prepareSpell.mutate({
             characterId: character.id,
@@ -149,7 +153,7 @@ const BookSpell = ({ spell, language, character }: Props) => {
                         <Button
                             variant="menu"
                             size="menu"
-                            onClick={() => (isPrepared ? onUnprepareSpell(true) : onPrepareSpell(false))}
+                            onClick={() => (isPrepared ? onUnprepareSpell(true) : onPrepareSpell(false, false))}
                         >
                             {isPrepared ? (
                                 <LuSparkle className="mr-2 h-5 w-5 rotate-45" />
@@ -203,7 +207,40 @@ const BookSpell = ({ spell, language, character }: Props) => {
                             type="button"
                             onClick={() => {
                                 setPrepareDialogOpen(false);
-                                onPrepareSpell(true);
+                                onPrepareSpell(true, false);
+                            }}
+                        >
+                            <LuSparkle className="mr-2 h-5 w-5" />
+                            {t.dnd.spell.prepareAnyway}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog open={prepareHigherLevelDialogOpen} onOpenChange={setPrepareHigherLevelDialogOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>{spellMini()}</DialogTitle>
+                    </DialogHeader>
+
+                    <p className="text-sm opacity-70">
+                        {t.dnd.spell.prepareSpellLevelTooHigh.replace(
+                            "{{PARAM}}",
+                            (highestLevelSpellSlot + 1).toString(),
+                        )}
+                    </p>
+
+                    <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
+                        <DialogClose asChild>
+                            <Button variant="default">{t.form.cancel}</Button>
+                        </DialogClose>
+
+                        <Button
+                            variant="outline"
+                            type="button"
+                            onClick={() => {
+                                setPrepareHigherLevelDialogOpen(false);
+                                onPrepareSpell(true, true);
                             }}
                         >
                             <LuSparkle className="mr-2 h-5 w-5" />
