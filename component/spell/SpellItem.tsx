@@ -38,7 +38,7 @@ const SpellItem = ({ spell, language, children }: Props) => {
 
                 <h3
                     className={cn(
-                        "w-full overflow-hidden text-ellipsis text-center text-sm font-semibold",
+                        "w-full overflow-hidden text-ellipsis text-center text-sm font-semibold leading-tight",
                         getSpellColorOnHover(spell.color),
                     )}
                 >

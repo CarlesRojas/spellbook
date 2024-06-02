@@ -272,7 +272,9 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
         <div className={cn("flex w-fit items-center gap-2", className)}>
             {smallIcon}
 
-            <p className="w-full truncate font-medium tracking-wide mouse:group-hover:opacity-0">{name[language]}</p>
+            <p className="w-full truncate font-medium leading-tight tracking-wide mouse:group-hover:opacity-0">
+                {name[language]}
+            </p>
         </div>
     );
 
@@ -300,7 +302,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
 
                         <h3
                             className={cn(
-                                "w-full overflow-hidden text-ellipsis text-center text-sm font-semibold",
+                                "w-full overflow-hidden text-ellipsis text-center text-sm font-semibold leading-tight",
                                 getSpellColorOnHover(spell.color),
                             )}
                         >

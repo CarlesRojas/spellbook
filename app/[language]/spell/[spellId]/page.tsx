@@ -106,7 +106,7 @@ const SpellPage = async ({ params: { language, spellId } }: Props) => {
                         }}
                     />
 
-                    <h1 className="text-lg font-semibold tracking-wide">{name[language]}</h1>
+                    <h1 className="text-lg font-semibold leading-tight tracking-wide">{name[language]}</h1>
                     <p className="font-medium tracking-wide opacity-50">{t.enum.school[school]}</p>
                 </div>
 

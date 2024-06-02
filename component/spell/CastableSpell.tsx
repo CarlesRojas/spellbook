@@ -36,7 +36,20 @@ interface Props {
 
 const CastableSpell = ({ spell, language, character, showUncastable }: Props) => {
     const { t } = useTranslation(language);
-    const { index, icon, color, name, level, ritual: isRitual, highLevelDescription, onlyRitual } = spell;
+    const {
+        index,
+        icon,
+        color,
+        name,
+        level,
+        ritual: isRitual,
+        highLevelDescription,
+        onlyRitual,
+        concentration,
+        castingTime,
+        range,
+        components,
+    } = spell;
 
     const [spellPopoverOpen, setSpellPopoverOpen] = useState(false);
     const [castWithHigherLevelSlotDialogOpen, setCastWithHigherLevelSlotDialogOpen] = useState(false);
@@ -236,14 +249,23 @@ const CastableSpell = ({ spell, language, character, showUncastable }: Props) =>
                         }}
                     />
 
-                    <h3
-                        className={cn(
-                            "w-full overflow-hidden text-ellipsis text-left text-sm font-semibold",
-                            getSpellColorOnHover(spell.color),
-                        )}
-                    >
-                        {name[language]}
-                    </h3>
+                    <div className="flex flex-col">
+                        <h3
+                            className={cn(
+                                "w-full overflow-hidden text-ellipsis text-left text-sm font-semibold leading-tight",
+                                getSpellColorOnHover(spell.color),
+                            )}
+                        >
+                            {name[language]}
+                        </h3>
+
+                        <p className="flex flex-wrap gap-x-3 text-left text-xs leading-tight opacity-60">
+                            <span>{t.enum.range[range]}</span>
+                            <span>{t.enum.castingTime[castingTime]}</span>
+                            {components.length > 0 && <span>{components.join(", ")}</span>}
+                            {concentration && <span>{t.dnd.spell.tag.concentration}</span>}
+                        </p>
+                    </div>
                 </PopoverTrigger>
 
                 <PopoverContent className="mx-2 my-3" align="start">

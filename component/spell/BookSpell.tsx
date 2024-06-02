@@ -111,7 +111,9 @@ const BookSpell = ({ spell, language, character }: Props) => {
         <div className={cn("flex w-fit items-center gap-2", className)}>
             {smallIcon}
 
-            <p className="w-full truncate font-medium tracking-wide mouse:group-hover:opacity-0">{name[language]}</p>
+            <p className="w-full truncate font-medium leading-tight tracking-wide mouse:group-hover:opacity-0">
+                {name[language]}
+            </p>
         </div>
     );
 
