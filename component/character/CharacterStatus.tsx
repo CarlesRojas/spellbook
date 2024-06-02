@@ -112,7 +112,10 @@ const CharacterStatus = (props: Props) => {
     };
 
     return (
-        <div className="sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16">
+        <div
+            id="statusBar"
+            className="sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16"
+        >
             <div className="flex w-full flex-col items-center gap-2 sm:gap-4 md:flex-row md:justify-between">
                 <div className="relative flex w-full items-center gap-4 md:w-fit">
                     <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>

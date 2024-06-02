@@ -29,7 +29,10 @@ const Header = ({ language }: Props) => {
     const { user, signIn } = useUser();
 
     const header = (children?: ReactNode) => (
-        <header className="fixed left-0 right-0 top-0 z-50 hidden h-16 items-center justify-between border-b border-stone-300 bg-stone-100 px-3 py-2 dark:border-stone-700 dark:bg-stone-950 md:px-4 mouse:flex">
+        <header
+            id="header"
+            className="fixed left-0 right-0 top-0 z-50 hidden h-16 items-center justify-between border-b border-stone-300 bg-stone-100 px-3 py-2 dark:border-stone-700 dark:bg-stone-950 md:px-4 mouse:flex"
+        >
             <nav className="relative flex items-center gap-3 md:gap-4">
                 <Link
                     href={`/${language}${Route.SPELLS}`}

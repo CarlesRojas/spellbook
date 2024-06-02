@@ -3,6 +3,7 @@
 import ClassFilter from "@/component/filter/ClassFilter";
 import QueryFilter from "@/component/filter/QueryFilter";
 import UnknownSpell from "@/component/spell/UnknownSpell";
+import { useCharacterStatusSize } from "@/hook/useCharacterStatusSize";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
@@ -36,6 +37,8 @@ const AllList = ({ language, spells, character }: Props) => {
 
     const spellsByLevel = getSpellsByLevel(filteredSpells);
 
+    const statusBarHeight = useCharacterStatusSize();
+
     return (
         <div className="relative flex h-fit w-full flex-col p-4">
             <div className="flex w-full justify-end gap-2 md:flex-row">
@@ -57,7 +60,10 @@ const AllList = ({ language, spells, character }: Props) => {
                         key={level}
                         className="hidden w-full grid-cols-3 gap-4 has-[.spell]:grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
                     >
-                        <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-2 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
+                        <h2
+                            className="sticky z-20 col-span-3 mt-4 w-full bg-stone-100 py-2 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6"
+                            style={{ top: statusBarHeight - 1 }}
+                        >
                             {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}
                         </h2>
 

@@ -3,7 +3,6 @@ import AllList from "@/component/spell/AllList";
 import KnownList from "@/component/spell/KnownList";
 import PreparedList from "@/component/spell/PreparedList";
 import SpellBookList from "@/component/spell/SpellBookList";
-import { getSaveDifficultyClass, getSpellAttackModifier } from "@/lib/character";
 import { GetAllSpellsReturnType } from "@/server/use/useSpells";
 import { CharacterWithSpells } from "@/type/Character";
 import { Language } from "@/type/Language";
@@ -24,9 +23,6 @@ const CharacterSpells = ({ language, character, spells, spellSection, setSpellSe
             return ritual;
         })
         .map((spell) => ({ ...spell, onlyRitual: true }));
-
-    console.log("SAVE THROW", getSaveDifficultyClass(character.class, character.ability, character.level));
-    console.log("ATTACK MOD", getSpellAttackModifier(character.class, character.ability, character.level));
 
     return (
         <>
