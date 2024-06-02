@@ -106,7 +106,6 @@ export const getProficiencyBonus = (level: number) => {
     return proficiencyBonus[level - 1];
 };
 
-// TODO show this?
 export const getSaveDifficultyClass = (classType: ClassType, ability: number, level: number) => {
     const abilityModifier = Math.floor((ability - 10) / 2);
 
@@ -124,7 +123,6 @@ export const getSaveDifficultyClass = (classType: ClassType, ability: number, le
     return map[classType];
 };
 
-// TODO show this?
 export const getSpellAttackModifier = (classType: ClassType, ability: number, level: number) => {
     const abilityModifier = Math.floor((ability - 10) / 2);
 

@@ -241,6 +241,8 @@
             "deleteDisclaimer": "Eliminar el personaje y todos sus datos. Esta acción no se puede deshacer.",
             "oath": "Juramento",
             "domain": "Dominio",
+            "attackModifier": "Mod de Ataque",
+            "saveDifficultyClass": "CD Salvación",
 
             "error": {
                 "nameTooShort": "El nombre debe tener al menos 2 caracteres",

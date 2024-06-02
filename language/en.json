@@ -241,6 +241,8 @@
             "deleteDisclaimer": "Delete character and all its data. This action cannot be undone.",
             "oath": "Oath",
             "domain": "Domain",
+            "attackModifier": "Attack Mod",
+            "saveDifficultyClass": "Save DC",
 
             "error": {
                 "nameTooShort": "The name must be at least 2 characters",

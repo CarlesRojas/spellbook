@@ -108,6 +108,8 @@ export const LanguageObjectSchema = z.object({
             deleteDisclaimer: z.string(),
             oath: z.string(),
             domain: z.string(),
+            attackModifier: z.string(),
+            saveDifficultyClass: z.string(),
 
             error: z.object({
                 nameTooShort: z.string(),

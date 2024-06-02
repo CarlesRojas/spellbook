@@ -9,6 +9,8 @@ import {
     getClassBackgroundColor,
     getClassBackgroundColorOnHover,
     getClassColorOnHover,
+    getSaveDifficultyClass,
+    getSpellAttackModifier,
     getTotalSpellSlots,
     showKnownSection,
     showPreparedSection,
@@ -21,7 +23,7 @@ import { ClassType, SpellSection } from "@/type/Spell";
 import { SpellSlots } from "@/type/SpellSlots";
 import { User } from "@/type/User";
 import { useState } from "react";
-import { LuEye, LuEyeOff, LuMinus, LuPencil, LuPlus } from "react-icons/lu";
+import { LuMinus, LuPlus } from "react-icons/lu";
 import { PiCampfireDuotone } from "react-icons/pi";
 
 interface CommonProps {
@@ -47,7 +49,6 @@ const CharacterStatus = (props: Props) => {
     const { t } = useTranslation(language);
 
     const [editDialogOpen, setEditDialogOpen] = useState(false);
-    const [showSpellSlots, setShowSpellSlots] = useState(true);
 
     const updateSpellSlots = useUpdateSpellSlots();
 
@@ -111,39 +112,46 @@ const CharacterStatus = (props: Props) => {
     };
 
     return (
-        <div
-            className={cn(
-                "sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16",
-                !showSpellSlots && "gap-2 md:gap-4",
-            )}
-        >
+        <div className="sticky top-0 z-40 flex w-full max-w-screen-lg flex-col gap-4 border-b border-stone-300 bg-stone-100 p-4 dark:border-stone-700 dark:bg-stone-950 mouse:top-16">
             <div className="flex w-full flex-col items-center gap-2 sm:gap-4 md:flex-row md:justify-between">
-                <div className="relative flex w-full items-center gap-2 md:w-fit">
-                    {getClassIcon(characterClass, "h-12 min-h-12 w-12 -my-2")}
-
-                    <div className="flex w-fit grow flex-col md:grow-0">
-                        <h3 className="truncate font-semibold">{name}</h3>
-
-                        <div className="flex items-baseline gap-3 sm:gap-4">
-                            <span>
-                                <span className="font-medium opacity-50">{t.dnd.level}</span>{" "}
-                                <strong className="font-semibold">{level}</strong>
-                            </span>
-
-                            <span>
-                                <span className="font-medium opacity-50">
-                                    {t.enum.abilityShort[getAbility(characterClass)]}
-                                </span>{" "}
-                                <strong className="font-semibold">{ability}</strong>
-                            </span>
-                        </div>
-                    </div>
-
+                <div className="relative flex w-full items-center gap-4 md:w-fit">
                     <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-                        <DialogTrigger asChild>
-                            <Button variant="outline" size="icon" className="sm:ml-4">
-                                <LuPencil className="h-4 w-4" />
-                            </Button>
+                        <DialogTrigger className="relative flex w-full items-center gap-2 md:w-fit">
+                            {getClassIcon(characterClass, "h-12 min-h-12 w-12 -my-2")}
+
+                            <div className="flex w-fit grow flex-col md:grow-0">
+                                <h3 className="truncate text-left font-semibold">{name}</h3>
+
+                                <div className="flex flex-wrap items-baseline gap-x-3 text-xs sm:gap-4 md:text-sm">
+                                    <span className="flex gap-1">
+                                        <span className="font-medium opacity-50">{t.dnd.level}</span>
+                                        <strong className="font-semibold">{level}</strong>
+                                    </span>
+
+                                    <span className="flex gap-1">
+                                        <span className="font-medium opacity-50">
+                                            {t.enum.abilityShort[getAbility(characterClass)]}
+                                        </span>
+                                        <strong className="font-semibold">{ability}</strong>
+                                    </span>
+
+                                    <span className="flex gap-1">
+                                        <span className="font-medium opacity-50">{t.dnd.character.attackModifier}</span>
+                                        <strong className="font-semibold">
+                                            +{getSpellAttackModifier(characterClass, ability, level)}
+                                        </strong>
+                                    </span>
+
+                                    <span className="flex gap-1">
+                                        <span className="font-medium opacity-50">
+                                            {t.dnd.character.saveDifficultyClass}
+                                        </span>
+                                        <strong className="font-semibold">
+                                            {getSaveDifficultyClass(characterClass, ability, level)}
+                                        </strong>
+                                    </span>
+                                </div>
+                            </div>
                         </DialogTrigger>
 
                         <DialogContent>
@@ -164,26 +172,12 @@ const CharacterStatus = (props: Props) => {
                         </DialogContent>
                     </Dialog>
 
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        className="md:hidden"
-                        onClick={() => setShowSpellSlots((prev) => !prev)}
-                    >
-                        {showSpellSlots ? <LuEyeOff className="h-5 w-5" /> : <LuEye className="h-5 w-5" />}
-                    </Button>
-
                     <Button variant="outline" size="icon" onClick={longRest}>
                         <PiCampfireDuotone className="h-5 w-5" />
                     </Button>
                 </div>
 
-                <div
-                    className={cn(
-                        "relative hidden h-fit w-full min-w-fit items-start justify-between sm:gap-x-2 md:flex md:w-fit md:justify-end lg:gap-x-4",
-                        showSpellSlots && "flex",
-                    )}
-                >
+                <div className="relative flex h-fit w-full min-w-fit items-start justify-between sm:gap-x-2 md:flex md:w-fit md:justify-end lg:gap-x-4">
                     {spellSlotsAvailable &&
                         Object.keys(spellSlotsAvailable)
                             .sort()
