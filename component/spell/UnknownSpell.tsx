@@ -46,7 +46,6 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
     const { index, icon, color, name, level } = spell;
     const isCantrip = level === 0;
     const highestLevelSpellSlot = getHighestLevelSpellSlot(getTotalSpellSlots(character.class, character.level));
-    const isWizard = character.class === ClassType.WIZARD;
 
     const [popoverOpen, setPopoverOpen] = useState(false);
 
@@ -93,9 +92,8 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
     const [learnHigherLevelDialogOpen, setLearnHigherLevelDialogOpen] = useState(false);
     const onLearnSpell = (bypassMax: boolean, bypassHigherLevel: boolean) => {
         setPopoverOpen(false);
-        if (!bypassMax && maxKnownSpells !== null && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
-        if (!bypassHigherLevel && !isWizard && level > highestLevelSpellSlot)
-            return setLearnHigherLevelDialogOpen(true);
+        if (!bypassMax && knownSpells >= maxKnownSpells) return setLearnDialogOpen(true);
+        if (!bypassHigherLevel && level > highestLevelSpellSlot) return setLearnHigherLevelDialogOpen(true);
 
         learnSpell.mutate({ characterId: character.id, spellIndex: index, spell });
         toast.custom((currToast) => (
@@ -200,7 +198,7 @@ const UnknownSpell = ({ spell, language, character }: Props) => {
     const addSpellText: Record<ClassType, string> = {
         [ClassType.WIZARD]: isKnown
             ? t.dnd.spell.removeFromSpellbook
-            : `${t.dnd.spell.addToSpellbook} (${knownSpells})`,
+            : `${t.dnd.spell.addToSpellbook} (${knownSpells}/${maxKnownSpells})`,
         [ClassType.SORCERER]: isKnown ? t.dnd.spell.forget : `${t.dnd.spell.learn} (${knownSpells}/${maxKnownSpells})`,
         [ClassType.CLERIC]: isPrepared
             ? t.dnd.spell.unprepare

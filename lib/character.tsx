@@ -19,8 +19,8 @@ export const getAbility = (classType: ClassType) => {
 };
 
 export const getKnowSpellsAmount = (classType: ClassType, level: number) => {
-    const map: Record<ClassType, ArrayWith20Positions<number> | null> = {
-        [ClassType.WIZARD]: null,
+    const map: Record<ClassType, ArrayWith20Positions<number>> = {
+        [ClassType.WIZARD]: [6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44],
         [ClassType.SORCERER]: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12, 13, 13, 14, 14, 15, 15, 15, 15],
         [ClassType.CLERIC]: ZERO,
         [ClassType.PALADIN]: ZERO,
@@ -31,7 +31,7 @@ export const getKnowSpellsAmount = (classType: ClassType, level: number) => {
     };
 
     const knownSpellsPerLevel = map[classType];
-    return knownSpellsPerLevel ? knownSpellsPerLevel[level - 1] : null;
+    return knownSpellsPerLevel[level - 1];
 };
 
 export const showKnownSection = (classType: ClassType) => {
@@ -50,14 +50,16 @@ export const showKnownSection = (classType: ClassType) => {
 };
 
 export const getPreparedSpellsAmount = (classType: ClassType, ability: number, level: number) => {
+    const abilityModifier = Math.floor((ability - 10) / 2);
+
     const map: Record<ClassType, number> = {
-        [ClassType.WIZARD]: Math.max(1, ability + level),
+        [ClassType.WIZARD]: Math.max(1, abilityModifier + level),
         [ClassType.SORCERER]: 0,
-        [ClassType.CLERIC]: Math.max(1, ability + level),
-        [ClassType.PALADIN]: Math.max(1, ability + Math.floor(level / 2)),
+        [ClassType.CLERIC]: Math.max(1, abilityModifier + level),
+        [ClassType.PALADIN]: Math.max(1, abilityModifier + Math.floor(level / 2)),
         [ClassType.RANGER]: 0,
         [ClassType.BARD]: 0,
-        [ClassType.DRUID]: Math.max(1, ability + level),
+        [ClassType.DRUID]: Math.max(1, abilityModifier + level),
         [ClassType.WARLOCK]: 0,
     };
 
@@ -102,6 +104,42 @@ export const getCantripsAmount = (classType: ClassType, level: number) => {
 export const getProficiencyBonus = (level: number) => {
     const proficiencyBonus: ArrayWith20Positions<number> = [2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6];
     return proficiencyBonus[level - 1];
+};
+
+// TODO show this?
+export const getSaveDifficultyClass = (classType: ClassType, ability: number, level: number) => {
+    const abilityModifier = Math.floor((ability - 10) / 2);
+
+    const map: Record<ClassType, number> = {
+        [ClassType.WIZARD]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.SORCERER]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.CLERIC]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.PALADIN]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.RANGER]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.BARD]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.DRUID]: 8 + getProficiencyBonus(level) + abilityModifier,
+        [ClassType.WARLOCK]: 8 + getProficiencyBonus(level) + abilityModifier,
+    };
+
+    return map[classType];
+};
+
+// TODO show this?
+export const getSpellAttackModifier = (classType: ClassType, ability: number, level: number) => {
+    const abilityModifier = Math.floor((ability - 10) / 2);
+
+    const map: Record<ClassType, number> = {
+        [ClassType.WIZARD]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.SORCERER]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.CLERIC]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.PALADIN]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.RANGER]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.BARD]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.DRUID]: getProficiencyBonus(level) + abilityModifier,
+        [ClassType.WARLOCK]: getProficiencyBonus(level) + abilityModifier,
+    };
+
+    return map[classType];
 };
 
 export const getClassColor = (classType: ClassType) => {
