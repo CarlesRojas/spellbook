@@ -29,6 +29,7 @@ import {
     Component,
     ComponentsSchema,
     DamageType,
+    DifficultyClassSuccess,
     Duration,
     RangeType,
     School,
@@ -71,8 +72,8 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
             z.null(),
         ]),
         hasAreaOfEffect: z.boolean(),
-        areaOfEffectSize: z.number(),
-        areaOfEffectType: z.nativeEnum(AreaOfEffectType),
+        areaOfEffectSize: z.number().optional().nullable(),
+        areaOfEffectType: z.nativeEnum(AreaOfEffectType).optional().nullable(),
         ritual: z.boolean(),
         duration: z.nativeEnum(Duration),
         concentration: z.boolean(),
@@ -97,8 +98,8 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
             components: [],
             material: null,
             hasAreaOfEffect: false,
-            areaOfEffectSize: 1,
-            areaOfEffectType: AreaOfEffectType.CUBE,
+            areaOfEffectSize: null,
+            areaOfEffectType: null,
             ritual: false,
             duration: Duration.INSTANTANEOUS,
             concentration: false,
@@ -110,19 +111,52 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
             difficultyClassType: Ability.STR,
             level: 1,
             icon: getRandomSpellIcon(),
-            color: SpellColor.ACID,
+            color: SpellColor.SHOCK,
         },
     });
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
-        // TODO
-        console.log(values);
-        // createSpell.mutate({
-        //     userEmail: user.email,
-        //     userName: user.name,
-        //     ...values,
-        // });
-        // onClose?.();
+        createSpell.mutate({
+            spell: {
+                index: "",
+                name: { id: 0, en: values.name, es: values.name },
+                description: { id: 0, en: values.description, es: values.description },
+                highLevelDescription: values.highLevelDescription
+                    ? { id: 0, en: values.highLevelDescription, es: values.highLevelDescription }
+                    : undefined,
+                range: values.range,
+                components: values.components,
+                material: values.material ? { id: 0, en: values.material, es: values.material } : undefined,
+                areaOfEffect:
+                    values.hasAreaOfEffect && values.areaOfEffectSize && values.areaOfEffectType
+                        ? {
+                              size: values.areaOfEffectSize,
+                              type: values.areaOfEffectType,
+                          }
+                        : undefined,
+
+                ritual: values.ritual,
+                duration: values.duration,
+                concentration: values.concentration,
+                castingTime: values.castingTime,
+                attackType: values.attackType ?? undefined,
+                school: values.school,
+                classes: values.classes,
+                damage: values.damageType ? { type: values.damageType } : undefined,
+                subclasses: [],
+                difficultyClass: values.difficultyClassType
+                    ? {
+                          type: values.difficultyClassType,
+                          success: DifficultyClassSuccess.OTHER,
+                      }
+                    : undefined,
+                level: values.level,
+                icon: values.icon,
+                color: values.color,
+            },
+            userId: user.id,
+        });
+        onClose?.();
     };
 
     const currentSpellColor = form.watch("color");
@@ -169,6 +203,43 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                                         />
                                     )}
                                 />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="color"
+                        render={({ field }) => (
+                            <FormItem className="space-y-1">
+                                <FormLabel>{t.dnd.newSpell.iconColor}</FormLabel>
+                                <FormControl>
+                                    <div className="flex flex-wrap gap-3">
+                                        {Object.values(SpellColor)
+                                            .reverse()
+                                            .map((color) => (
+                                                <FormItem key={color} className="group flex min-w-fit items-center">
+                                                    <FormControl>
+                                                        <Button
+                                                            variant="outline"
+                                                            type="button"
+                                                            disabled={createSpell.isPending || createSpell.isSuccess}
+                                                            onClick={() => field.onChange(color)}
+                                                            className={cn(
+                                                                "h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 rounded-full mouse:transition-all mouse:hover:scale-110",
+                                                                field.value === color &&
+                                                                    "ring-2 ring-stone-950 ring-offset-2 ring-offset-stone-100 dark:ring-stone-400 dark:ring-offset-stone-950",
+                                                            )}
+                                                            style={{
+                                                                backgroundColor: getSpellRawColor(color),
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                </FormItem>
+                                            ))}
+                                    </div>
+                                </FormControl>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
@@ -292,32 +363,6 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                         )}
                     />
 
-                    <div className="flex flex-wrap gap-x-8 gap-y-6">
-                        <FormField
-                            control={form.control}
-                            name="school"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-col gap-2">
-                                    <FormLabel>{t.dnd.newSpell.school}</FormLabel>
-                                    <ResponsiveCombobox
-                                        value={{
-                                            value: field.value,
-                                            label: t.enum.school[field.value],
-                                        }}
-                                        setValue={(value) => {
-                                            field.onChange(value?.value);
-                                        }}
-                                        options={Object.values(School).map((school) => ({
-                                            value: school,
-                                            label: t.enum.school[school],
-                                        }))}
-                                        language={language}
-                                    />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-
                     <FormField
                         control={form.control}
                         name="description"
@@ -417,7 +462,7 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                                             disabled={createSpell.isPending || createSpell.isSuccess}
                                             {...rest}
                                             value={value ?? ""}
-                                            className="font-semibold tracking-wide"
+                                            className="font-medium tracking-wide"
                                         />
                                     </FormControl>
 
@@ -428,6 +473,30 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                     )}
 
                     <div className="flex flex-wrap gap-x-8 gap-y-6">
+                        <FormField
+                            control={form.control}
+                            name="school"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col gap-2">
+                                    <FormLabel>{t.dnd.newSpell.school}</FormLabel>
+                                    <ResponsiveCombobox
+                                        value={{
+                                            value: field.value,
+                                            label: t.enum.school[field.value],
+                                        }}
+                                        setValue={(value) => {
+                                            field.onChange(value?.value);
+                                        }}
+                                        options={Object.values(School).map((school) => ({
+                                            value: school,
+                                            label: t.enum.school[school],
+                                        }))}
+                                        language={language}
+                                    />
+                                </FormItem>
+                            )}
+                        />
+
                         <FormField
                             control={form.control}
                             name="castingTime"
@@ -597,7 +666,14 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                                 <FormControl>
                                     <Switch
                                         checked={field.value}
-                                        onCheckedChange={field.onChange}
+                                        onCheckedChange={(checked) => {
+                                            field.onChange(checked);
+
+                                            if (!checked) {
+                                                form.setValue("areaOfEffectSize", null);
+                                                form.setValue("areaOfEffectType", null);
+                                            }
+                                        }}
                                         disabled={createSpell.isPending || createSpell.isSuccess}
                                     />
                                 </FormControl>
@@ -612,7 +688,7 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             <FormField
                                 control={form.control}
                                 name="areaOfEffectSize"
-                                render={({ field: { value, ...rest } }) => (
+                                render={({ field: { value, onChange, ...rest } }) => (
                                     <FormItem className="space-y-1">
                                         <FormLabel>{t.dnd.newSpell.areaOfEffectSize}</FormLabel>
                                         <FormControl>
@@ -621,7 +697,14 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                                                 disabled={createSpell.isPending || createSpell.isSuccess}
                                                 {...rest}
                                                 value={value ?? ""}
-                                                className="font-semibold tracking-wide"
+                                                onChange={(event) =>
+                                                    onChange(
+                                                        isNaN(parseInt(event.target.value))
+                                                            ? null
+                                                            : parseInt(event.target.value),
+                                                    )
+                                                }
+                                                className="font-medium tracking-wide"
                                             />
                                         </FormControl>
 
@@ -639,7 +722,7 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                                         <FormControl>
                                             <RadioGroup
                                                 onValueChange={field.onChange}
-                                                defaultValue={field.value}
+                                                defaultValue={field.value ?? undefined}
                                                 disabled={createSpell.isPending || createSpell.isSuccess}
                                                 className="flex flex-wrap gap-2"
                                             >

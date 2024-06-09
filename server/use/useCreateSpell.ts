@@ -34,6 +34,7 @@ const createSpellWithTranslations = async ({ spell, userId }: Mutation) => {
 
     const dbSpell: DbSpell = {
         ...spell,
+        index: `user-${userId}_spell-${spell.name.en.replace(" ", "-").replace(/[^a-zA-Z0-9]/g, "")}`,
         nameId,
         descriptionId,
         highLevelDescriptionId,
