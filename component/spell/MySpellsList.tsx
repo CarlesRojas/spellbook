@@ -1,8 +1,11 @@
 "use client";
 
 import ScrollToTop from "@/component/ScrollToTop";
+import CreateSpellForm from "@/component/character/CreateSpellForm";
 import QueryFilter from "@/component/filter/QueryFilter";
 import UserSpellItem from "@/component/spell/UserSpellItem";
+import { Button } from "@/component/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
@@ -10,6 +13,8 @@ import { cn } from "@/lib/util";
 import { useUserSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
+import { useState } from "react";
+import { LuPlus } from "react-icons/lu";
 import { z } from "zod";
 
 interface Props {
@@ -23,6 +28,8 @@ const MySpellsList = ({ language, user }: Props) => {
     const [query, setQuery] = useUrlState("query", "", z.string());
 
     const spells = useUserSpells(user.id);
+
+    const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
     const filteredSpells = spells.data
         ? spells.data
@@ -40,7 +47,26 @@ const MySpellsList = ({ language, user }: Props) => {
 
     return (
         <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col p-4">
-            <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
+            <div className="sticky top-4 z-10 mouse:top-20">
+                <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
+                    <DialogTrigger asChild>
+                        <Button>
+                            <LuPlus className="mr-3 h-4 w-4 stroke-[3]" />
+                            {t.dnd.newSpell.createSpell}
+                        </Button>
+                    </DialogTrigger>
+
+                    <DialogContent position="top" className="md:w-full">
+                        <DialogHeader>
+                            <DialogTitle>{t.dnd.newSpell.createSpell}</DialogTitle>
+                        </DialogHeader>
+
+                        <CreateSpellForm user={user} language={language} onClose={() => setCreateDialogOpen(false)} />
+                    </DialogContent>
+                </Dialog>
+            </div>
+
+            <div className="mt-4 flex w-full flex-col justify-end gap-2 md:flex-row">
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
             </div>
 

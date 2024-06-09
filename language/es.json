@@ -251,6 +251,49 @@
             }
         },
 
+        "newSpell": {
+            "createSpell": "Crear nuevo hechizo",
+            "name": "Elige un nombre",
+            "description": "Descripción",
+            "descriptionTip": "Usa el formato 2d12 para lanzamientos de dados para obtener:",
+            "highLevelDescription": "Descripción para niveles superiores",
+            "range": "Rango",
+            "components": "Componentes",
+            "material": "Descripción del material",
+            "hasAreaOfEffect": "¿Tiene un área de efecto?",
+            "areaOfEffectSize": "Tamaño del área de efecto",
+            "areaOfEffectType": "Tipo de área de efecto",
+            "ritual": "¿Es un ritual?",
+            "duration": "Duración",
+            "concentration": "¿Requiere concentración?",
+            "castingTime": "Tiempo de lanzamiento",
+            "attackType": "Tipo de ataque",
+            "school": "Escuela",
+            "classes": "Clases que pueden usar este hechizo",
+            "subclasses": "Subclases que pueden usar este hechizo",
+            "damageType": "Tipo de daño",
+            "difficultyClassType": "Tipo de clase de dificultad",
+            "level": "Nivel",
+            "icon": "Icono",
+            "iconColor": "Color del icono",
+            "noAttackType": "Ninguno",
+            "noDamageType": "Ninguno",
+            "noDifficultyClassType": "Ninguna",
+
+            "error": {
+                "nameTooShort": "El nombre debe tener al menos 2 caracteres",
+                "nameTooLong": "El nombre debe tener no más de 32 caracteres",
+
+                "descriptionTooShort": "La descripción debe tener al menos 2 caracteres",
+                "descriptionTooLong": "La descripción debe tener no más de 1024 caracteres",
+
+                "highLevelDescriptionTooLong": "La descripción para niveles superiores debe tener no más de 1024 caracteres",
+
+                "materialTooShort": "La descripción del material debe tener al menos 2 caracteres",
+                "materialTooLong": "El material debe tener no más de 64 caracteres"
+            }
+        },
+
         "spell": {
             "all": "Todos",
             "known": "Conocidos",
@@ -361,6 +404,9 @@
         "cancel": "Cancelar",
         "edit": "Editar",
         "confirm": "Confirmar",
-        "close": "Cerrar"
+        "close": "Cerrar",
+        "select": "Seleccionar",
+        "filter": "Filtrar...",
+        "noResults": "Sin resultados"
     }
 }

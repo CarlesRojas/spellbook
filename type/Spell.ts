@@ -168,16 +168,16 @@ export enum SpellColor {
     SHOCK = "SHOCK",
 }
 
-const AreaOfEffectSchema = z.object({
+export const AreaOfEffectSchema = z.object({
     size: z.number(),
     type: z.nativeEnum(AreaOfEffectType),
 });
 export type AreaOfEffect = z.infer<typeof AreaOfEffectSchema>;
 
-const ClassListSchema = z.array(z.nativeEnum(ClassType));
+export const ClassListSchema = z.array(z.nativeEnum(ClassType));
 export type ClassList = z.infer<typeof ClassListSchema>;
 
-const SubclassListSchema = z.array(z.nativeEnum(Subclass));
+export const SubclassListSchema = z.array(z.nativeEnum(Subclass));
 export type SubclassList = z.infer<typeof SubclassListSchema>;
 
 const DamageSchema = z.object({
@@ -200,7 +200,7 @@ const DifficultyClassSchema = z.object({
 });
 export type DifficultyClass = z.infer<typeof DifficultyClassSchema>;
 
-const ComponentsSchema = z.array(z.nativeEnum(Component));
+export const ComponentsSchema = z.array(z.nativeEnum(Component));
 export type Components = z.infer<typeof ComponentsSchema>;
 
 export const DbSpellSchema = z.object({

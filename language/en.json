@@ -251,6 +251,49 @@
             }
         },
 
+        "newSpell": {
+            "createSpell": "Create new spell",
+            "name": "Choose a name",
+            "description": "Description",
+            "descriptionTip": "Use the format 2d12 for die throws to get:",
+            "highLevelDescription": "Higher level description",
+            "range": "Range",
+            "components": "Components",
+            "material": "Material description",
+            "hasAreaOfEffect": "Does it have an area of effect?",
+            "areaOfEffectSize": "Area of effect size",
+            "areaOfEffectType": "Area of effect type",
+            "ritual": "Is it a ritual?",
+            "duration": "Duration",
+            "concentration": "Does it require concentration?",
+            "castingTime": "Casting time",
+            "attackType": "Attack type",
+            "school": "School",
+            "classes": "Classes that can use this spell",
+            "subclasses": "Subclasses that can use this spell",
+            "damageType": "Damage type",
+            "difficultyClassType": "Difficulty class type",
+            "level": "Level",
+            "icon": "Icon",
+            "iconColor": "Icon color",
+            "noAttackType": "None",
+            "noDamageType": "None",
+            "noDifficultyClassType": "None",
+
+            "error": {
+                "nameTooShort": "The name must be at least 2 characters",
+                "nameTooLong": "The name must be no more than 32 characters",
+
+                "descriptionTooShort": "The description must be at least 2 characters",
+                "descriptionTooLong": "The description must be no more than 1024 characters",
+
+                "highLevelDescriptionTooLong": "The high level description must be no more than 1024 characters",
+
+                "materialTooShort": "The material description must be at least 2 characters",
+                "materialTooLong": "The material must be no more than 64 characters"
+            }
+        },
+
         "spell": {
             "all": "All",
             "known": "Known",
@@ -361,6 +404,9 @@
         "cancel": "Cancel",
         "edit": "Edit",
         "confirm": "Confirm",
-        "close": "Close"
+        "close": "Close",
+        "select": "Select",
+        "filter": "Filter...",
+        "noResults": "No results"
     }
 }
