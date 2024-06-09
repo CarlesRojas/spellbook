@@ -54,6 +54,16 @@ const Links = ({ language }: Props) => {
                 ) : (
                     signInButton(t.enum.route[Route.CHARACTERS], `/${language}${Route.CHARACTERS}`)
                 )}
+
+                {user.data ? (
+                    <Button asChild variant="link" className={route === Route.MY_SPELLS ? "!text-sky-500" : ""}>
+                        <Link href={`/${language}${Route.MY_SPELLS}/${user.data.id}`}>
+                            {t.enum.route[Route.MY_SPELLS]}
+                        </Link>
+                    </Button>
+                ) : (
+                    signInButton(t.enum.route[Route.MY_SPELLS], `/${language}${Route.MY_SPELLS}`)
+                )}
             </div>
 
             <div className="flex md:hidden">
@@ -97,6 +107,18 @@ const Links = ({ language }: Props) => {
                             </Link>
                         ) : (
                             signInDropdownButton(t.enum.route[Route.CHARACTERS], `/${language}${Route.CHARACTERS}`)
+                        )}
+
+                        {user.data ? (
+                            <Link href={`/${language}${Route.MY_SPELLS}/${user.data.id}`}>
+                                <DropdownMenuItem
+                                    className={`font-semibold ${route === Route.MY_SPELLS ? "!text-sky-500" : ""}`}
+                                >
+                                    {t.enum.route[Route.MY_SPELLS]}
+                                </DropdownMenuItem>
+                            </Link>
+                        ) : (
+                            signInDropdownButton(t.enum.route[Route.MY_SPELLS], `/${language}${Route.MY_SPELLS}`)
                         )}
                     </DropdownMenuContent>
                 </DropdownMenu>

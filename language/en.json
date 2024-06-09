@@ -29,6 +29,7 @@
         "route": {
             "/": "Spells",
             "/spell": "Spell",
+            "/my-spells": "My Spells",
             "/characters": "Characters",
             "/character": "Character"
         },

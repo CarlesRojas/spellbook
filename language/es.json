@@ -29,6 +29,7 @@
         "route": {
             "/": "Hechizos",
             "/spell": "Hechizo",
+            "/my-spells": "Mis hechizos",
             "/characters": "Personajes",
             "/character": "Personaje"
         },

@@ -60,6 +60,20 @@ export const getAllSpells = async (userId?: number) => {
     return result.map(toSpell);
 };
 
+export const getUserSpells = async (userId: number) => {
+    const result = await db.query.spell.findMany({
+        with: {
+            name: true,
+            description: true,
+            highLevelDescription: true,
+            material: true,
+        },
+        where: (spell, { eq }) => eq(spell.userId, userId),
+    });
+
+    return result.map(toSpell);
+};
+
 export const clearSpells = async () => {
     await db.delete(spell).execute();
 };

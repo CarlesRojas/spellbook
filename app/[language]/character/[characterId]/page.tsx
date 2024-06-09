@@ -21,7 +21,7 @@ interface Props extends PageProps {
 const Characters = ({ params: { language, characterId } }: Props) => {
     const character = useCharacter(characterId);
     const { user } = useUser();
-    const spells = useSpells();
+    const spells = useSpells(user.data?.id);
 
     const [spellSection, setSpellSection] = useUrlState("spells", SpellSection.ALL, z.nativeEnum(SpellSection));
 

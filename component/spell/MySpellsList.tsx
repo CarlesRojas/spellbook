@@ -2,38 +2,39 @@
 
 import ScrollToTop from "@/component/ScrollToTop";
 import QueryFilter from "@/component/filter/QueryFilter";
-import SpellItem from "@/component/spell/SpellItem";
+import UserSpellItem from "@/component/spell/UserSpellItem";
 import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
 import { cn } from "@/lib/util";
-import { GetAllSpellsReturnType, useSpellsPreloaded } from "@/server/use/useSpells";
-import { useUser } from "@/server/use/useUser";
+import { useUserSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
+import { User } from "@/type/User";
 import { z } from "zod";
 
 interface Props {
     language: Language;
-    initialSpellsData: GetAllSpellsReturnType;
+    user: User;
 }
 
-const SpellList = ({ language, initialSpellsData }: Props) => {
+const MySpellsList = ({ language, user }: Props) => {
     const { t } = useTranslation(language);
 
     const [query, setQuery] = useUrlState("query", "", z.string());
 
-    const { user } = useUser();
-    const spells = useSpellsPreloaded(initialSpellsData, user.data?.id);
+    const spells = useUserSpells(user.id);
 
     const filteredSpells = spells.data
-        .filter((spell) => {
-            if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
-            return true;
-        })
-        .sort((a, b) => {
-            if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
-            return a.level - b.level;
-        });
+        ? spells.data
+              .filter((spell) => {
+                  if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
+                  return true;
+              })
+              .sort((a, b) => {
+                  if (a.level === b.level) return a.name[language].localeCompare(b.name[language]);
+                  return a.level - b.level;
+              })
+        : [];
 
     const spellsByLevel = getSpellsByLevel(filteredSpells);
 
@@ -62,7 +63,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
                         </h2>
 
                         {spells.map((spell) => (
-                            <SpellItem key={spell.index} language={language} spell={spell} />
+                            <UserSpellItem key={spell.index} language={language} spell={spell} />
                         ))}
                     </div>
                 ))}
@@ -73,4 +74,4 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
     );
 };
 
-export default SpellList;
+export default MySpellsList;

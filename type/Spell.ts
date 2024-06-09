@@ -225,6 +225,7 @@ export const DbSpellSchema = z.object({
     level: z.number(),
     icon: z.string(),
     color: z.nativeEnum(SpellColor),
+    userId: z.number().optional().nullable(),
 });
 export type DbSpell = z.infer<typeof DbSpellSchema>;
 
