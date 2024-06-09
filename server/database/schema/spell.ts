@@ -1,5 +1,6 @@
 import { knownSpells } from "@/server/database/schema/relations/knownSpells";
 import { translation } from "@/server/database/schema/translation";
+import { user } from "@/server/database/schema/user";
 import { AreaOfEffect, ClassList, Components, Damage, DifficultyClass, SubclassList } from "@/type/Spell";
 import { relations } from "drizzle-orm";
 import { boolean, integer, json, pgTable, text } from "drizzle-orm/pg-core";
@@ -32,6 +33,7 @@ export const spell = pgTable("spell", {
     level: integer("level").notNull(),
     icon: text("icon").notNull(),
     color: text("color").notNull(),
+    userId: integer("userId").references(() => user.id, { onDelete: "cascade" }),
 });
 
 export const spellRelations = relations(spell, ({ many, one }) => ({
@@ -53,6 +55,11 @@ export const spellRelations = relations(spell, ({ many, one }) => ({
     material: one(translation, {
         fields: [spell.materialId],
         references: [translation.id],
+    }),
+
+    user: one(user, {
+        fields: [spell.userId],
+        references: [user.id],
     }),
 
     known: many(knownSpells),

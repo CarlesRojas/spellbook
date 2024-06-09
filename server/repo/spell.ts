@@ -44,7 +44,7 @@ export const existsSpell = async (index: string) => {
     return !!result;
 };
 
-export const getAllSpells = async () => {
+export const getAllSpells = async (userId?: number) => {
     const result = await db.query.spell.findMany({
         with: {
             name: true,
@@ -52,6 +52,9 @@ export const getAllSpells = async () => {
             highLevelDescription: true,
             material: true,
         },
+        where: userId
+            ? (spell, { eq, isNull, or }) => or(isNull(spell.userId), eq(spell.userId, userId))
+            : (spell, { isNull }) => isNull(spell.userId),
     });
 
     return result.map(toSpell);
