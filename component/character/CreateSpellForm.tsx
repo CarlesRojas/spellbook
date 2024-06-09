@@ -1,5 +1,6 @@
+import { getClassIcon } from "@/component/character/CharacterItem";
 import { Button } from "@/component/ui/button";
-import { ResponsiveCombobox } from "@/component/ui/combobox";
+import { ResponsiveCombobox, ResponsiveCustomCombobox } from "@/component/ui/combobox";
 import { DialogClose, DialogFooter } from "@/component/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/component/ui/form";
 import { Input } from "@/component/ui/input";
@@ -7,7 +8,14 @@ import { RadioGroup, RadioGroupItem } from "@/component/ui/radio-group";
 import { Switch } from "@/component/ui/switch";
 import { Textarea } from "@/component/ui/textarea";
 import { useTranslation } from "@/hook/useTranslation";
-import { getSpellBackground, getSpellBackgroundOnHover, getSpellBorder, getSpellColor } from "@/lib/spell";
+import { getClassBorderColor, getClassColor } from "@/lib/character";
+import {
+    getSpellBackground,
+    getSpellBackgroundOnHover,
+    getSpellBorder,
+    getSpellColor,
+    getSpellRawColor,
+} from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useCreateSpell } from "@/server/use/useCreateSpell";
 import { Language } from "@/type/Language";
@@ -17,6 +25,7 @@ import {
     AttackType,
     CastingTime,
     ClassListSchema,
+    ClassType,
     Component,
     ComponentsSchema,
     DamageType,
@@ -24,13 +33,12 @@ import {
     RangeType,
     School,
     SpellColor,
-    SubclassListSchema,
 } from "@/type/Spell";
 import { SpellIcon, getRandomSpellIcon } from "@/type/SpellIcon";
 import { User } from "@/type/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LuLoader2, LuPlus } from "react-icons/lu";
+import { LuLoader2, LuMinus, LuPlus } from "react-icons/lu";
 import { z } from "zod";
 
 interface Props {
@@ -72,7 +80,6 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
         attackType: z.nativeEnum(AttackType).optional().nullable(),
         school: z.nativeEnum(School),
         classes: ClassListSchema,
-        subclasses: SubclassListSchema,
         damageType: z.nativeEnum(DamageType).optional().nullable(),
         difficultyClassType: z.nativeEnum(Ability).optional().nullable(),
         level: z.number().min(1).max(20),
@@ -99,9 +106,8 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
             attackType: undefined,
             school: School.EVOCATION,
             classes: [],
-            subclasses: [],
             damageType: undefined,
-            difficultyClassType: Ability.INT,
+            difficultyClassType: Ability.STR,
             level: 1,
             icon: getRandomSpellIcon(),
             color: SpellColor.ACID,
@@ -127,24 +133,166 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                 <div className="h-fit max-h-[75vh] space-y-6 overflow-auto px-3 pb-1">
                     <FormField
                         control={form.control}
-                        name="name"
+                        name="icon"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-col gap-2">
+                                <FormLabel>{t.dnd.newSpell.icon}</FormLabel>
+
+                                <ResponsiveCustomCombobox
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    options={Object.values(SpellIcon)}
+                                    component={(value) => (
+                                        <div
+                                            className="h-full w-full"
+                                            style={{
+                                                backgroundImage: `url(/spell/${value})`,
+                                                maskImage: `url(/spell/${value})`,
+                                                maskMode: "alpha",
+                                                maskSize: "cover",
+                                                backgroundBlendMode: "luminosity",
+                                                backgroundColor: getSpellRawColor(form.watch("color")),
+                                            }}
+                                        />
+                                    )}
+                                    triggerComponent={(value) => (
+                                        <div
+                                            className="inline-block aspect-square max-h-full w-full max-w-full bg-cover brightness-90 dark:brightness-100 mouse:cursor-pointer mouse:transition-transform mouse:hover:scale-110"
+                                            style={{
+                                                backgroundImage: `url(/spell/${value})`,
+                                                maskImage: `url(/spell/${value})`,
+                                                maskMode: "alpha",
+                                                maskSize: "cover",
+                                                backgroundBlendMode: "luminosity",
+                                                backgroundColor: getSpellRawColor(form.watch("color")),
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </FormItem>
+                        )}
+                    />
+
+                    <div className="flex flex-col flex-wrap gap-x-8 gap-y-6 sm:flex-row">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem className="grow space-y-1">
+                                    <FormLabel>{t.dnd.newSpell.name}</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            disabled={createSpell.isPending || createSpell.isSuccess}
+                                            {...field}
+                                            className="font-semibold tracking-wide"
+                                        />
+                                    </FormControl>
+
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="level"
+                            render={({ field }) => (
+                                <FormItem className="space-y-1">
+                                    <FormLabel>{t.dnd.character.level}</FormLabel>
+                                    <FormControl>
+                                        <div className="flex items-center gap-4">
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={
+                                                    field.value <= 1 || createSpell.isPending || createSpell.isSuccess
+                                                }
+                                                onClick={() => field.onChange(field.value - 1)}
+                                            >
+                                                <LuMinus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+
+                                            <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
+                                                {field.value}
+                                            </p>
+
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                type="button"
+                                                disabled={
+                                                    field.value >= 20 || createSpell.isPending || createSpell.isSuccess
+                                                }
+                                                onClick={() => field.onChange(field.value + 1)}
+                                            >
+                                                <LuPlus className="h-4 w-4 stroke-[3]" />
+                                            </Button>
+                                        </div>
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </div>
+
+                    <FormField
+                        control={form.control}
+                        name="classes"
                         render={({ field }) => (
                             <FormItem className="space-y-1">
-                                <FormLabel>{t.dnd.newSpell.name}</FormLabel>
+                                <FormLabel>{t.dnd.newSpell.classes}</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        disabled={createSpell.isPending || createSpell.isSuccess}
-                                        {...field}
-                                        className="font-semibold tracking-wide"
-                                    />
-                                </FormControl>
+                                    <div className="flex flex-wrap gap-2">
+                                        {Object.values(ClassType).map((classType) => (
+                                            <FormItem key={classType} className="group flex min-w-fit items-center">
+                                                <FormControl>
+                                                    <Button
+                                                        variant="outline"
+                                                        type="button"
+                                                        disabled={createSpell.isPending || createSpell.isSuccess}
+                                                        onClick={() =>
+                                                            field.onChange(
+                                                                field.value.includes(classType)
+                                                                    ? field.value.filter((elem) => elem !== classType)
+                                                                    : [...field.value, classType],
+                                                            )
+                                                        }
+                                                        className={cn(
+                                                            field.value.includes(classType) &&
+                                                                getClassBorderColor(classType),
+                                                        )}
+                                                    >
+                                                        {getClassIcon(
+                                                            classType,
+                                                            cn(
+                                                                "h-7 min-h-7 w-7 min-w-7 text-stone-600 dark:text-stone-400 mouse:transition-colors",
+                                                                field.value.includes(classType) &&
+                                                                    getClassColor(classType),
+                                                            ),
+                                                        )}
 
+                                                        <p
+                                                            className={cn(
+                                                                "ml-2",
+                                                                field.value.includes(classType) &&
+                                                                    getClassColor(classType),
+                                                            )}
+                                                        >
+                                                            {t.enum.class[classType]}
+                                                        </p>
+                                                    </Button>
+                                                </FormControl>
+                                            </FormItem>
+                                        ))}
+                                    </div>
+                                </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
 
-                    <div className="flex flex-wrap gap-x-8">
+                    <div className="flex flex-wrap gap-x-8 gap-y-6">
                         <FormField
                             control={form.control}
                             name="school"
@@ -279,7 +427,7 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                         />
                     )}
 
-                    <div className="flex flex-wrap gap-x-8">
+                    <div className="flex flex-wrap gap-x-8 gap-y-6">
                         <FormField
                             control={form.control}
                             name="castingTime"
@@ -376,6 +524,64 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                                         }))}
                                         language={language}
                                         placeholder={t.dnd.newSpell.noAttackType}
+                                    />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="damageType"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col gap-2">
+                                    <FormLabel>{t.dnd.newSpell.damageType}</FormLabel>
+                                    <ResponsiveCombobox
+                                        value={
+                                            field.value
+                                                ? {
+                                                      value: field.value,
+                                                      label: t.enum.damageType[field.value],
+                                                  }
+                                                : null
+                                        }
+                                        setValue={(value) => {
+                                            field.onChange(value?.value ?? null);
+                                        }}
+                                        options={Object.values(DamageType).map((damageTypeType) => ({
+                                            value: damageTypeType,
+                                            label: t.enum.damageType[damageTypeType],
+                                        }))}
+                                        language={language}
+                                        placeholder={t.dnd.newSpell.noDamageType}
+                                    />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="difficultyClassType"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col gap-2">
+                                    <FormLabel>{t.dnd.newSpell.difficultyClassType}</FormLabel>
+                                    <ResponsiveCombobox
+                                        value={
+                                            field.value
+                                                ? {
+                                                      value: field.value,
+                                                      label: t.enum.ability[field.value],
+                                                  }
+                                                : null
+                                        }
+                                        setValue={(value) => {
+                                            field.onChange(value?.value ?? null);
+                                        }}
+                                        options={Object.values(Ability).map((ability) => ({
+                                            value: ability,
+                                            label: t.enum.ability[ability],
+                                        }))}
+                                        language={language}
+                                        placeholder={t.dnd.newSpell.noDifficultyClassType}
                                     />
                                 </FormItem>
                             )}

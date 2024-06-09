@@ -25,12 +25,12 @@ interface ResponsiveComboboxProps {
 export const ResponsiveCombobox = ({ value, setValue, options, language, placeholder }: ResponsiveComboboxProps) => {
     const { t } = useTranslation(language);
 
-    const [castingTimeOpen, setCastingTimeOpen] = useState(false);
+    const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     if (isDesktop)
         return (
-            <Popover open={castingTimeOpen} onOpenChange={setCastingTimeOpen}>
+            <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <Button variant="outline" className="justify-start">
                         {value ? <> {value.label}</> : <>{placeholder ?? t.form.select}</>}
@@ -41,7 +41,7 @@ export const ResponsiveCombobox = ({ value, setValue, options, language, placeho
 
                 <PopoverContent className="w-[200px] p-0" align="start">
                     <ComboboxList
-                        setOpen={setCastingTimeOpen}
+                        setOpen={setOpen}
                         setSelected={(elem) => setValue(elem)}
                         options={options}
                         language={language}
@@ -51,7 +51,7 @@ export const ResponsiveCombobox = ({ value, setValue, options, language, placeho
         );
 
     return (
-        <Drawer open={castingTimeOpen} onOpenChange={setCastingTimeOpen}>
+        <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
                 <Button variant="outline" className="justify-start">
                     {value ? <> {value.label}</> : <>{placeholder ?? t.form.select}</>}
@@ -63,7 +63,7 @@ export const ResponsiveCombobox = ({ value, setValue, options, language, placeho
             <DrawerContent>
                 <div className="mt-4">
                     <ComboboxList
-                        setOpen={setCastingTimeOpen}
+                        setOpen={setOpen}
                         setSelected={(elem) => setValue(elem)}
                         options={options}
                         language={language}
@@ -77,7 +77,7 @@ export const ResponsiveCombobox = ({ value, setValue, options, language, placeho
 
 interface ComboboxProps {
     setOpen: (open: boolean) => void;
-    setSelected: (status: ComboboxListItem | null) => void;
+    setSelected: (value: ComboboxListItem | null) => void;
     options: ComboboxListItem[];
     language: Language;
     showInput?: boolean;
@@ -110,5 +110,85 @@ export const ComboboxList = ({ setOpen, setSelected, options, language, showInpu
                 </CommandGroup>
             </CommandList>
         </Command>
+    );
+};
+
+interface ResponsiveCustomComboboxProps<T> {
+    value: T;
+    onChange: (value: T) => void;
+    options: T[];
+    component: (value: T) => JSX.Element;
+    triggerComponent: (value: T) => JSX.Element;
+}
+
+export const ResponsiveCustomCombobox = <T,>({
+    value,
+    onChange,
+    options,
+    component,
+    triggerComponent,
+}: ResponsiveCustomComboboxProps<T>) => {
+    const [open, setOpen] = useState(false);
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+
+    if (isDesktop)
+        return (
+            <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                    <Button variant="outline" className="h-20 min-h-20 w-20 min-w-20 justify-start p-2">
+                        {triggerComponent(value)}
+                    </Button>
+                </PopoverTrigger>
+
+                <PopoverContent className="max-h-[600px] w-[400px] overflow-y-auto overflow-x-hidden" align="start">
+                    <div className="grid w-full max-w-[95vw] grid-cols-4 gap-3 overflow-y-auto overflow-x-hidden p-3">
+                        {options.map((option, i) => (
+                            <Button
+                                key={i}
+                                variant="menu"
+                                onClick={() => {
+                                    setOpen(false);
+                                    onChange(option);
+                                }}
+                                type="button"
+                                className="inline-block aspect-square h-full max-h-full w-full max-w-full bg-cover p-0 brightness-90 dark:brightness-100 mouse:cursor-pointer mouse:transition-transform mouse:hover:scale-110"
+                            >
+                                {component(option)}
+                            </Button>
+                        ))}
+                    </div>
+                </PopoverContent>
+            </Popover>
+        );
+
+    return (
+        <Drawer open={open} onOpenChange={setOpen}>
+            <DrawerTrigger asChild>
+                <Button variant="outline" className="h-20 min-h-20 w-20 min-w-20 justify-start p-2">
+                    {triggerComponent(value)}
+                </Button>
+            </DrawerTrigger>
+
+            <DrawerContent>
+                <div className="mt-4 max-h-[600px] w-full overflow-y-auto overflow-x-hidden">
+                    <div className="grid w-full grid-cols-4 gap-3 overflow-y-auto overflow-x-hidden p-3">
+                        {options.map((option, i) => (
+                            <Button
+                                key={i}
+                                variant="menu"
+                                onClick={() => {
+                                    setOpen(false);
+                                    onChange(option);
+                                }}
+                                type="button"
+                                className="inline-block aspect-square h-full max-h-full w-full max-w-full bg-cover p-0 brightness-90 dark:brightness-100 mouse:cursor-pointer mouse:transition-transform mouse:hover:scale-110"
+                            >
+                                {component(option)}
+                            </Button>
+                        ))}
+                    </div>
+                </div>
+            </DrawerContent>
+        </Drawer>
     );
 };

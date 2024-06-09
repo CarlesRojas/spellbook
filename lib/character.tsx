@@ -209,3 +209,18 @@ export const getClassBackgroundColorOnHover = (classType: ClassType) => {
 
     return map[classType];
 };
+
+export const getClassBorderColor = (classType: ClassType) => {
+    const map: Record<ClassType, string> = {
+        [ClassType.WIZARD]: "border-sky-500/90 dark:border-sky-500/90",
+        [ClassType.SORCERER]: "border-pink-500/90 dark:border-pink-500/90",
+        [ClassType.CLERIC]: "border-yellow-500/90 dark:border-yellow-500/90",
+        [ClassType.PALADIN]: "border-red-500/90 dark:border-red-500/90",
+        [ClassType.RANGER]: "border-amber-500/90 dark:border-amber-500/90",
+        [ClassType.BARD]: "border-teal-500/90 dark:border-teal-500/90",
+        [ClassType.DRUID]: "border-lime-500/90 dark:border-lime-500/90",
+        [ClassType.WARLOCK]: "border-fuchsia-500/90 dark:border-fuchsia-500/90",
+    };
+
+    return map[classType];
+};
