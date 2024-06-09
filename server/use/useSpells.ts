@@ -19,6 +19,8 @@ export const useSpells = (userId?: number) => {
     });
 };
 
+// TODO use this one and add the results in the spells and character spells lists
+
 export const useUserSpells = (userId?: number) => {
     return useQuery({
         queryKey: ["userSpells", userId],

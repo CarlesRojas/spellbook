@@ -13,6 +13,7 @@ interface Props {
     children?: ReactNode;
 }
 
+// TODO open popover when clicking, with options to edit, delete, and view information
 const UserSpellItem = ({ spell, language, children }: Props) => {
     const { t } = useTranslation(language);
     const { index, icon, color, name } = spell;
