@@ -361,7 +361,7 @@ const CastableSpell = ({ spell, language, character, showUncastable, setConcentr
             {castWithHigherLevelSlotDialogOpen && (
                 <HigherLevelDialog
                     spell={spell}
-                    language={Language.ES}
+                    language={language}
                     spellMini={spellMini}
                     open={castWithHigherLevelSlotDialogOpen}
                     onOpenChange={setCastWithHigherLevelSlotDialogOpen}
