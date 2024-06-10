@@ -1,3 +1,4 @@
+import "@/app/globals.css";
 import Header from "@/component/navigation/Header";
 import Navbar from "@/component/navigation/Navbar";
 import { QueryProvider } from "@/component/provider/QueryProvider";
@@ -6,11 +7,11 @@ import ThemeProvider from "@/component/provider/ThemeProvider";
 import { Toaster } from "@/component/ui/toast";
 import { getTranslation } from "@/hook/useTranslation";
 import { Language, LANGUAGES } from "@/type/Language";
+import { Analytics } from "@vercel/analytics/react";
 import { type Metadata, type Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import { ReactNode } from "react";
-import "@/app/globals.css";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -66,6 +67,8 @@ const RootLayout = ({ children, modal, params: { language } }: Props) => {
 
                             <Toaster />
                         </ThemeProvider>
+
+                        <Analytics />
                     </body>
                 </AuthProvider>
             </QueryProvider>
