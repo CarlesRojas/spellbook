@@ -7,7 +7,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
 import { cn } from "@/lib/util";
-import { GetAllSpellsReturnType, useSpellsPreloaded } from "@/server/use/useSpells";
+import { GetAllSpellsReturnType, useSpellsPreloaded, useUserSpells } from "@/server/use/useSpells";
 import { useUser } from "@/server/use/useUser";
 import { Language } from "@/type/Language";
 import { z } from "zod";
@@ -24,8 +24,12 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
 
     const { user } = useUser();
     const spells = useSpellsPreloaded(initialSpellsData);
+    const userSpells = useUserSpells(user.data?.id);
 
-    const filteredSpells = spells.data
+    const allSpells = [...spells.data];
+    if (userSpells.data) allSpells.push(...userSpells.data);
+
+    const filteredSpells = allSpells
         .filter((spell) => {
             if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
             return true;
