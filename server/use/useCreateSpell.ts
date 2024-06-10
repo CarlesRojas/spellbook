@@ -51,9 +51,9 @@ export const useCreateSpell = () => {
     return useMutation({
         mutationFn: createSpellWithTranslations,
         onMutate: async ({ spell, userId }) => {
-            await queryClient.cancelQueries({ queryKey: ["spells", userId] });
+            await queryClient.cancelQueries({ queryKey: ["spells"] });
             await queryClient.cancelQueries({ queryKey: ["userSpells", userId] });
-            const previousSpellsData: Spell[] | undefined = queryClient.getQueryData(["spells", userId]);
+            const previousSpellsData: Spell[] | undefined = queryClient.getQueryData(["spells"]);
             const previousMySpellsData: Spell[] | undefined = queryClient.getQueryData(["userSpells", userId]);
 
             const newSpellsData: Spell[] | undefined = previousSpellsData ? [spell, ...previousSpellsData] : undefined;
@@ -61,17 +61,17 @@ export const useCreateSpell = () => {
                 ? [spell, ...previousMySpellsData]
                 : undefined;
 
-            queryClient.setQueryData(["spells", userId], newSpellsData);
+            queryClient.setQueryData(["spells"], newSpellsData);
             queryClient.setQueryData(["userSpells", userId], newMySpellsData);
 
             return { previousSpellsData, previousMySpellsData };
         },
         onError: (err, { userId }, context) => {
-            context && queryClient.setQueryData(["spells", userId], context.previousSpellsData);
+            context && queryClient.setQueryData(["spells"], context.previousSpellsData);
             context && queryClient.setQueryData(["userSpells", userId], context.previousMySpellsData);
         },
         onSettled: (returnedData, error, { userId }) => {
-            queryClient.invalidateQueries({ queryKey: ["spells", userId] });
+            queryClient.invalidateQueries({ queryKey: ["spells"] });
             queryClient.invalidateQueries({ queryKey: ["userSpells", userId] });
         },
     });

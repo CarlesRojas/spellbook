@@ -23,7 +23,7 @@ const SpellList = ({ language, initialSpellsData }: Props) => {
     const [query, setQuery] = useUrlState("query", "", z.string());
 
     const { user } = useUser();
-    const spells = useSpellsPreloaded(initialSpellsData, user.data?.id);
+    const spells = useSpellsPreloaded(initialSpellsData);
 
     const filteredSpells = spells.data
         .filter((spell) => {
