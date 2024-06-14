@@ -1,6 +1,6 @@
 import { getClassIcon } from "@/component/character/CharacterItem";
 import { Button } from "@/component/ui/button";
-import { ResponsiveCombobox, ResponsiveCustomCombobox } from "@/component/ui/combobox";
+import { Combobox } from "@/component/ui/combobox";
 import { DialogClose, DialogFooter } from "@/component/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/component/ui/form";
 import { Input } from "@/component/ui/input";
@@ -33,9 +33,9 @@ import {
     Duration,
     RangeType,
     School,
+    Spell,
     SpellColor,
 } from "@/type/Spell";
-import { SpellIcon, getRandomSpellIcon } from "@/type/SpellIcon";
 import { User } from "@/type/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -45,12 +45,19 @@ import { z } from "zod";
 interface Props {
     user: User;
     language: Language;
+    spells: Spell[];
     onClose?: () => void;
 }
 
-const CreateSpellForm = ({ user, language, onClose }: Props) => {
+const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
     const { t } = useTranslation(language);
     const createSpell = useCreateSpell();
+
+    const sortedSpells = spells.sort((a, b) => a.name[language].localeCompare(b.name[language]));
+
+    const getRandomSpell = () => {
+        return sortedSpells[Math.floor(Math.random() * sortedSpells.length)];
+    };
 
     const formSchema = z.object({
         name: z
@@ -84,7 +91,7 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
         damageType: z.nativeEnum(DamageType).optional().nullable(),
         difficultyClassType: z.nativeEnum(Ability).optional().nullable(),
         level: z.number().min(1).max(20),
-        icon: z.nativeEnum(SpellIcon),
+        icon: z.string(),
         color: z.nativeEnum(SpellColor),
     });
 
@@ -110,7 +117,7 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
             damageType: undefined,
             difficultyClassType: Ability.STR,
             level: 1,
-            icon: getRandomSpellIcon(),
+            icon: getRandomSpell().index,
             color: SpellColor.SHOCK,
         },
     });
@@ -161,6 +168,45 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
 
     const currentSpellColor = form.watch("color");
 
+    const spellRow = (spell: Spell) => (
+        <div className="flex w-full items-center gap-2">
+            <div
+                className="aspect-square size-12 min-h-12 min-w-12 brightness-90 dark:brightness-100"
+                style={{
+                    backgroundImage: `url(/spell/${spell.icon})`,
+                    maskImage: `url(/spell/${spell.icon})`,
+                    maskMode: "alpha",
+                    maskSize: "cover",
+                    backgroundBlendMode: "luminosity",
+                    backgroundColor: getSpellRawColor(form.watch("color")),
+                }}
+            />
+
+            <p className="text-sm font-medium leading-tight tracking-wide">{spell.name[language]}</p>
+        </div>
+    );
+
+    const spellTrigger = (spell: Spell) => (
+        <div
+            className="m-2 aspect-square size-16 min-h-16 min-w-16 brightness-90 dark:brightness-100"
+            style={{
+                backgroundImage: `url(/spell/${spell.icon})`,
+                maskImage: `url(/spell/${spell.icon})`,
+                maskMode: "alpha",
+                maskSize: "cover",
+                backgroundBlendMode: "luminosity",
+                backgroundColor: getSpellRawColor(form.watch("color")),
+            }}
+        />
+    );
+
+    const spellIconList = sortedSpells.map((spell) => ({
+        id: spell.index,
+        search: spell.name[language],
+        trigger: spellTrigger(spell),
+        label: spellRow(spell),
+    }));
+
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -172,36 +218,13 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             <FormItem className="flex flex-col gap-2">
                                 <FormLabel>{t.dnd.newSpell.icon}</FormLabel>
 
-                                <ResponsiveCustomCombobox
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    options={Object.values(SpellIcon)}
-                                    component={(value) => (
-                                        <div
-                                            className="h-full w-full"
-                                            style={{
-                                                backgroundImage: `url(/spell/${value})`,
-                                                maskImage: `url(/spell/${value})`,
-                                                maskMode: "alpha",
-                                                maskSize: "cover",
-                                                backgroundBlendMode: "luminosity",
-                                                backgroundColor: getSpellRawColor(form.watch("color")),
-                                            }}
-                                        />
-                                    )}
-                                    triggerComponent={(value) => (
-                                        <div
-                                            className="inline-block aspect-square max-h-full w-full max-w-full bg-cover brightness-90 dark:brightness-100 mouse:cursor-pointer mouse:transition-transform mouse:hover:scale-110"
-                                            style={{
-                                                backgroundImage: `url(/spell/${value})`,
-                                                maskImage: `url(/spell/${value})`,
-                                                maskMode: "alpha",
-                                                maskSize: "cover",
-                                                backgroundBlendMode: "luminosity",
-                                                backgroundColor: getSpellRawColor(form.watch("color")),
-                                            }}
-                                        />
-                                    )}
+                                <Combobox
+                                    value={spellIconList.find(({ id }) => id === field.value) ?? null}
+                                    setValue={(value) => field.onChange(value?.id)}
+                                    options={spellIconList}
+                                    text={{ ...t.form }}
+                                    triggerClassName="h-fit p-0"
+                                    showInput
                                 />
                             </FormItem>
                         )}
@@ -479,19 +502,15 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.school}</FormLabel>
-                                    <ResponsiveCombobox
-                                        value={{
-                                            value: field.value,
-                                            label: t.enum.school[field.value],
-                                        }}
-                                        setValue={(value) => {
-                                            field.onChange(value?.value);
-                                        }}
+                                    <Combobox
+                                        value={{ id: field.value, label: t.enum.school[field.value] }}
+                                        setValue={(value) => field.onChange(value?.id)}
                                         options={Object.values(School).map((school) => ({
-                                            value: school,
+                                            id: school,
                                             label: t.enum.school[school],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                     />
                                 </FormItem>
                             )}
@@ -503,19 +522,15 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.castingTime}</FormLabel>
-                                    <ResponsiveCombobox
-                                        value={{
-                                            value: field.value,
-                                            label: t.enum.castingTime[field.value],
-                                        }}
-                                        setValue={(value) => {
-                                            field.onChange(value?.value);
-                                        }}
+                                    <Combobox
+                                        value={{ id: field.value, label: t.enum.castingTime[field.value] }}
+                                        setValue={(value) => field.onChange(value?.id)}
                                         options={Object.values(CastingTime).map((castingTimeType) => ({
-                                            value: castingTimeType,
+                                            id: castingTimeType,
                                             label: t.enum.castingTime[castingTimeType],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                     />
                                 </FormItem>
                             )}
@@ -527,19 +542,15 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.range}</FormLabel>
-                                    <ResponsiveCombobox
-                                        value={{
-                                            value: field.value,
-                                            label: t.enum.range[field.value],
-                                        }}
-                                        setValue={(value) => {
-                                            field.onChange(value?.value);
-                                        }}
+                                    <Combobox
+                                        value={{ id: field.value, label: t.enum.range[field.value] }}
+                                        setValue={(value) => field.onChange(value?.id)}
                                         options={Object.values(RangeType).map((rangeType) => ({
-                                            value: rangeType,
+                                            id: rangeType,
                                             label: t.enum.range[rangeType],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                     />
                                 </FormItem>
                             )}
@@ -551,19 +562,15 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.duration}</FormLabel>
-                                    <ResponsiveCombobox
-                                        value={{
-                                            value: field.value,
-                                            label: t.enum.duration[field.value],
-                                        }}
-                                        setValue={(value) => {
-                                            field.onChange(value?.value);
-                                        }}
+                                    <Combobox
+                                        value={{ id: field.value, label: t.enum.duration[field.value] }}
+                                        setValue={(value) => field.onChange(value?.id)}
                                         options={Object.values(Duration).map((duration) => ({
-                                            value: duration,
+                                            id: duration,
                                             label: t.enum.duration[duration],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                     />
                                 </FormItem>
                             )}
@@ -575,23 +582,19 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.attackType}</FormLabel>
-                                    <ResponsiveCombobox
+                                    <Combobox
                                         value={
                                             field.value
-                                                ? {
-                                                      value: field.value,
-                                                      label: t.enum.attackType[field.value],
-                                                  }
+                                                ? { id: field.value, label: t.enum.attackType[field.value] }
                                                 : null
                                         }
-                                        setValue={(value) => {
-                                            field.onChange(value?.value ?? null);
-                                        }}
+                                        setValue={(value) => field.onChange(value?.id ?? null)}
                                         options={Object.values(AttackType).map((attackTypeType) => ({
-                                            value: attackTypeType,
+                                            id: attackTypeType,
                                             label: t.enum.attackType[attackTypeType],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                         placeholder={t.dnd.newSpell.noAttackType}
                                     />
                                 </FormItem>
@@ -604,23 +607,19 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.damageType}</FormLabel>
-                                    <ResponsiveCombobox
+                                    <Combobox
                                         value={
                                             field.value
-                                                ? {
-                                                      value: field.value,
-                                                      label: t.enum.damageType[field.value],
-                                                  }
+                                                ? { id: field.value, label: t.enum.damageType[field.value] }
                                                 : null
                                         }
-                                        setValue={(value) => {
-                                            field.onChange(value?.value ?? null);
-                                        }}
+                                        setValue={(value) => field.onChange(value?.id ?? null)}
                                         options={Object.values(DamageType).map((damageTypeType) => ({
-                                            value: damageTypeType,
+                                            id: damageTypeType,
                                             label: t.enum.damageType[damageTypeType],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                         placeholder={t.dnd.newSpell.noDamageType}
                                     />
                                 </FormItem>
@@ -633,23 +632,17 @@ const CreateSpellForm = ({ user, language, onClose }: Props) => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col gap-2">
                                     <FormLabel>{t.dnd.newSpell.difficultyClassType}</FormLabel>
-                                    <ResponsiveCombobox
+                                    <Combobox
                                         value={
-                                            field.value
-                                                ? {
-                                                      value: field.value,
-                                                      label: t.enum.ability[field.value],
-                                                  }
-                                                : null
+                                            field.value ? { id: field.value, label: t.enum.ability[field.value] } : null
                                         }
-                                        setValue={(value) => {
-                                            field.onChange(value?.value ?? null);
-                                        }}
+                                        setValue={(value) => field.onChange(value?.id ?? null)}
                                         options={Object.values(Ability).map((ability) => ({
-                                            value: ability,
+                                            id: ability,
                                             label: t.enum.ability[ability],
                                         }))}
-                                        language={language}
+                                        text={{ ...t.form }}
+                                        showDropdownIcon
                                         placeholder={t.dnd.newSpell.noDifficultyClassType}
                                     />
                                 </FormItem>

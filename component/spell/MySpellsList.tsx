@@ -10,7 +10,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
 import { cn } from "@/lib/util";
-import { useUserSpells } from "@/server/use/useSpells";
+import { useSpells, useUserSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
 import { useState } from "react";
@@ -27,12 +27,13 @@ const MySpellsList = ({ language, user }: Props) => {
 
     const [query, setQuery] = useUrlState("query", "", z.string());
 
-    const spells = useUserSpells(user.id);
+    const userSpells = useUserSpells(user.id);
+    const spells = useSpells();
 
     const [createDialogOpen, setCreateDialogOpen] = useState(false);
 
-    const filteredSpells = spells.data
-        ? spells.data
+    const filteredSpells = userSpells.data
+        ? userSpells.data
               .filter((spell) => {
                   if (query && !spell.name[language].toLowerCase().includes(query.toLowerCase())) return false;
                   return true;
@@ -50,7 +51,7 @@ const MySpellsList = ({ language, user }: Props) => {
             <div className="sticky top-4 z-10 mouse:top-20">
                 <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                     <DialogTrigger asChild>
-                        <Button>
+                        <Button disabled={spells.isLoading || !spells.data}>
                             <LuPlus className="mr-3 h-4 w-4 stroke-[3]" />
                             {t.dnd.newSpell.createSpell}
                         </Button>
@@ -61,7 +62,14 @@ const MySpellsList = ({ language, user }: Props) => {
                             <DialogTitle>{t.dnd.newSpell.createSpell}</DialogTitle>
                         </DialogHeader>
 
-                        <CreateSpellForm user={user} language={language} onClose={() => setCreateDialogOpen(false)} />
+                        {spells.data && (
+                            <CreateSpellForm
+                                user={user}
+                                spells={spells.data}
+                                language={language}
+                                onClose={() => setCreateDialogOpen(false)}
+                            />
+                        )}
                     </DialogContent>
                 </Dialog>
             </div>
@@ -70,7 +78,7 @@ const MySpellsList = ({ language, user }: Props) => {
                 <QueryFilter language={language} query={query} setQuery={setQuery} />
             </div>
 
-            <div className={cn("flex justify-end", spells.isLoading ? "pointer-events-none opacity-0" : "")}>
+            <div className={cn("flex justify-end", userSpells.isLoading ? "pointer-events-none opacity-0" : "")}>
                 <p className="text-sm font-medium tracking-wide opacity-60">
                     {filteredSpells.length > 0
                         ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`

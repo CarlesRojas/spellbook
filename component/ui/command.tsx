@@ -41,7 +41,7 @@ const CommandInput = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Input>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-    <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+    <div className="flex items-center border-b border-stone-300 px-3 dark:border-stone-700" cmdk-input-wrapper="">
         <LuSearch className="mr-2 h-4 w-4 shrink-0 opacity-50" />
         <CommandPrimitive.Input
             ref={ref}
@@ -111,7 +111,7 @@ const CommandItem = React.forwardRef<
     <CommandPrimitive.Item
         ref={ref}
         className={cn(
-            "relative flex cursor-default select-none items-center rounded-md px-3 py-2 text-base font-medium tracking-wide outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 mouse:data-[selected=true]:bg-stone-200 mouse:data-[selected=true]:text-stone-900 mouse:dark:data-[selected=true]:bg-stone-900 mouse:dark:data-[selected=true]:text-stone-50",
+            "relative flex cursor-default select-none items-center rounded-md px-3 py-2 text-base font-medium tracking-wide outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 mouse:data-[selected=true]:bg-stone-150 mouse:data-[selected=true]:text-stone-900 mouse:dark:data-[selected=true]:bg-stone-900 mouse:dark:data-[selected=true]:text-stone-50",
             className,
         )}
         {...props}
