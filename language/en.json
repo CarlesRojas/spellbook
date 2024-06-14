@@ -293,7 +293,9 @@
                 "highLevelDescriptionTooLong": "The high level description must be no more than 1024 characters",
 
                 "materialTooShort": "The material description must be at least 2 characters",
-                "materialTooLong": "The material must be no more than 64 characters"
+                "materialTooLong": "The material must be no more than 64 characters",
+
+                "atLeastOnwComponent": "It must have at least one component"
             }
         },
 

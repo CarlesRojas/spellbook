@@ -47,8 +47,8 @@ const MySpellsList = ({ language, user }: Props) => {
     const spellsByLevel = getSpellsByLevel(filteredSpells);
 
     return (
-        <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col p-4">
-            <div className="sticky top-4 z-10 mouse:top-20">
+        <section className="relative flex h-fit min-h-full w-full max-w-screen-lg flex-col">
+            <div className="sticky top-0 z-50 bg-stone-100 p-4 dark:bg-stone-950 mouse:top-16">
                 <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                     <DialogTrigger asChild>
                         <Button disabled={spells.isLoading || !spells.data}>
@@ -74,39 +74,41 @@ const MySpellsList = ({ language, user }: Props) => {
                 </Dialog>
             </div>
 
-            <div className="mt-4 flex w-full flex-col justify-end gap-2 md:flex-row">
-                <QueryFilter language={language} query={query} setQuery={setQuery} />
-            </div>
+            <div className="flex flex-col p-4">
+                <div className="flex w-full flex-col justify-end gap-2 md:flex-row">
+                    <QueryFilter language={language} query={query} setQuery={setQuery} />
+                </div>
 
-            <div className={cn("flex justify-end", userSpells.isLoading ? "pointer-events-none opacity-0" : "")}>
-                <p className="text-sm font-medium tracking-wide opacity-60">
-                    {filteredSpells.length > 0
-                        ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`
-                        : `${t.filter.noResults}`}
-                </p>
-            </div>
+                <div className={cn("flex justify-end", userSpells.isLoading ? "pointer-events-none opacity-0" : "")}>
+                    <p className="text-sm font-medium tracking-wide opacity-60">
+                        {filteredSpells.length > 0
+                            ? `${filteredSpells.length} ${filteredSpells.length === 1 ? t.filter.result : t.filter.results}`
+                            : `${t.filter.noResults}`}
+                    </p>
+                </div>
 
-            <div className="flex w-full flex-col gap-2">
-                {Object.entries(spellsByLevel).map(([level, levelSpells]) => (
-                    <div
-                        key={level}
-                        className="hidden w-full grid-cols-3 gap-4 has-[.spell]:grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
-                    >
-                        <h2 className="sticky top-0 z-20 col-span-3 mt-4 w-full bg-stone-100 py-2 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-16">
-                            {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}
-                        </h2>
+                <div className="flex w-full flex-col gap-2">
+                    {Object.entries(spellsByLevel).map(([level, levelSpells]) => (
+                        <div
+                            key={level}
+                            className="hidden w-full grid-cols-3 gap-4 has-[.spell]:grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
+                        >
+                            <h2 className="sticky top-[4rem] z-20 col-span-3 mt-4 w-full bg-stone-100 py-2 text-center text-lg font-bold tracking-wider text-sky-500 dark:bg-stone-950 sm:col-span-4 md:col-span-5 lg:col-span-6 mouse:top-[8rem]">
+                                {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}
+                            </h2>
 
-                        {levelSpells.map((spell) => (
-                            <UserSpellItem
-                                key={spell.index}
-                                language={language}
-                                spell={spell}
-                                user={user}
-                                spells={spells.data}
-                            />
-                        ))}
-                    </div>
-                ))}
+                            {levelSpells.map((spell) => (
+                                <UserSpellItem
+                                    key={spell.index}
+                                    language={language}
+                                    spell={spell}
+                                    user={user}
+                                    spells={spells.data}
+                                />
+                            ))}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             <ScrollToTop />

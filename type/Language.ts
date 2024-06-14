@@ -157,6 +157,7 @@ export const LanguageObjectSchema = z.object({
                 highLevelDescriptionTooLong: z.string(),
                 materialTooShort: z.string(),
                 materialTooLong: z.string(),
+                atLeastOnwComponent: z.string(),
             }),
         }),
 

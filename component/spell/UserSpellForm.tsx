@@ -73,7 +73,7 @@ const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props)
             .max(1024, { message: t.dnd.newSpell.error.descriptionTooLong }),
         highLevelDescription: z.string().max(1024, { message: t.dnd.newSpell.error.highLevelDescriptionTooLong }),
         range: z.nativeEnum(RangeType),
-        components: ComponentsSchema,
+        components: ComponentsSchema.min(1, { message: t.dnd.newSpell.error.atLeastOnwComponent }),
         material: z.union([
             z
                 .string()
