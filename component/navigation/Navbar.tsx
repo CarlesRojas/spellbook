@@ -37,7 +37,7 @@ const Navbar = ({ language }: Props) => {
                 </Link>
 
                 {user.data ? (
-                    <Link href={`/${language}${Route.CHARACTERS}/${user.data.id}`} className="relative h-full w-full">
+                    <Link href={`/${language}${Route.CHARACTERS}`} className="relative h-full w-full">
                         <NavbarItem
                             selected={route === Route.CHARACTERS}
                             label={t.enum.route[Route.CHARACTERS]}
@@ -60,7 +60,7 @@ const Navbar = ({ language }: Props) => {
                 )}
 
                 {user.data ? (
-                    <Link href={`/${language}${Route.MY_SPELLS}/${user.data.id}`} className="relative h-full w-full">
+                    <Link href={`/${language}${Route.MY_SPELLS}`} className="relative h-full w-full">
                         <NavbarItem
                             selected={route === Route.MY_SPELLS}
                             label={t.enum.route[Route.MY_SPELLS]}

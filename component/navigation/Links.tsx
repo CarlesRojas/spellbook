@@ -47,9 +47,7 @@ const Links = ({ language }: Props) => {
 
                 {user.data ? (
                     <Button asChild variant="link" className={route === Route.CHARACTERS ? "!text-sky-500" : ""}>
-                        <Link href={`/${language}${Route.CHARACTERS}/${user.data.id}`}>
-                            {t.enum.route[Route.CHARACTERS]}
-                        </Link>
+                        <Link href={`/${language}${Route.CHARACTERS}`}>{t.enum.route[Route.CHARACTERS]}</Link>
                     </Button>
                 ) : (
                     signInButton(t.enum.route[Route.CHARACTERS], `/${language}${Route.CHARACTERS}`)
@@ -57,9 +55,7 @@ const Links = ({ language }: Props) => {
 
                 {user.data ? (
                     <Button asChild variant="link" className={route === Route.MY_SPELLS ? "!text-sky-500" : ""}>
-                        <Link href={`/${language}${Route.MY_SPELLS}/${user.data.id}`}>
-                            {t.enum.route[Route.MY_SPELLS]}
-                        </Link>
+                        <Link href={`/${language}${Route.MY_SPELLS}`}>{t.enum.route[Route.MY_SPELLS]}</Link>
                     </Button>
                 ) : (
                     signInButton(t.enum.route[Route.MY_SPELLS], `/${language}${Route.MY_SPELLS}`)
@@ -98,7 +94,7 @@ const Links = ({ language }: Props) => {
                         </Link>
 
                         {user.data ? (
-                            <Link href={`/${language}${Route.CHARACTERS}/${user.data.id}`}>
+                            <Link href={`/${language}${Route.CHARACTERS}`}>
                                 <DropdownMenuItem
                                     className={`font-semibold ${route === Route.CHARACTERS ? "!text-sky-500" : ""}`}
                                 >
@@ -110,7 +106,7 @@ const Links = ({ language }: Props) => {
                         )}
 
                         {user.data ? (
-                            <Link href={`/${language}${Route.MY_SPELLS}/${user.data.id}`}>
+                            <Link href={`/${language}${Route.MY_SPELLS}`}>
                                 <DropdownMenuItem
                                     className={`font-semibold ${route === Route.MY_SPELLS ? "!text-sky-500" : ""}`}
                                 >

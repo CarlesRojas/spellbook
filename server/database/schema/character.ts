@@ -27,6 +27,7 @@ export const characterRelations = relations(character, ({ many, one }) => ({
         fields: [character.spellSlotsAvailableId],
         references: [spellSlots.id],
     }),
+
     concentratingOn: one(spell, {
         fields: [character.concentratingOnId],
         references: [spell.index],

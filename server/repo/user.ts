@@ -5,7 +5,7 @@ import { user } from "@/server/database/schema/user";
 import { User, UserSchema } from "@/type/User";
 
 type NewUser = typeof user.$inferInsert;
-type SelectedUser = InferResultType<"user">;
+type SelectedUser = InferResultType<"user", { characters: true }>;
 
 export const createUser = async (newUser: NewUser) => {
     const result = await db.insert(user).values(newUser).returning();
@@ -18,6 +18,7 @@ export const getUser = async (email: string, name: string, image?: string) => {
 
     const result = await db.query.user.findFirst({
         where: (user, { eq }) => eq(user.email, email),
+        with: { characters: true },
     });
 
     if (!result) return null;
@@ -27,6 +28,7 @@ export const getUser = async (email: string, name: string, image?: string) => {
 export const getUserById = async (id: number) => {
     const result = await db.query.user.findFirst({
         where: (user, { eq }) => eq(user.id, id),
+        with: { characters: true },
     });
 
     if (!result) return null;
@@ -42,5 +44,9 @@ export const existsUser = async (email: string) => {
 };
 
 const toUser = (user: SelectedUser, image?: string): User => {
-    return UserSchema.parse({ ...user, image }) as User;
+    const characters = user.characters
+        .filter(({ characterId }) => !!characterId)
+        .map(({ characterId }) => characterId!);
+
+    return UserSchema.parse({ ...user, image, characters }) as User;
 };

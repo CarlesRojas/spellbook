@@ -34,6 +34,7 @@ const Characters = ({ params: { language, characterId } }: Props) => {
         );
     if (!character.data) return <NotFound type={NotFoundType.CHARACTER} language={language} />;
     if (!user.data) return <NotFound type={NotFoundType.USER} language={language} />;
+    if (!(characterId in user.data.characters)) return <NotFound type={NotFoundType.CHARACTER} language={language} />;
 
     const allSpells = spells.data && userSpells.data ? [...spells.data, ...userSpells.data] : null;
 
