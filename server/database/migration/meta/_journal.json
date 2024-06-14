@@ -57,6 +57,13 @@
       "when": 1717921175076,
       "tag": "0007_conscious_shadow_king",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1718379245332,
+      "tag": "0008_loving_red_wolf",
+      "breakpoints": true
     }
   ]
 }
