@@ -34,7 +34,10 @@ const createSpellWithTranslations = async ({ spell, userId }: Mutation) => {
 
     const dbSpell: DbSpell = {
         ...spell,
-        index: `user-${userId}_spell-${spell.name.en.replace(" ", "-").replace(/[^a-zA-Z0-9]/g, "")}`,
+        index: `user-${userId}-spell-${spell.name.en
+            .replace(" ", "-")
+            .replace(/[^a-zA-Z0-9]/g, "")
+            .toLowerCase()}`,
         nameId,
         descriptionId,
         highLevelDescriptionId,
@@ -45,6 +48,8 @@ const createSpellWithTranslations = async ({ spell, userId }: Mutation) => {
     await createSpell(dbSpell);
 };
 
+export const FAKE_ID = "10c9d5ee-396a-4094-8f13-7e5628ebd4ba";
+
 export const useCreateSpell = () => {
     const queryClient = useQueryClient();
 
@@ -54,7 +59,9 @@ export const useCreateSpell = () => {
             await queryClient.cancelQueries({ queryKey: ["userSpells", userId] });
             const previousData: Spell[] | undefined = queryClient.getQueryData(["userSpells", userId]);
 
-            const newData: Spell[] | undefined = previousData ? [spell, ...previousData] : undefined;
+            const newData: Spell[] | undefined = previousData
+                ? [{ ...spell, index: FAKE_ID }, ...previousData]
+                : undefined;
 
             queryClient.setQueryData(["userSpells", userId], newData);
 

@@ -19,9 +19,10 @@ interface Props {
     user: User;
     spells: Spell[] | undefined;
     language: Language;
+    disabled?: boolean;
 }
 
-const UserSpellItem = ({ spell, language, user, spells }: Props) => {
+const UserSpellItem = ({ spell, language, user, spells, disabled }: Props) => {
     const { t } = useTranslation(language);
     const { index, icon, color, name } = spell;
 
@@ -57,7 +58,13 @@ const UserSpellItem = ({ spell, language, user, spells }: Props) => {
     return (
         <div className="spell flex flex-col items-center gap-2">
             <Popover modal={true} open={popoverOpen} onOpenChange={setPopoverOpen}>
-                <PopoverTrigger className="focus-shadow group relative flex w-full flex-col items-center rounded-md p-2">
+                <PopoverTrigger
+                    disabled={disabled}
+                    className={cn(
+                        "focus-shadow group relative flex w-full flex-col items-center rounded-md p-2",
+                        disabled && "pointer-events-none animate-pulse select-none",
+                    )}
+                >
                     <div
                         className="inline-block h-20 min-h-20 w-20 min-w-20 bg-cover brightness-90 dark:brightness-100 sm:h-24 sm:min-h-24 sm:w-24 sm:min-w-24 mouse:transition-transform mouse:group-hover:scale-110"
                         style={{

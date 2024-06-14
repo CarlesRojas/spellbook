@@ -7,6 +7,7 @@ import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/component/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "@/component/ui/popover";
 import { useTranslation } from "@/hook/useTranslation";
+import { cn } from "@/lib/util";
 import { Character } from "@/type/Character";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
@@ -17,9 +18,10 @@ export interface Props {
     character: Character;
     language: Language;
     user: User;
+    disabled?: boolean;
 }
 
-const CharacterDropdownMenu = ({ character, language, user }: Props) => {
+const CharacterDropdownMenu = ({ character, language, user, disabled }: Props) => {
     const { t } = useTranslation(language);
 
     const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -29,8 +31,13 @@ const CharacterDropdownMenu = ({ character, language, user }: Props) => {
     return (
         <>
             <Popover modal={true} open={popoverOpen} onOpenChange={setPopoverOpen}>
-                <PopoverTrigger asChild>
-                    <Button variant="outline" size="icon">
+                <PopoverTrigger asChild disabled={disabled}>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        disabled={disabled}
+                        className={cn(disabled && "pointer-events-none select-none")}
+                    >
                         <LuMoreHorizontal className="h-4 w-4 stroke-[3]" />
                     </Button>
                 </PopoverTrigger>

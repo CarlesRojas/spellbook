@@ -53,7 +53,12 @@ const CharacterItem = (props: Props) => {
         >
             <Link
                 href={`/${language}/${Route.CHARACTER}/${id}`}
-                className="focus-shadow group flex grow items-center gap-2 rounded p-3"
+                tabIndex={disabled ? -1 : undefined}
+                aria-disabled={disabled}
+                className={cn(
+                    "focus-shadow group flex grow items-center gap-2 rounded p-3",
+                    disabled && "pointer-events-none select-none",
+                )}
             >
                 {getClassIcon(characterClass, "mouse:transition-transform mouse:group-hover:scale-110")}
 
@@ -81,7 +86,12 @@ const CharacterItem = (props: Props) => {
             </Link>
 
             <div className="flex h-fit w-fit items-center gap-2 p-3">
-                <CharacterDropdownMenu character={props.character} language={language} user={user} />
+                <CharacterDropdownMenu
+                    character={props.character}
+                    language={language}
+                    user={user}
+                    disabled={disabled}
+                />
             </div>
         </div>
     );

@@ -10,6 +10,7 @@ import { useTranslation } from "@/hook/useTranslation";
 import { useUrlState } from "@/hook/useUrlState";
 import { getSpellsByLevel } from "@/lib/spell";
 import { cn } from "@/lib/util";
+import { FAKE_ID } from "@/server/use/useCreateSpell";
 import { useSpells, useUserSpells } from "@/server/use/useSpells";
 import { Language } from "@/type/Language";
 import { User } from "@/type/User";
@@ -99,6 +100,7 @@ const MySpellsList = ({ language, user }: Props) => {
 
                             {levelSpells.map((spell) => (
                                 <UserSpellItem
+                                    disabled={spell.index === FAKE_ID}
                                     key={spell.index}
                                     language={language}
                                     spell={spell}
