@@ -43,8 +43,6 @@ export const Combobox = ({
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    console.log(value);
-
     if (isDesktop) {
         return (
             <Popover open={open} onOpenChange={setOpen}>
