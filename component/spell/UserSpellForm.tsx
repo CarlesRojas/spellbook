@@ -62,6 +62,11 @@ const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props)
         return sortedSpells[Math.floor(Math.random() * sortedSpells.length)];
     };
 
+    const getRandomSpellColor = () => {
+        const colors = Object.values(SpellColor);
+        return colors[Math.floor(Math.random() * colors.length)];
+    };
+
     const formSchema = z.object({
         name: z
             .string()
@@ -121,7 +126,7 @@ const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props)
             difficultyClassType: defaultValue ? defaultValue.difficultyClass?.type : undefined,
             level: defaultValue ? defaultValue.level : 1,
             icon: defaultValue ? defaultValue.icon : getRandomSpell().icon,
-            color: defaultValue ? defaultValue.color : SpellColor.SHOCK,
+            color: defaultValue ? defaultValue.color : getRandomSpellColor(),
         },
     });
 
