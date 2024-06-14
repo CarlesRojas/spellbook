@@ -18,6 +18,7 @@ import {
 } from "@/lib/spell";
 import { cn } from "@/lib/util";
 import { useCreateSpell } from "@/server/use/useCreateSpell";
+import { useUpdateSpell } from "@/server/use/useUpdateSpell";
 import { Language } from "@/type/Language";
 import {
     Ability,
@@ -39,7 +40,7 @@ import {
 import { User } from "@/type/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { LuLoader2, LuMinus, LuPlus } from "react-icons/lu";
+import { LuLoader2, LuMinus, LuPencil, LuPlus } from "react-icons/lu";
 import { z } from "zod";
 
 interface Props {
@@ -47,11 +48,13 @@ interface Props {
     language: Language;
     spells: Spell[];
     onClose?: () => void;
+    defaultValue?: Spell;
 }
 
-const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
+const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props) => {
     const { t } = useTranslation(language);
     const createSpell = useCreateSpell();
+    const updateSpell = useUpdateSpell();
 
     const sortedSpells = spells.sort((a, b) => a.name[language].localeCompare(b.name[language]));
 
@@ -98,71 +101,118 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            description: "",
-            highLevelDescription: "",
-            range: RangeType.FIVE_FEET,
-            components: [],
-            material: null,
-            hasAreaOfEffect: false,
-            areaOfEffectSize: null,
-            areaOfEffectType: null,
-            ritual: false,
-            duration: Duration.INSTANTANEOUS,
-            concentration: false,
-            castingTime: CastingTime.ONE_ACTION,
-            attackType: undefined,
-            school: School.EVOCATION,
-            classes: [],
-            damageType: undefined,
-            difficultyClassType: Ability.STR,
-            level: 1,
-            icon: getRandomSpell().index,
-            color: SpellColor.SHOCK,
+            name: defaultValue ? defaultValue.name[language] : "",
+            description: defaultValue ? defaultValue.description[language] : "",
+            highLevelDescription: defaultValue ? defaultValue.highLevelDescription?.[language] ?? "" : "",
+            range: defaultValue ? defaultValue.range : RangeType.FIVE_FEET,
+            components: defaultValue ? defaultValue.components : [],
+            material: defaultValue ? defaultValue.material?.[language] ?? null : null,
+            hasAreaOfEffect: defaultValue ? !!defaultValue.areaOfEffect : false,
+            areaOfEffectSize: defaultValue ? defaultValue.areaOfEffect?.size ?? null : null,
+            areaOfEffectType: defaultValue ? defaultValue.areaOfEffect?.type ?? null : null,
+            ritual: defaultValue ? defaultValue.ritual : false,
+            duration: defaultValue ? defaultValue.duration : Duration.INSTANTANEOUS,
+            concentration: defaultValue ? defaultValue.concentration : false,
+            castingTime: defaultValue ? defaultValue.castingTime : CastingTime.ONE_ACTION,
+            attackType: defaultValue ? defaultValue.attackType : undefined,
+            school: defaultValue ? defaultValue.school : School.EVOCATION,
+            classes: defaultValue ? defaultValue.classes : [],
+            damageType: defaultValue ? defaultValue.damage?.type ?? undefined : undefined,
+            difficultyClassType: defaultValue ? defaultValue.difficultyClass?.type : undefined,
+            level: defaultValue ? defaultValue.level : 1,
+            icon: defaultValue ? defaultValue.icon : getRandomSpell().icon,
+            color: defaultValue ? defaultValue.color : SpellColor.SHOCK,
         },
     });
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
-        createSpell.mutate({
-            spell: {
-                index: "",
-                name: { id: 0, en: values.name, es: values.name },
-                description: { id: 0, en: values.description, es: values.description },
-                highLevelDescription: values.highLevelDescription
-                    ? { id: 0, en: values.highLevelDescription, es: values.highLevelDescription }
-                    : undefined,
-                range: values.range,
-                components: values.components,
-                material: values.material ? { id: 0, en: values.material, es: values.material } : undefined,
-                areaOfEffect:
-                    values.hasAreaOfEffect && values.areaOfEffectSize && values.areaOfEffectType
-                        ? {
-                              size: values.areaOfEffectSize,
-                              type: values.areaOfEffectType,
-                          }
-                        : undefined,
+        defaultValue
+            ? updateSpell.mutate({
+                  originalSpell: defaultValue,
+                  spell: {
+                      index: defaultValue.index,
+                      name: { id: defaultValue.name.id, en: values.name, es: values.name },
+                      description: { id: defaultValue.description.id, en: values.description, es: values.description },
+                      highLevelDescription: values.highLevelDescription
+                          ? {
+                                id: defaultValue.highLevelDescription?.id ?? -1,
+                                en: values.highLevelDescription,
+                                es: values.highLevelDescription,
+                            }
+                          : undefined,
+                      range: values.range,
+                      components: values.components,
+                      material: values.material
+                          ? { id: defaultValue.material?.id ?? -1, en: values.material, es: values.material }
+                          : undefined,
+                      areaOfEffect:
+                          values.hasAreaOfEffect && values.areaOfEffectSize && values.areaOfEffectType
+                              ? {
+                                    size: values.areaOfEffectSize,
+                                    type: values.areaOfEffectType,
+                                }
+                              : undefined,
+                      ritual: values.ritual,
+                      duration: values.duration,
+                      concentration: values.concentration,
+                      castingTime: values.castingTime,
+                      attackType: values.attackType ?? undefined,
+                      school: values.school,
+                      classes: values.classes,
+                      damage: values.damageType ? { type: values.damageType } : undefined,
+                      subclasses: [],
+                      difficultyClass: values.difficultyClassType
+                          ? {
+                                type: values.difficultyClassType,
+                                success: DifficultyClassSuccess.OTHER,
+                            }
+                          : undefined,
+                      level: values.level,
+                      icon: values.icon,
+                      color: values.color,
+                  },
+                  userId: user.id,
+              })
+            : createSpell.mutate({
+                  spell: {
+                      index: "",
+                      name: { id: -1, en: values.name, es: values.name },
+                      description: { id: -1, en: values.description, es: values.description },
+                      highLevelDescription: values.highLevelDescription
+                          ? { id: -1, en: values.highLevelDescription, es: values.highLevelDescription }
+                          : undefined,
+                      range: values.range,
+                      components: values.components,
+                      material: values.material ? { id: -1, en: values.material, es: values.material } : undefined,
+                      areaOfEffect:
+                          values.hasAreaOfEffect && values.areaOfEffectSize && values.areaOfEffectType
+                              ? {
+                                    size: values.areaOfEffectSize,
+                                    type: values.areaOfEffectType,
+                                }
+                              : undefined,
 
-                ritual: values.ritual,
-                duration: values.duration,
-                concentration: values.concentration,
-                castingTime: values.castingTime,
-                attackType: values.attackType ?? undefined,
-                school: values.school,
-                classes: values.classes,
-                damage: values.damageType ? { type: values.damageType } : undefined,
-                subclasses: [],
-                difficultyClass: values.difficultyClassType
-                    ? {
-                          type: values.difficultyClassType,
-                          success: DifficultyClassSuccess.OTHER,
-                      }
-                    : undefined,
-                level: values.level,
-                icon: values.icon,
-                color: values.color,
-            },
-            userId: user.id,
-        });
+                      ritual: values.ritual,
+                      duration: values.duration,
+                      concentration: values.concentration,
+                      castingTime: values.castingTime,
+                      attackType: values.attackType ?? undefined,
+                      school: values.school,
+                      classes: values.classes,
+                      damage: values.damageType ? { type: values.damageType } : undefined,
+                      subclasses: [],
+                      difficultyClass: values.difficultyClassType
+                          ? {
+                                type: values.difficultyClassType,
+                                success: DifficultyClassSuccess.OTHER,
+                            }
+                          : undefined,
+                      level: values.level,
+                      icon: values.icon,
+                      color: values.color,
+                  },
+                  userId: user.id,
+              });
         onClose?.();
     };
 
@@ -201,11 +251,13 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
     );
 
     const spellIconList = sortedSpells.map((spell) => ({
-        id: spell.index,
+        id: spell.icon,
         search: spell.name[language],
         trigger: spellTrigger(spell),
         label: spellRow(spell),
     }));
+
+    const isDisabled = createSpell.isPending || createSpell.isSuccess || updateSpell.isPending || updateSpell.isSuccess;
 
     return (
         <Form {...form}>
@@ -246,7 +298,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                                         <Button
                                                             variant="outline"
                                                             type="button"
-                                                            disabled={createSpell.isPending || createSpell.isSuccess}
+                                                            disabled={isDisabled}
                                                             onClick={() => field.onChange(color)}
                                                             className={cn(
                                                                 "h-8 max-h-8 min-h-8 w-8 min-w-8 max-w-8 rounded-full mouse:transition-all mouse:hover:scale-110",
@@ -276,7 +328,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                     <FormLabel>{t.dnd.newSpell.name}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            disabled={createSpell.isPending || createSpell.isSuccess}
+                                            disabled={isDisabled}
                                             {...field}
                                             className="font-semibold tracking-wide"
                                         />
@@ -299,9 +351,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                                 variant="outline"
                                                 size="icon"
                                                 type="button"
-                                                disabled={
-                                                    field.value <= 1 || createSpell.isPending || createSpell.isSuccess
-                                                }
+                                                disabled={field.value <= 1 || isDisabled}
                                                 onClick={() => field.onChange(field.value - 1)}
                                             >
                                                 <LuMinus className="h-4 w-4 stroke-[3]" />
@@ -315,9 +365,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                                 variant="outline"
                                                 size="icon"
                                                 type="button"
-                                                disabled={
-                                                    field.value >= 20 || createSpell.isPending || createSpell.isSuccess
-                                                }
+                                                disabled={field.value >= 20 || isDisabled}
                                                 onClick={() => field.onChange(field.value + 1)}
                                             >
                                                 <LuPlus className="h-4 w-4 stroke-[3]" />
@@ -344,7 +392,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                                     <Button
                                                         variant="outline"
                                                         type="button"
-                                                        disabled={createSpell.isPending || createSpell.isSuccess}
+                                                        disabled={isDisabled}
                                                         onClick={() =>
                                                             field.onChange(
                                                                 field.value.includes(classType)
@@ -393,7 +441,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                             <FormItem className="space-y-1">
                                 <FormLabel>{t.dnd.newSpell.description}</FormLabel>
                                 <FormControl>
-                                    <Textarea disabled={createSpell.isPending || createSpell.isSuccess} {...field} />
+                                    <Textarea disabled={isDisabled} {...field} />
                                 </FormControl>
 
                                 <FormMessage />
@@ -410,7 +458,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                     {t.dnd.newSpell.highLevelDescription} ({t.form.optional})
                                 </FormLabel>
                                 <FormControl>
-                                    <Textarea disabled={createSpell.isPending || createSpell.isSuccess} {...field} />
+                                    <Textarea disabled={isDisabled} {...field} />
                                 </FormControl>
 
                                 <FormMessage />
@@ -432,7 +480,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                                     <Button
                                                         variant="outline"
                                                         type="button"
-                                                        disabled={createSpell.isPending || createSpell.isSuccess}
+                                                        disabled={isDisabled}
                                                         onClick={() => {
                                                             if (
                                                                 component === Component.M &&
@@ -482,7 +530,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                     <FormLabel>{t.dnd.newSpell.material}</FormLabel>
                                     <FormControl>
                                         <Input
-                                            disabled={createSpell.isPending || createSpell.isSuccess}
+                                            disabled={isDisabled}
                                             {...rest}
                                             value={value ?? ""}
                                             className="font-medium tracking-wide"
@@ -667,7 +715,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                                 form.setValue("areaOfEffectType", null);
                                             }
                                         }}
-                                        disabled={createSpell.isPending || createSpell.isSuccess}
+                                        disabled={isDisabled}
                                     />
                                 </FormControl>
 
@@ -687,7 +735,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                         <FormControl>
                                             <Input
                                                 type="number"
-                                                disabled={createSpell.isPending || createSpell.isSuccess}
+                                                disabled={isDisabled}
                                                 {...rest}
                                                 value={value ?? ""}
                                                 onChange={(event) =>
@@ -716,7 +764,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                             <RadioGroup
                                                 onValueChange={field.onChange}
                                                 defaultValue={field.value ?? undefined}
-                                                disabled={createSpell.isPending || createSpell.isSuccess}
+                                                disabled={isDisabled}
                                                 className="flex flex-wrap gap-2"
                                             >
                                                 {Object.values(AreaOfEffectType).map((areaOfEffectType) => (
@@ -764,7 +812,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                     <Switch
                                         checked={field.value}
                                         onCheckedChange={field.onChange}
-                                        disabled={createSpell.isPending || createSpell.isSuccess}
+                                        disabled={isDisabled}
                                     />
                                 </FormControl>
 
@@ -783,7 +831,7 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
                                     <Switch
                                         checked={field.value}
                                         onCheckedChange={field.onChange}
-                                        disabled={createSpell.isPending || createSpell.isSuccess}
+                                        disabled={isDisabled}
                                     />
                                 </FormControl>
 
@@ -795,18 +843,22 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
 
                 <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
                     <DialogClose asChild>
-                        <Button disabled={createSpell.isPending || createSpell.isSuccess} variant="outline">
+                        <Button disabled={isDisabled} variant="outline">
                             {t.form.cancel}
                         </Button>
                     </DialogClose>
 
-                    <Button type="submit" disabled={createSpell.isPending || createSpell.isSuccess}>
-                        {createSpell.isPending || createSpell.isSuccess ? (
+                    <Button type="submit" disabled={isDisabled}>
+                        {isDisabled ? (
                             <LuLoader2 className="h-4 w-4 animate-spin stroke-[3]" />
                         ) : (
                             <>
-                                <LuPlus className="mr-3 h-4 w-4 stroke-[3]" />
-                                {t.form.create}
+                                {defaultValue ? (
+                                    <LuPencil className="mr-3 h-4 w-4 stroke-[3]" />
+                                ) : (
+                                    <LuPlus className="mr-3 h-4 w-4 stroke-[3]" />
+                                )}
+                                {defaultValue ? t.form.confirm : t.form.create}
                             </>
                         )}
                     </Button>
@@ -816,4 +868,4 @@ const CreateSpellForm = ({ user, language, spells, onClose }: Props) => {
     );
 };
 
-export default CreateSpellForm;
+export default UserSpellForm;

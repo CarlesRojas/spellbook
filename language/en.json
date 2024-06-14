@@ -252,6 +252,8 @@
         },
 
         "newSpell": {
+            "editSpell": "Edit spell",
+            "deleteSpell": "Delete spell",
             "createSpell": "Create new spell",
             "name": "Choose a name",
             "description": "Description",

@@ -18,13 +18,31 @@ export const createTranslation = async (newTranslation: NewTranslation) => {
 };
 
 export const updateTranslation = async (newTranslation: UpdateTranslation) => {
-    const result = await db
-        .update(translation)
-        .set(newTranslation)
-        .where(eq(translation.id, newTranslation.id))
-        .returning();
+    if (await existsTranslation(newTranslation.id)) {
+        const result = await db
+            .update(translation)
+            .set(newTranslation)
+            .where(eq(translation.id, newTranslation.id))
+            .returning();
 
-    return result.length > 0 ? result[0] : null;
+        return result.length > 0 ? result[0].id : null;
+    }
+
+    const { id, ...rest } = newTranslation;
+    return await createTranslation(rest);
+};
+
+export const deleteTranslation = async (id: number) => {
+    await db.delete(translation).where(eq(translation.id, id));
+    return null;
+};
+
+const existsTranslation = async (id: number) => {
+    const result = await db.query.translation.findFirst({
+        where: (translation, { eq }) => eq(translation.id, id),
+    });
+
+    return !!result;
 };
 
 export const getTranslation = async (id: number) => {

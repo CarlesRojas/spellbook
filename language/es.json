@@ -252,6 +252,8 @@
         },
 
         "newSpell": {
+            "editSpell": "Editar hechizo",
+            "deleteSpell": "Eliminar hechizo",
             "createSpell": "Crear nuevo hechizo",
             "name": "Elige un nombre",
             "description": "Descripción",

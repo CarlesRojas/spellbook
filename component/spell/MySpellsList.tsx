@@ -1,8 +1,8 @@
 "use client";
 
 import ScrollToTop from "@/component/ScrollToTop";
-import CreateSpellForm from "@/component/character/CreateSpellForm";
 import QueryFilter from "@/component/filter/QueryFilter";
+import UserSpellForm from "@/component/spell/UserSpellForm";
 import UserSpellItem from "@/component/spell/UserSpellItem";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/component/ui/dialog";
@@ -59,11 +59,11 @@ const MySpellsList = ({ language, user }: Props) => {
 
                     <DialogContent position="top" className="md:w-full">
                         <DialogHeader>
-                            <DialogTitle>{t.dnd.newSpell.createSpell}</DialogTitle>
+                            <DialogTitle className="px-2">{t.dnd.newSpell.createSpell}</DialogTitle>
                         </DialogHeader>
 
                         {spells.data && (
-                            <CreateSpellForm
+                            <UserSpellForm
                                 user={user}
                                 spells={spells.data}
                                 language={language}
@@ -87,7 +87,7 @@ const MySpellsList = ({ language, user }: Props) => {
             </div>
 
             <div className="flex w-full flex-col gap-2">
-                {Object.entries(spellsByLevel).map(([level, spells]) => (
+                {Object.entries(spellsByLevel).map(([level, levelSpells]) => (
                     <div
                         key={level}
                         className="hidden w-full grid-cols-3 gap-4 has-[.spell]:grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6"
@@ -96,8 +96,14 @@ const MySpellsList = ({ language, user }: Props) => {
                             {level === "0" ? t.dnd.cantrips : `${t.filter.level} ${level}`}
                         </h2>
 
-                        {spells.map((spell) => (
-                            <UserSpellItem key={spell.index} language={language} spell={spell} />
+                        {levelSpells.map((spell) => (
+                            <UserSpellItem
+                                key={spell.index}
+                                language={language}
+                                spell={spell}
+                                user={user}
+                                spells={spells.data}
+                            />
                         ))}
                     </div>
                 ))}

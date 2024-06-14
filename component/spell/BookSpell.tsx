@@ -194,10 +194,10 @@ const BookSpell = ({ spell, language, character }: Props) => {
             <Dialog open={prepareDialogOpen} onOpenChange={setPrepareDialogOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{t.dnd.spell.cannotPrepare}</DialogTitle>
+                        <DialogTitle>{spellMini()}</DialogTitle>
                     </DialogHeader>
 
-                    <div className="ml-1 flex flex-col gap-2">{spellMini()}</div>
+                    <p className="text-sm opacity-70">{t.dnd.spell.cannotPrepare}</p>
 
                     <DialogFooter className="flex w-full flex-row justify-end gap-2 pt-4">
                         <DialogClose asChild>

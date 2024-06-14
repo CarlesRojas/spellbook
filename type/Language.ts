@@ -118,6 +118,8 @@ export const LanguageObjectSchema = z.object({
         }),
 
         newSpell: z.object({
+            editSpell: z.string(),
+            deleteSpell: z.string(),
             createSpell: z.string(),
             name: z.string(),
             description: z.string(),

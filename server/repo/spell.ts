@@ -3,6 +3,7 @@
 import { InferResultType, db } from "@/server/database";
 import { spell } from "@/server/database/schema/spell";
 import { Spell, SpellSchema } from "@/type/Spell";
+import { eq } from "drizzle-orm";
 
 type NewSpell = typeof spell.$inferInsert;
 type SelectedSpell = InferResultType<
@@ -19,6 +20,12 @@ export const createSpell = async (newSpell: NewSpell) => {
     const result = await db.insert(spell).values(newSpell).returning();
 
     return result.length > 0 ? result[0].index : null;
+};
+
+export const updateSpell = async (updatedSpell: NewSpell) => {
+    const result = await db.update(spell).set(updatedSpell).where(eq(spell.index, updatedSpell.index)).returning();
+
+    return result.length > 0 ? result[0] : null;
 };
 
 export const getSpell = async (index: string) => {
