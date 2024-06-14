@@ -15,7 +15,7 @@ export const character = pgTable("character", {
     ability: integer("ability").notNull(),
 
     spellSlotsAvailableId: integer("spellSlotsAvailableId").references(() => spellSlots.id, { onDelete: "restrict" }),
-    concentratingOnId: text("concentratingOnId").references(() => spell.index, { onDelete: "restrict" }),
+    concentratingOnId: text("concentratingOnId").references(() => spell.index, { onDelete: "set null" }),
 });
 
 export const characterRelations = relations(character, ({ many, one }) => ({

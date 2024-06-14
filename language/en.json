@@ -254,6 +254,7 @@
         "newSpell": {
             "editSpell": "Edit spell",
             "deleteSpell": "Delete spell",
+            "deleteDisclaimer": "Delete spell. This action cannot be undone.",
             "createSpell": "Create new spell",
             "name": "Choose a name",
             "description": "Description",

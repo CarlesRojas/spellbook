@@ -1,3 +1,4 @@
+import DeleteSpellForm from "@/component/spell/DeleteSpellForm";
 import UserSpellForm from "@/component/spell/UserSpellForm";
 import { Button } from "@/component/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/component/ui/dialog";
@@ -135,20 +136,20 @@ const UserSpellItem = ({ spell, language, user, spells }: Props) => {
 
             <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
                 <DialogContent>
-                    {/* <DialogHeader className="flex flex-row items-center gap-2">
-                        {getClassIcon(character.class, "h-8 min-h-8 w-8")}
+                    <DialogHeader className="flex flex-row items-center gap-2">
+                        {smallIcon}
 
                         <DialogTitle className="px-2">
-                            {t.form.delete} {character.name}
+                            {t.form.delete} {spell.name[language]}
                         </DialogTitle>
                     </DialogHeader>
 
                     <DeleteSpellForm
-                        character={character}
+                        spell={spell}
                         user={user}
                         onClose={() => setDeleteDialogOpen(false)}
                         language={language}
-                    /> */}
+                    />
                 </DialogContent>
             </Dialog>
         </div>

@@ -2,6 +2,7 @@
 
 import { InferResultType, db } from "@/server/database";
 import { spell } from "@/server/database/schema/spell";
+import { deleteTranslation } from "@/server/repo/translation";
 import { Spell, SpellSchema } from "@/type/Spell";
 import { eq } from "drizzle-orm";
 
@@ -41,6 +42,20 @@ export const getSpell = async (index: string) => {
 
     if (!result) return null;
     return toSpell(result);
+};
+
+export const deleteSpell = async (index: string) => {
+    const spellToDelete = await db.query.spell.findFirst({
+        where: (spell, { eq }) => eq(spell.index, index),
+    });
+    if (!spellToDelete) return;
+
+    await db.delete(spell).where(eq(spell.index, index));
+
+    spellToDelete.nameId && (await deleteTranslation(spellToDelete.nameId));
+    spellToDelete.descriptionId && (await deleteTranslation(spellToDelete.descriptionId));
+    spellToDelete.highLevelDescriptionId && (await deleteTranslation(spellToDelete.highLevelDescriptionId));
+    spellToDelete.materialId && (await deleteTranslation(spellToDelete.materialId));
 };
 
 export const existsSpell = async (index: string) => {

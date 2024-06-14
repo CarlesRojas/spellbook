@@ -254,6 +254,7 @@
         "newSpell": {
             "editSpell": "Editar hechizo",
             "deleteSpell": "Eliminar hechizo",
+            "deleteDisclaimer": "Eliminar el hechizo. Esta acción no se puede deshacer.",
             "createSpell": "Crear nuevo hechizo",
             "name": "Elige un nombre",
             "description": "Descripción",
