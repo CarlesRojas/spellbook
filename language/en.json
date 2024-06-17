@@ -31,7 +31,9 @@
             "/spell": "Spell",
             "/my-spells": "My Spells",
             "/characters": "Characters",
-            "/character": "Character"
+            "/character": "Character",
+            "/legal/privacy-policy": "Privacy Policy",
+            "/legal/terms-and-conditions": "Terms and Conditions"
         },
 
         "notFound": {

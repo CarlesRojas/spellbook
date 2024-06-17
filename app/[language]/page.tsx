@@ -1,11 +1,16 @@
 import { PageProps } from "@/app/[language]/layout";
 import SpellList from "@/component/spell/SpellList";
+import { Button } from "@/component/ui/button";
+import { getTranslation } from "@/hook/useTranslation";
 import { getAllSpells } from "@/server/repo/spell";
+import { Route } from "@/type/Route";
+import Link from "next/link";
 import { Suspense } from "react";
 
 export const revalidate = 60 * 60 * 24; // 1 day
 
 const Spells = async ({ params: { language } }: PageProps) => {
+    const t = getTranslation(language);
     const initialSpellsData = await getAllSpells();
 
     return (
@@ -14,6 +19,14 @@ const Spells = async ({ params: { language } }: PageProps) => {
                 <Suspense fallback={null}>
                     <SpellList language={language} initialSpellsData={initialSpellsData} />
                 </Suspense>
+            </div>
+
+            <div className="flex w-fit flex-wrap gap-x-4">
+                <Link href={`${Route.PRIVACY_POLICY}`} className="">
+                    <Button className="text-sm opacity-50" variant="link">
+                        {t.enum.route[Route.PRIVACY_POLICY]}
+                    </Button>
+                </Link>
             </div>
         </main>
     );

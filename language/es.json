@@ -31,7 +31,9 @@
             "/spell": "Hechizo",
             "/my-spells": "Mis hechizos",
             "/characters": "Personajes",
-            "/character": "Personaje"
+            "/character": "Personaje",
+            "/legal/privacy-policy": "Política de privacidad",
+            "/legal/terms-and-conditions": "Términos y condiciones"
         },
 
         "notFound": {
