@@ -22,11 +22,9 @@ const Spells = async ({ params: { language } }: PageProps) => {
             </div>
 
             <div className="flex w-fit flex-wrap gap-x-4">
-                <Link href={`${Route.PRIVACY_POLICY}`} className="">
-                    <Button className="text-sm opacity-50" variant="link">
-                        {t.enum.route[Route.PRIVACY_POLICY]}
-                    </Button>
-                </Link>
+                <Button className="text-sm opacity-50" variant="link" asChild>
+                    <Link href={`${Route.PRIVACY_POLICY}`}>{t.enum.route[Route.PRIVACY_POLICY]}</Link>
+                </Button>
             </div>
         </main>
     );
