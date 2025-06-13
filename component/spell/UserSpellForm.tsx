@@ -98,7 +98,7 @@ const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props)
         classes: ClassListSchema,
         damageType: z.nativeEnum(DamageType).optional().nullable(),
         difficultyClassType: z.nativeEnum(Ability).optional().nullable(),
-        level: z.number().min(1).max(20),
+        level: z.number().min(0).max(20),
         icon: z.string(),
         color: z.nativeEnum(SpellColor),
     });
@@ -129,6 +129,8 @@ const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props)
             color: defaultValue ? defaultValue.color : getRandomSpellColor(),
         },
     });
+
+    console.log(form.formState.errors);
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
         defaultValue
@@ -356,14 +358,14 @@ const UserSpellForm = ({ user, language, spells, onClose, defaultValue }: Props)
                                                 variant="outline"
                                                 size="icon"
                                                 type="button"
-                                                disabled={field.value <= 1 || isDisabled}
+                                                disabled={field.value <= 0 || isDisabled}
                                                 onClick={() => field.onChange(field.value - 1)}
                                             >
                                                 <LuMinus className="h-4 w-4 stroke-[3]" />
                                             </Button>
 
                                             <p className="flex min-w-7 select-none items-center justify-center text-lg font-semibold tabular-nums tracking-wide">
-                                                {field.value}
+                                                {field.value > 0 ? field.value : t.dnd.cantrip}
                                             </p>
 
                                             <Button
